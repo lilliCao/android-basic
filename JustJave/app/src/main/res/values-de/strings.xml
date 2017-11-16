@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Just Jave</string>
+    <string name="toppings">Mit</string>
+    <string name="user_name">dein Name bitte</string>
+    <string name="ice_cream">Eiscreme</string>
+    <string name="chocolate">Schokolade</string>
+    <string name="quantity">Quantität:</string>
+    <string name="order_summary">Bestellung</string>
+    <string name="order">bestellen</string>
+    <string name="customer">Kunde:</string>
+    <string name="price_total">Preis:</string>
+    <string name="thank_you">Vielen Dank</string>
+    <string name="max">Sie können nicht mehr als 100 Becher bestellen</string>
+    <string name="min">Sie können nicht weniger als 1 Becher bestellen</string>
+</resources>

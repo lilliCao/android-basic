@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Just Jave</string>
+    <string name="toppings">Toppings</string>
+    <string name="user_name">your name please</string>
+    <string name="ice_cream">ice cream</string>
+    <string name="chocolate">chocolate</string>
+    <string name="quantity">Quantity:</string>
+    <string name="order_summary">order summary</string>
+    <string name="order">order</string>
+    <string name="customer">Customer:</string>
+    <string name="price_total">Price total:</string>
+    <string name="thank_you">Thank you</string>
+    <string name="max">You can not have more than 100</string>
+    <string name="min">You can not have less than 1</string>
+</resources>
