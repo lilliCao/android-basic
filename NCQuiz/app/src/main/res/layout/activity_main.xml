@@ -11,6 +11,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/root"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -34,6 +35,7 @@
                 android:id="@+id/rule"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingBottom="20dp"
                 android:paddingLeft="60dp"
                 android:paddingRight="60dp"
                 android:text="" />
@@ -96,6 +98,7 @@
                 </RadioGroup>
 
                 <Button
+                    android:id="@+id/submit1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="submit"
@@ -216,6 +219,7 @@
                 </LinearLayout>
 
                 <Button
+                    android:id="@+id/submit2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -281,6 +285,7 @@
                 </RadioGroup>
 
                 <Button
+                    android:id="@+id/submit3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="submit"
@@ -344,6 +349,7 @@
                     android:text="0.5kg water and 0.5kg gold" />
 
                 <Button
+                    android:id="@+id/submit4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="submit"
@@ -415,6 +421,7 @@
                 </RadioGroup>
 
                 <Button
+                    android:id="@+id/submit5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="submit"
@@ -462,6 +469,7 @@
                     android:textSize="15sp" />
 
                 <Button
+                    android:id="@+id/submit6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="submit"
@@ -490,13 +498,18 @@
                 android:textAllCaps="true"
                 android:textColor="#00E676"
                 android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/nerd"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:onClick="getDetail"
-                android:text="see more details"
+                android:text="More details"
                 android:textAllCaps="true" />
 
             <TextView
@@ -504,8 +517,56 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:textAllCaps="true"
+                android:textSize="15sp"
+                android:text=""
                 android:textColor="#00E676" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginBottom="20dp"
+                android:background="@android:color/black" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:layout_marginBottom="30dp"
+                android:text="I hope you like my quiz so far. I hope you will always stay passionate about something.\nFeel free to contact me for any further information.\nCheer \nL3I2"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:layout_marginBottom="30dp">
+                <ImageButton
+                    android:onClick="goToGitHub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/github"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY"/>
+                <ImageButton
+                    android:onClick="goToEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/mail"
+                    android:scaleType="fitXY"/>
+                <ImageButton
+                    android:onClick="goToInsta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/instagram"
+                    android:scaleType="fitXY"/>
+                <ImageButton
+                    android:onClick="goToFb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/fb"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY"/>
 
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>
