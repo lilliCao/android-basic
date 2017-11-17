@@ -316,7 +316,7 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="20dp"
                     android:paddingRight="20dp"
-                    android:text="Which of those answers are heavier than 1kg iron?(choose 1 or more)"
+                    android:text="Which of those answers are not heavier than 1kg iron?(choose 1 or more)"
                     android:textSize="15sp" />
 
                 <CheckBox

@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
                 "\nQUESTION 3: There is no place like ..." +
                 "\nANSWER: <<127.0.0.1>> is known as <<local host>> or <<home address>> in computer network. Of course there is no place like <<home>>" +
                 "\n" +
-                "\nQUESTION 4: Which of those answers are heavier than 1kg iron?(choose 1 or more)" +
+                "\nQUESTION 4: Which of those answers are not heavier than 1kg iron?(choose 1 or more)" +
                 "\nANSWER: Sorry for kidding you like this. Of course 1kg is always 1kg no matter in water or sugar or iron or gold=)))" +
                 "\n" +
                 "\nQUESTION 5: There are ... types of people in the world; those who understand binary and those who don't" +
