@@ -30,10 +30,10 @@
     <string name="question2_text">Which droids are in the movie Star wars?(choose 1 or more)</string>
     <string name="question3_text">There is no place like ...</string>
     <string name="question4_text">Which of those answers are not heavier than 1kg iron?(choose 1 or more)</string>
-    <string name="question4_text1">0.2kg sugar and 0.8kg iron</string>
-    <string name="question4_text2">1kg gold</string>
+    <string name="question4_text1">two hundred grams sugar and zero point eight kilograms iron</string>
+    <string name="question4_text2">1000g gold</string>
     <string name="question4_text3">1kg silver</string>
-    <string name="question4_text4">0.5kg water and 0.5kg gold</string>
+    <string name="question4_text4">500.00g water and zero point five kg gold</string>
     <string name="question5_text">There are ... types of people in the world; those who understand binary and those who do not</string>
     <string name="question6_text">The only valid measurement of code quality is ..../minute</string>
     <string name="hint">type what you think, do not worry about the word case</string>
