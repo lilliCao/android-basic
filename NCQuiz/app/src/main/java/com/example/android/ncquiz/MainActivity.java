@@ -17,7 +17,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,11 +31,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private final int QUESTION_NUMBER = 6;
     private int correctAnswer = 0;
-    private boolean isIni = false;
     boolean check1 = false;
     boolean check2 = false;
     boolean check3 = false;
@@ -62,41 +65,39 @@ public class MainActivity extends AppCompatActivity {
     private TextView resultView;
     private TextView detailView;
     private ImageView stickerView;
-    private Button submit;
+    private Button submit1;
+    private Button submit2;
+    private Button submit3;
+    private Button submit4;
+    private Button submit5;
+    private Button submit6;
     private TextView question1;
     private TextView question2;
     private TextView question3;
     private TextView question4;
     private TextView question5;
     private TextView question6;
+    private Button moreDetails;
+    private Button close;
     List<Button> rightAnswer=new ArrayList<>();
     List<Button> submitButton=new ArrayList<>();
+    List<Button> allButton=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ini();
     }
 
     public void detail(View view) {
         TextView detail = (TextView) findViewById(R.id.rule);
         if(detail.getText().toString().isEmpty()) {
-            detail.setText("I call this quiz NC. If you are german, don't worry. " +
-                    "There is nothing to do with the Numerus Clausus, not with exams at all. " +
-                    "Its name is Nerd Check. It's a small quiz to check how nerd you are :) " +
-                    "Or let's say there are some funny questions for you to entertain:) " +
-                    "\nThere are some questions where you can only choice 1 unique answer(with circle)" +
-                    " and some you can choose more(with square). " +
-                    "\nPay attention to the question before you head any answer" +
-                    "\nPress submit if you are sure about the answer. Submit will block you from that question " +
-                    "since it will show you the answer after pressing" +
-                    "\nIf you don't have enough time to see the answer. Don't worry, you can take a look at all the QA at the end " +
-                    "Press <<more details>> button at the end to see all the answer with explanation" +
-                    "\nOk. Enough text. I hope you have fun checking your nerd level" +
-                    "\nStay foolish. Stay hungry." +
-                    "\nBe passionate. Be curious\nBe a nerd \nL3I2");
+            detail.setText(getString(R.string.readme_text));
+            close.setText(getString(R.string.close));
         }else{
             detail.setText("");
+            close.setText(getString(R.string.readme));
         }
     }
 
@@ -123,41 +124,31 @@ public class MainActivity extends AppCompatActivity {
         resultView = findViewById(R.id.result);
         detailView = findViewById(R.id.detail);
         stickerView= findViewById(R.id.nerd);
-        rightAnswer.add(checkQuestion1);
-        rightAnswer.add(checkQuestion22);
-        rightAnswer.add(checkQuestion23);
-        rightAnswer.add(checkQuestion24);
-        rightAnswer.add(checkQuestion3);
-        rightAnswer.add(checkQuestion41);
-        rightAnswer.add(checkQuestion42);
-        rightAnswer.add(checkQuestion43);
-        rightAnswer.add(checkQuestion44);
-        rightAnswer.add(checkQuestion5);
-        submit=findViewById(R.id.submit1);
-        submitButton.add(submit);
-        submit=findViewById(R.id.submit2);
-        submitButton.add(submit);
-        submit=findViewById(R.id.submit3);
-        submitButton.add(submit);
-        submit=findViewById(R.id.submit4);
-        submitButton.add(submit);
-        submit=findViewById(R.id.submit5);
-        submitButton.add(submit);
-        submit=findViewById(R.id.submit6);
-        submitButton.add(submit);
+        rightAnswer.addAll(Arrays.asList(checkQuestion1,checkQuestion22,checkQuestion23,
+                checkQuestion24,checkQuestion3,checkQuestion41,checkQuestion42,
+                checkQuestion43,checkQuestion44,checkQuestion5));
+        submit1=findViewById(R.id.submit1);
+        submit2=findViewById(R.id.submit2);
+        submit3=findViewById(R.id.submit3);
+        submit4=findViewById(R.id.submit4);
+        submit5=findViewById(R.id.submit5);
+        submit6=findViewById(R.id.submit6);
+        submitButton.addAll(Arrays.asList(submit1,submit2,submit3,submit4,submit5,submit6));
         question1=findViewById(R.id.q1_text);
         question2=findViewById(R.id.q2_text);
         question3=findViewById(R.id.q3_text);
         question4=findViewById(R.id.q4_text);
         question5=findViewById(R.id.q5_text);
         question6=findViewById(R.id.q6_text);
-        isIni = true;
+        moreDetails=findViewById(R.id.more_details);
+        close=findViewById(R.id.readme);
+        allButton.addAll(Arrays.asList(checkQuestion1,checkQuestion11,checkQuestion13,
+                checkQuestion21,checkQuestion22,checkQuestion23,checkQuestion24,
+                checkQuestion3,checkQuestion32,checkQuestion33,
+                checkQuestion41, checkQuestion42,checkQuestion43,checkQuestion44,
+                checkQuestion5, checkQuestion51, checkQuestion52, checkQuestion53));
     }
-
-    public void submit(View view) {
-        if (!isIni) {
-            ini();
-        }
+    public void submit1(View view){
         boolean q1 = checkQuestion1.isChecked();
         boolean q11 = checkQuestion11.isChecked();
         boolean q13 = checkQuestion13.isChecked();
@@ -167,14 +158,16 @@ public class MainActivity extends AppCompatActivity {
             checkQuestion13.setClickable(false);
             if (q1) {
                 correctAnswer++;
-                Toast.makeText(this, "CORRECT", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.correct), Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this,
-                        "IRCORRECT! 42 is known as the answer to life, universum and everything since the movie <<The Hitchhiker's Guide to the Galaxy>>",
+                        getString(R.string.ircorrect)+getString(R.string.answer1),
                         Toast.LENGTH_LONG).show();
             }
             check1 = true;
         }
+    }
+    public void submit2(View view){
         boolean q21 = checkQuestion21.isChecked();
         boolean q22 = checkQuestion22.isChecked();
         boolean q23 = checkQuestion23.isChecked();
@@ -187,15 +180,16 @@ public class MainActivity extends AppCompatActivity {
             checkQuestion24.setClickable(false);
             if (q2) {
                 correctAnswer++;
-                Toast.makeText(this, "CORRECT", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.correct), Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this,
-                        "IRCORRECT! C3PO(image 2), R2D2(image 3) and BB8(image 4) are from star wars, Marvin (image 1) is as know as <<the most depressive robot>>" +
-                                " from the movie <<The Hitchhiker's Guide to the Galaxy>>",
+                        getString(R.string.ircorrect)+getString(R.string.answer2),
                         Toast.LENGTH_LONG).show();
             }
             check2 = true;
         }
+    }
+    public void submit3(View view){
         boolean q3 = checkQuestion3.isChecked();
         boolean q32 = checkQuestion32.isChecked();
         boolean q33 = checkQuestion33.isChecked();
@@ -205,14 +199,16 @@ public class MainActivity extends AppCompatActivity {
             checkQuestion33.setClickable(false);
             if (q3) {
                 correctAnswer++;
-                Toast.makeText(this, "CORRECT", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.correct), Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this,
-                        "IRCORRECT! <<127.0.0.1>> is known as <<local host>> or <<home address>> in computer network. Of course there is no place like <<home>>",
+                        getString(R.string.ircorrect)+getString(R.string.answer3),
                         Toast.LENGTH_LONG).show();
             }
             check3 = true;
         }
+    }
+    public void submit4(View view){
         boolean q41 = ((CheckBox) findViewById(R.id.q41)).isChecked();
         boolean q42 = ((CheckBox) findViewById(R.id.q42)).isChecked();
         boolean q43 = ((CheckBox) findViewById(R.id.q43)).isChecked();
@@ -225,14 +221,16 @@ public class MainActivity extends AppCompatActivity {
             checkQuestion44.setClickable(false);
             if (q4) {
                 correctAnswer++;
-                Toast.makeText(this, "CORRECT", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.correct), Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this,
-                        "IRCORRECT! Sorry for kidding you like this. Of course 1kg is always 1kg no matter in water or sugar or iron or gold=)))",
+                        getString(R.string.ircorrect)+getString(R.string.answer4),
                         Toast.LENGTH_LONG).show();
             }
             check4 = true;
         }
+    }
+    public void submit5(View view){
         boolean q5 = checkQuestion5.isChecked();
         boolean q51 = checkQuestion51.isChecked();
         boolean q52 = checkQuestion52.isChecked();
@@ -244,15 +242,16 @@ public class MainActivity extends AppCompatActivity {
             checkQuestion5.setClickable(false);
             if (q5) {
                 correctAnswer++;
-                Toast.makeText(this, "CORRECT", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.correct), Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this,
-                        "IRCORRECT! One group knows binary and one doesn't. It should be 2, shouldn't it? And 2 in binary is <<10>>",
+                        getString(R.string.ircorrect) + getString(R.string.answer6),
                         Toast.LENGTH_LONG).show();
             }
             check5 = true;
         }
-
+    }
+    public void submit6(View view){
         Editable name = checkQuestion6.getText();
         String nameLowerCase = name.toString().toLowerCase();
         boolean q6 = nameLowerCase.contains("wtf") || nameLowerCase.contains("whatthefuck") || nameLowerCase.contains("what the fuck");
@@ -260,12 +259,10 @@ public class MainActivity extends AppCompatActivity {
             checkQuestion6.setFocusable(false);
             if (q6) {
                 correctAnswer++;
-                Toast.makeText(this, "CORRECT", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.correct), Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this,
-                        "IRCORRECT! Have you ever saidom <<What the fuck>> while reading someone's code." +
-                                " When you read a code, and have to say <<WTF>> the whole time, that means it's not a good code." +
-                                " Number of <<What the fuck>>/minute is known as a measurement for code style",
+                        getString(R.string.ircorrect)+getString(R.string.answer6),
                         Toast.LENGTH_LONG).show();
             }
             check6 = true;
@@ -274,59 +271,46 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getResult(View view) {
-        if (!isIni) {
-            ini();
-        }
         String result = "";
         String image="";
-        switch (correctAnswer) {
+        int level=0;
+        int prozent=correctAnswer==0? 0 : (correctAnswer/QUESTION_NUMBER)*100;
+        level=prozent <50? 0: (prozent<80? 1: 2);
+        switch (level) {
             case 0:
-            case 1:
-            case 2:
-                result = "you are quite nerdy. Be nerdier";
+                result = getString(R.string.level1);
                 stickerView.setImageResource(R.drawable.nerd1);
                 break;
-            case 3:
-            case 4:
-                result = "wow you are very nerdy. Stay nerdy.";
+            case 1:
+                result = getString(R.string.level2);
                 stickerView.setImageResource(R.drawable.nerd2);
                 break;
-            case 5:
-            case 6:
+            case 2:
                 stickerView.setImageResource(R.drawable.nerd3);
-                result = "wow you are born to be nerd. Stay like this.";
+                result = getString(R.string.level3);
         }
         resultView.setText(result);
     }
 
     public void getDetail(View view) {
-        if (!isIni) {
-            ini();
-        }
         for(Button button:rightAnswer){
             button.setPressed(true);
         }
-        checkQuestion6.setText("what the fuck/wtf/wtfs/WTF/WTFs/whatthefuck");
+        checkQuestion6.setText(getString(R.string.text6));
         checkQuestion6.setFocusable(false);
-        for(Button button:submitButton){
-            button.setClickable(false);
-        }
         String answer1=question1.getText().toString();
-        answer1+="\nANSWER: 42 is known as the answer to life, universum and everything since the movie <<The Hitchhiker's Guide to the Galaxy>>";
+        answer1+=getString(R.string.answer1);
         String answer2=question2.getText().toString();
-        answer2+="\nANSWER: C3PO(image 2), R2D2(image 3) and BB8(image 4) are from star wars, Marvin (image 1) " +
-                "is as know as <<the most depressive robot>> from the movie <<The Hitchhiker's Guide to the Galaxy>>";
-        String answer3=question2.getText().toString();
-        answer3+="\nANSWER: <<127.0.0.1>> is known as <<local host>> or <<home address>> in computer network. Of course there is no place like <<home>>";
-        String answer4=question2.getText().toString();
-        answer4+="\nANSWER: Sorry for kidding you like this. Of course 1kg is always 1kg no matter in water or sugar or iron or gold=)))";
-        String answer5=question2.getText().toString();
-        answer5+="\nANSWER: One group knows binary and one doesn't. It should be 2, shouldn't it? And 2 in binary is <<10>>" ;
-        String answer6=question2.getText().toString();
-        answer6+="\nANSWER: Have you ever said <<What the fuck>> while reading someone's code." +
-                " When you read a code, and have to say <<WTF>> the whole time, that means it's not a good code." +
-                " Number of <<What the fuck>>/minute is known as a measurement for code style";
-        String detail="Roll up to see all QA and explanation";
+        answer2+=getString(R.string.answer2);
+        String answer3=question3.getText().toString();
+        answer3+=getString(R.string.answer3);
+        String answer4=question4.getText().toString();
+        answer4+=getString(R.string.answer4);
+        String answer5=question5.getText().toString();
+        answer5+=getString(R.string.answer5) ;
+        String answer6=question6.getText().toString();
+        answer6+=getString(R.string.answer6);
+        String detail=getString(R.string.roll);
 
         detailView.setText(detail);
         question1.setText(answer1);
@@ -335,6 +319,10 @@ public class MainActivity extends AppCompatActivity {
         question4.setText(answer4);
         question5.setText(answer5);
         question6.setText(answer6);
+
+        for(Button button : allButton){button.setClickable(false);}
+        for(Button submit: submitButton){submit.setClickable(false);}
+        moreDetails.setClickable(false);
 
     }
     /* Try to send user cert and sticker in a pdf per email
@@ -389,7 +377,7 @@ public class MainActivity extends AppCompatActivity {
         return bitmap;
     }
     */
-    
+
     private void viewLink(String link){
         Uri uri=Uri.parse(link);
         Intent intent=new Intent(Intent.ACTION_VIEW, uri);
@@ -417,5 +405,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToGitHub(View view) {
         viewLink("https://github.com/lilliCao/AndroidBasic/tree/master/NCQuiz");
+    }
+
+    public void getCert(View view) {
     }
 }

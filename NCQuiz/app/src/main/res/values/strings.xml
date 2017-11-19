@@ -1,3 +1,74 @@
 <resources>
     <string name="app_name">NC Quiz</string>
+    <string name="readme">readme</string>
+    <string name="close">close</string>
+    <string name="readme_text">
+                    I call this quiz NC. If you are german, don\'t worry.
+                    There is nothing to do with the Numerus Clausus, not with exams at all.
+                    Its name is Nerd Check. It\'s a small quiz to check how nerd you are :)
+                    Or let\'s say there are some funny questions for you to entertain:)
+                    \nThere are some questions where you can only choice 1 unique answer(with circle)
+                     and some you can choose more(with square).
+                    \nPay attention to the question before you head any answer
+                    \nPress submit if you are sure about the answer. Submit will block you from that question
+                    since it will show you the answer after pressing
+                    \nIf you don\'t have enough time to see the answer. Don\'t worry, you can take a look at all the QA at the end
+                    Press &lt;&lt;see QA&gt;&gt; button at the end to see all the answer with explanation
+                    \nOk. Enough text. I hope you have fun checking your nerd level
+                    \nStay foolish. Stay hungry.
+                    \nBe passionate. Be curious.
+                    \nBe a nerd
+                    \nL3I2
+    </string>
+    <string name="question1">Question 1</string>
+    <string name="question2">Question 2</string>
+    <string name="question3">Question 3</string>
+    <string name="question4">Question 4</string>
+    <string name="question5">Question 5</string>
+    <string name="question6">Question 6</string>
+    <string name="question1_text">What is the answer to life, the universum and everything?</string>
+    <string name="question2_text">Which droids are in the movie Star wars?(choose 1 or more)</string>
+    <string name="question3_text">There is no place like ...</string>
+    <string name="question4_text">Which of those answers are not heavier than 1kg iron?(choose 1 or more)</string>
+    <string name="question4_text1">0.2kg sugar and 0.8kg iron</string>
+    <string name="question4_text2">1kg gold</string>
+    <string name="question4_text3">1kg silver</string>
+    <string name="question4_text4">0.5kg water and 0.5kg gold</string>
+    <string name="question5_text">There are ... types of people in the world; those who understand binary and those who do not</string>
+    <string name="question6_text">The only valid measurement of code quality is ..../minute</string>
+    <string name="hint">type what you think, do not worry about the word case</string>
+    <string name="submit">submit</string>
+    <string name="answer1">
+        \nANSWER: 42 is known as the answer to life, universum and everything since the movie &lt;&lt;The Hitchhiker\'s Guide to the Galaxy&gt;&gt;
+    </string>
+    <string name="answer2">
+        \nANSWER: C3PO(image 2), R2D2(image 3) and BB8(image 4) are from star wars, Marvin (image 1)
+        is as know as &lt;&lt;the most depressive robot&gt;&gt; from the movie &lt;&lt;The Hitchhiker\'s Guide to the Galaxy&gt;&gt;
+    </string>
+    <string name="answer3">
+        \nANSWER: &lt;&lt;127.0.0.1&gt;&gt; is known as &lt;&lt;local host&gt;&gt; or &lt;&lt;home address&gt;&gt; in computer network. Of course there is no place like &lt;&lt;home&gt;&gt;
+    </string>
+    <string name="answer4">
+        \nANSWER: Sorry for kidding you like this. Of course 1kg is always 1kg no matter in water or sugar or iron or gold=)))
+    </string>
+    <string name="answer5">
+        \nANSWER: One group knows binary and one doesn\'t. It should be 2, shouldn\'t it? And 2 in binary is &lt;&lt;10&gt;&gt;
+    </string>
+    <string name="answer6">
+        \nANSWER: Have you ever said &lt;&lt;What the fuck&gt;&gt; while reading someone\'s code.
+                  When you read a code, and have to say &lt;&lt;WTF&gt;&gt; the whole time, that means it\'s not a good code.
+                  Number of &lt;&lt;What the fuck&gt;&gt;/minute is known as a measurement for code style
+    </string>
+    <string name="text6">what the fuck/wtf/wtfs/WTF/WTFs/whatthefuck</string>
+    <string name="level1">you are quite nerdy. Be nerdier.</string>
+    <string name="level2">wow you are very nerdy. Stay nerdy.</string>
+    <string name="level3">wow you are born to be nerd.</string>
+    <string name="correct">CORRECT</string>
+    <string name="ircorrect">IRCORRECT!</string>
+    <string name="roll">Roll up to see all QA and explanation</string>
+    <string name="ready">ready to see how nerd you are? Click me</string>
+    <string name="answer">see the answers? click me</string>
+    <string name="cert">Get Certificate</string>
+    <string name="final_word">I hope you like my quiz so far. I hope you will always stay passionate about something.\nFeel free to contact me for any further information.\nCheer \nL3I2</string>
+
 </resources>

@@ -29,7 +29,8 @@
                 android:layout_gravity="center"
                 android:onClick="detail"
                 android:paddingBottom="20dp"
-                android:text="README.md" />
+                android:textAllCaps="true"
+                android:text="@string/readme" />
 
             <TextView
                 android:id="@+id/rule"
@@ -58,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="12dp"
-                    android:text="Question 1"
+                    android:text="@string/question1"
                     android:textAllCaps="true"
                     android:textStyle="bold" />
 
@@ -66,10 +67,9 @@
                     android:id="@+id/q1_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:paddingBottom="20dp"
                     android:paddingRight="20dp"
-                    android:text="What is the answer to life, the universum and everything?"
+                    android:text="@string/question1_text"
                     android:textSize="15sp" />
 
                 <RadioGroup
@@ -101,8 +101,8 @@
                     android:id="@+id/submit1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="submit"
-                    android:text="submit" />
+                    android:onClick="submit1"
+                    android:text="@string/submit" />
 
             </LinearLayout>
 
@@ -123,7 +123,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
-                    android:text="Question 2"
+                    android:text="@string/question2"
                     android:textAllCaps="true"
                     android:textStyle="bold" />
 
@@ -132,14 +132,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/q2"
-                    android:paddingBottom="20dp"
-                    android:text="Which droids are in the movie Star wars?(choose 1 or more)" />
+                    android:layout_marginBottom="20dp"
+                    android:textSize="15sp"
+                    android:text="@string/question2_text" />
+
+                <LinearLayout
+                    android:id="@+id/droids"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/q2_text"
+                    android:layout_marginBottom="30dp"
+                    android:layout_centerHorizontal="true">
 
                 <LinearLayout
                     android:id="@+id/choice1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/q2_text"
                     android:orientation="vertical">
 
                     <ImageView
@@ -160,8 +169,6 @@
                     android:id="@+id/choice2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/q2_text"
-                    android:layout_toRightOf="@id/choice1"
                     android:orientation="vertical">
 
                     <ImageView
@@ -181,8 +188,6 @@
                     android:id="@+id/choice3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/q2_text"
-                    android:layout_toRightOf="@id/choice2"
                     android:orientation="vertical">
 
                     <ImageView
@@ -202,8 +207,6 @@
                     android:id="@+id/choice4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/q2_text"
-                    android:layout_toRightOf="@id/choice3"
                     android:orientation="vertical">
 
                     <ImageView
@@ -218,14 +221,17 @@
                         android:layout_gravity="center" />
                 </LinearLayout>
 
+                </LinearLayout>
+
+
                 <Button
                     android:id="@+id/submit2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_below="@id/choice1"
-                    android:onClick="submit"
-                    android:text="submit" />
+                    android:layout_below="@id/droids"
+                    android:onClick="submit2"
+                    android:text="@string/submit" />
             </RelativeLayout>
 
             <View
@@ -246,7 +252,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="12dp"
-                    android:text="Question 3"
+                    android:text="@string/question3"
                     android:textAllCaps="true"
                     android:textStyle="bold" />
 
@@ -256,7 +262,7 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="20dp"
                     android:paddingRight="20dp"
-                    android:text="There is no place like ..."
+                    android:text="@string/question3_text"
                     android:textSize="15sp" />
 
                 <RadioGroup
@@ -288,8 +294,8 @@
                     android:id="@+id/submit3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="submit"
-                    android:text="submit" />
+                    android:onClick="submit3"
+                    android:text="@string/submit" />
 
             </LinearLayout>
 
@@ -311,7 +317,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="12dp"
-                    android:text="Question 4"
+                    android:text="@string/question4"
                     android:textAllCaps="true"
                     android:textStyle="bold" />
 
@@ -321,39 +327,39 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="20dp"
                     android:paddingRight="20dp"
-                    android:text="Which of those answers are not heavier than 1kg iron?(choose 1 or more)"
+                    android:text="@string/question4_text"
                     android:textSize="15sp" />
 
                 <CheckBox
                     android:id="@+id/q41"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0.2kg sugar and 0.8kg iron" />
+                    android:text="@string/question4_text1" />
 
                 <CheckBox
                     android:id="@+id/q42"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1kg gold" />
+                    android:text="@string/question4_text2" />
 
                 <CheckBox
                     android:id="@+id/q43"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1kg silver" />
+                    android:text="@string/question4_text3" />
 
                 <CheckBox
                     android:id="@+id/q44"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0.5kg water and 0.5kg gold" />
+                    android:text="@string/question4_text4" />
 
                 <Button
                     android:id="@+id/submit4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="submit"
-                    android:text="submit" />
+                    android:onClick="submit4"
+                    android:text="@string/submit" />
 
             </LinearLayout>
 
@@ -375,7 +381,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="12dp"
-                    android:text="Question 5"
+                    android:text="@string/question5"
                     android:textAllCaps="true"
                     android:textStyle="bold" />
 
@@ -385,7 +391,7 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="20dp"
                     android:paddingRight="20dp"
-                    android:text="There are ... types of people in the world; those who understand binary and those who don't"
+                    android:text="@string/question5_text"
                     android:textSize="15sp" />
 
                 <RadioGroup
@@ -424,8 +430,8 @@
                     android:id="@+id/submit5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="submit"
-                    android:text="submit" />
+                    android:onClick="submit5"
+                    android:text="@string/submit" />
 
             </LinearLayout>
 
@@ -447,7 +453,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="12dp"
-                    android:text="Question 6"
+                    android:text="@string/question6"
                     android:textAllCaps="true"
                     android:textStyle="bold" />
 
@@ -457,23 +463,23 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="20dp"
                     android:paddingRight="20dp"
-                    android:text="The only valid measurement of code quality is ..../minute"
+                    android:text="@string/question6_text"
                     android:textSize="15sp" />
 
                 <EditText
                     android:id="@+id/answer6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="type what you think, don't worry about the word case"
-                    android:inputType="text"
+                    android:hint="@string/hint"
+                    android:inputType="textMultiLine"
                     android:textSize="15sp" />
 
                 <Button
                     android:id="@+id/submit6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="submit"
-                    android:text="submit" />
+                    android:onClick="submit6"
+                    android:text="@string/submit" />
             </LinearLayout>
 
             <View
@@ -487,7 +493,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:onClick="getResult"
-                android:text="ready to see how nerd you are? Click me"
+                android:text="@string/ready"
                 android:textAllCaps="true" />
 
             <TextView
@@ -505,11 +511,21 @@
                 android:layout_height="wrap_content" />
 
             <Button
+                android:id="@+id/more_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:onClick="getDetail"
-                android:text="More details"
+                android:text="@string/answer"
+                android:textAllCaps="true" />
+
+            <Button
+                android:id="@+id/cert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:onClick="getCert"
+                android:text="@string/cert"
                 android:textAllCaps="true" />
 
             <TextView
@@ -531,42 +547,51 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
                 android:layout_marginBottom="30dp"
-                android:text="I hope you like my quiz so far. I hope you will always stay passionate about something.\nFeel free to contact me for any further information.\nCheer \nL3I2"/>
+                android:text="@string/final_word"/>
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:id="@+id/contact"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
                 android:layout_marginBottom="30dp">
-                <ImageButton
+                <com.example.android.ncquiz.ImageButtonBalance
+                    android:id="@+id/git"
                     android:onClick="goToGitHub"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/github"
                     android:layout_weight="1"
                     android:scaleType="fitXY"/>
-                <ImageButton
+                <com.example.android.ncquiz.ImageButtonBalance
+                    android:id="@+id/mail"
                     android:onClick="goToEmail"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:src="@drawable/mail"
                     android:scaleType="fitXY"/>
-                <ImageButton
+                <com.example.android.ncquiz.ImageButtonBalance
+                    android:id="@+id/insta"
                     android:onClick="goToInsta"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:src="@drawable/instagram"
                     android:scaleType="fitXY"/>
-                <ImageButton
+                <com.example.android.ncquiz.ImageButtonBalance
+                    android:id="@+id/fb"
                     android:onClick="goToFb"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/fb"
                     android:layout_weight="1"
                     android:scaleType="fitXY"/>
 
             </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>
