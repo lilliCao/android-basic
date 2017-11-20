@@ -30,10 +30,10 @@
     <string name="question2_text">Which droids are in the movie Star wars?(choose 1 or more)</string>
     <string name="question3_text">There is no place like ...</string>
     <string name="question4_text">Which of those answers are not heavier than 1kg iron?(choose 1 or more)</string>
-    <string name="question4_text1">0.2kg sugar and 0.8kg iron</string>
+    <string name="question4_text1">200gram sugar and 800gram iron</string>
     <string name="question4_text2">1kg gold</string>
     <string name="question4_text3">1kg silver</string>
-    <string name="question4_text4">0.5kg water and 0.5kg gold</string>
+    <string name="question4_text4">half of kg water and half of kg gold</string>
     <string name="question5_text">There are ... types of people in the world; those who understand binary and those who do not</string>
     <string name="question6_text">The only valid measurement of code quality is ..../minute</string>
     <string name="hint">type what you think, do not worry about the word case</string>
@@ -70,5 +70,10 @@
     <string name="answer">see the answers? click me</string>
     <string name="cert">Get Certificate</string>
     <string name="final_word">I hope you like my quiz so far. I hope you will always stay passionate about something.\nFeel free to contact me for any further information.\nCheer \nL3I2</string>
+    <string name="warning">Please click more detail firstly to see all answer</string>
+    <string name="certificate">certificate</string>
+    <string name="name">NerdCheck Quiz</string>
+    <string name="email_text">Dear Tester, \\nI attach here the answer and your certificate \\nFeel free to share it with your friends \\nCheer, \\nL3I2</string>
+    <string name="file1">question_answer</string>
 
 </resources>

@@ -1,33 +1,28 @@
 package com.example.android.ncquiz;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Document;
-
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,12 +32,14 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private final int QUESTION_NUMBER = 6;
     private int correctAnswer = 0;
+    private int level = 0;
     boolean check1 = false;
     boolean check2 = false;
     boolean check3 = false;
     boolean check4 = false;
     boolean check5 = false;
     boolean check6 = false;
+    boolean checkAnswer = false;
     private RadioButton checkQuestion1;
     private RadioButton checkQuestion11;
     private RadioButton checkQuestion13;
@@ -79,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView question6;
     private Button moreDetails;
     private Button close;
-    List<Button> rightAnswer=new ArrayList<>();
-    List<Button> submitButton=new ArrayList<>();
-    List<Button> allButton=new ArrayList<>();
+    List<Button> rightAnswer = new ArrayList<>();
+    List<Button> submitButton = new ArrayList<>();
+    List<Button> allButton = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,14 +89,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void detail(View view) {
         TextView detail = (TextView) findViewById(R.id.rule);
-        if(detail.getText().toString().isEmpty()) {
+        if (detail.getText().toString().isEmpty()) {
             detail.setText(getString(R.string.readme_text));
             close.setText(getString(R.string.close));
-        }else{
+        } else {
             detail.setText("");
             close.setText(getString(R.string.readme));
         }
     }
+
 
     private void ini() {
         checkQuestion1 = findViewById(R.id.answer1);
@@ -123,32 +121,33 @@ public class MainActivity extends AppCompatActivity {
         checkQuestion6 = findViewById(R.id.answer6);
         resultView = findViewById(R.id.result);
         detailView = findViewById(R.id.detail);
-        stickerView= findViewById(R.id.nerd);
-        rightAnswer.addAll(Arrays.asList(checkQuestion1,checkQuestion22,checkQuestion23,
-                checkQuestion24,checkQuestion3,checkQuestion41,checkQuestion42,
-                checkQuestion43,checkQuestion44,checkQuestion5));
-        submit1=findViewById(R.id.submit1);
-        submit2=findViewById(R.id.submit2);
-        submit3=findViewById(R.id.submit3);
-        submit4=findViewById(R.id.submit4);
-        submit5=findViewById(R.id.submit5);
-        submit6=findViewById(R.id.submit6);
-        submitButton.addAll(Arrays.asList(submit1,submit2,submit3,submit4,submit5,submit6));
-        question1=findViewById(R.id.q1_text);
-        question2=findViewById(R.id.q2_text);
-        question3=findViewById(R.id.q3_text);
-        question4=findViewById(R.id.q4_text);
-        question5=findViewById(R.id.q5_text);
-        question6=findViewById(R.id.q6_text);
-        moreDetails=findViewById(R.id.more_details);
-        close=findViewById(R.id.readme);
-        allButton.addAll(Arrays.asList(checkQuestion1,checkQuestion11,checkQuestion13,
-                checkQuestion21,checkQuestion22,checkQuestion23,checkQuestion24,
-                checkQuestion3,checkQuestion32,checkQuestion33,
-                checkQuestion41, checkQuestion42,checkQuestion43,checkQuestion44,
+        stickerView = findViewById(R.id.nerd);
+        rightAnswer.addAll(Arrays.asList(checkQuestion1, checkQuestion22, checkQuestion23,
+                checkQuestion24, checkQuestion3, checkQuestion41, checkQuestion42,
+                checkQuestion43, checkQuestion44, checkQuestion5));
+        submit1 = findViewById(R.id.submit1);
+        submit2 = findViewById(R.id.submit2);
+        submit3 = findViewById(R.id.submit3);
+        submit4 = findViewById(R.id.submit4);
+        submit5 = findViewById(R.id.submit5);
+        submit6 = findViewById(R.id.submit6);
+        submitButton.addAll(Arrays.asList(submit1, submit2, submit3, submit4, submit5, submit6));
+        question1 = findViewById(R.id.q1_text);
+        question2 = findViewById(R.id.q2_text);
+        question3 = findViewById(R.id.q3_text);
+        question4 = findViewById(R.id.q4_text);
+        question5 = findViewById(R.id.q5_text);
+        question6 = findViewById(R.id.q6_text);
+        moreDetails = findViewById(R.id.more_details);
+        close = findViewById(R.id.readme);
+        allButton.addAll(Arrays.asList(checkQuestion1, checkQuestion11, checkQuestion13,
+                checkQuestion21, checkQuestion22, checkQuestion23, checkQuestion24,
+                checkQuestion3, checkQuestion32, checkQuestion33,
+                checkQuestion41, checkQuestion42, checkQuestion43, checkQuestion44,
                 checkQuestion5, checkQuestion51, checkQuestion52, checkQuestion53));
     }
-    public void submit1(View view){
+
+    public void submit1(View view) {
         boolean q1 = checkQuestion1.isChecked();
         boolean q11 = checkQuestion11.isChecked();
         boolean q13 = checkQuestion13.isChecked();
@@ -161,13 +160,14 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, getString(R.string.correct), Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this,
-                        getString(R.string.ircorrect)+getString(R.string.answer1),
+                        getString(R.string.ircorrect) + getString(R.string.answer1),
                         Toast.LENGTH_LONG).show();
             }
             check1 = true;
         }
     }
-    public void submit2(View view){
+
+    public void submit2(View view) {
         boolean q21 = checkQuestion21.isChecked();
         boolean q22 = checkQuestion22.isChecked();
         boolean q23 = checkQuestion23.isChecked();
@@ -183,13 +183,14 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, getString(R.string.correct), Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this,
-                        getString(R.string.ircorrect)+getString(R.string.answer2),
+                        getString(R.string.ircorrect) + getString(R.string.answer2),
                         Toast.LENGTH_LONG).show();
             }
             check2 = true;
         }
     }
-    public void submit3(View view){
+
+    public void submit3(View view) {
         boolean q3 = checkQuestion3.isChecked();
         boolean q32 = checkQuestion32.isChecked();
         boolean q33 = checkQuestion33.isChecked();
@@ -202,13 +203,14 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, getString(R.string.correct), Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this,
-                        getString(R.string.ircorrect)+getString(R.string.answer3),
+                        getString(R.string.ircorrect) + getString(R.string.answer3),
                         Toast.LENGTH_LONG).show();
             }
             check3 = true;
         }
     }
-    public void submit4(View view){
+
+    public void submit4(View view) {
         boolean q41 = ((CheckBox) findViewById(R.id.q41)).isChecked();
         boolean q42 = ((CheckBox) findViewById(R.id.q42)).isChecked();
         boolean q43 = ((CheckBox) findViewById(R.id.q43)).isChecked();
@@ -224,13 +226,14 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, getString(R.string.correct), Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this,
-                        getString(R.string.ircorrect)+getString(R.string.answer4),
+                        getString(R.string.ircorrect) + getString(R.string.answer4),
                         Toast.LENGTH_LONG).show();
             }
             check4 = true;
         }
     }
-    public void submit5(View view){
+
+    public void submit5(View view) {
         boolean q5 = checkQuestion5.isChecked();
         boolean q51 = checkQuestion51.isChecked();
         boolean q52 = checkQuestion52.isChecked();
@@ -251,7 +254,8 @@ public class MainActivity extends AppCompatActivity {
             check5 = true;
         }
     }
-    public void submit6(View view){
+
+    public void submit6(View view) {
         Editable name = checkQuestion6.getText();
         String nameLowerCase = name.toString().toLowerCase();
         boolean q6 = nameLowerCase.contains("wtf") || nameLowerCase.contains("whatthefuck") || nameLowerCase.contains("what the fuck");
@@ -262,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, getString(R.string.correct), Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this,
-                        getString(R.string.ircorrect)+getString(R.string.answer6),
+                        getString(R.string.ircorrect) + getString(R.string.answer6),
                         Toast.LENGTH_LONG).show();
             }
             check6 = true;
@@ -272,11 +276,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void getResult(View view) {
         String result = "";
-        String image="";
-        int level=0;
-        int prozent=correctAnswer==0? 0 : (correctAnswer/QUESTION_NUMBER)*100;
-        level=prozent <50? 0: (prozent<80? 1: 2);
-        switch (level) {
+        String image = "";
+        int prozent = correctAnswer == 0 ? 0 : (correctAnswer / QUESTION_NUMBER) * 100;
+        this.level = prozent < 30 ? 0 : (prozent < 60 ? 1 : 2);
+        switch (this.level) {
             case 0:
                 result = getString(R.string.level1);
                 stickerView.setImageResource(R.drawable.nerd1);
@@ -293,24 +296,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getDetail(View view) {
-        for(Button button:rightAnswer){
+        checkAnswer = true;
+        for (Button button : rightAnswer) {
             button.setPressed(true);
         }
         checkQuestion6.setText(getString(R.string.text6));
         checkQuestion6.setFocusable(false);
-        String answer1=question1.getText().toString();
-        answer1+=getString(R.string.answer1);
-        String answer2=question2.getText().toString();
-        answer2+=getString(R.string.answer2);
-        String answer3=question3.getText().toString();
-        answer3+=getString(R.string.answer3);
-        String answer4=question4.getText().toString();
-        answer4+=getString(R.string.answer4);
-        String answer5=question5.getText().toString();
-        answer5+=getString(R.string.answer5) ;
-        String answer6=question6.getText().toString();
-        answer6+=getString(R.string.answer6);
-        String detail=getString(R.string.roll);
+        checkQuestion6.setEnabled(false);
+        String answer1 = question1.getText().toString();
+        answer1 += getString(R.string.answer1);
+        String answer2 = question2.getText().toString();
+        answer2 += getString(R.string.answer2);
+        String answer3 = question3.getText().toString();
+        answer3 += getString(R.string.answer3);
+        String answer4 = question4.getText().toString();
+        answer4 += getString(R.string.answer4);
+        String answer5 = question5.getText().toString();
+        answer5 += getString(R.string.answer5);
+        String answer6 = question6.getText().toString();
+        answer6 += getString(R.string.answer6);
+        String detail = getString(R.string.roll);
 
         detailView.setText(detail);
         question1.setText(answer1);
@@ -320,68 +325,99 @@ public class MainActivity extends AppCompatActivity {
         question5.setText(answer5);
         question6.setText(answer6);
 
-        for(Button button : allButton){button.setClickable(false);}
-        for(Button submit: submitButton){submit.setClickable(false);}
+        for (Button button : allButton) {
+            button.setClickable(false);
+        }
+        for (Button submit : submitButton) {
+            submit.setClickable(false);
+        }
         moreDetails.setClickable(false);
 
     }
-    /* Try to send user cert and sticker in a pdf per email
 
-    private void sendEmail(){
-        View root = findViewById(R.id.root).getRootView();
-        root.setDrawingCacheEnabled(true);
-        Bitmap screen=getBitmapFromView(this.getWindow().findViewById(R.id.root));
-        //Store bitmap to file
-        File dir = new File(
-                Environment.getExternalStoragePublicDirectory
-                        (Environment.DIRECTORY_PICTURES),
-                "dirName");
-        if(!dir.exists()){
-            dir.mkdirs();
-        }
-        String fileName="question_answer";
-        File file = new File(dir.getAbsolutePath(),fileName);
+    private File parserCertificate(File dir, int cert, String fileName) {
+        Bitmap certificate = BitmapFactory.decodeResource(getResources(), cert);
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        certificate.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
+        File filePdfDes = new File(dir.getAbsolutePath(), fileName);
         try {
-            FileOutputStream fos = new FileOutputStream(file);
-            screen.compress(Bitmap.CompressFormat.PNG, 85,fos);
-            fos.flush();
-            fos.close();
-        } catch (Exception e) {
+            FileOutputStream fileOutputStream = new FileOutputStream(filePdfDes);
+            fileOutputStream.write(bytes.toByteArray());
+            fileOutputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        //Go to gmail
-        Uri uri=Uri.fromFile(file);
-        Intent sendEmail=new Intent();
-        sendEmail.setAction(Intent.ACTION_SEND);
-        sendEmail.setType("image/*");
-        sendEmail.putExtra(Intent.EXTRA_STREAM,uri);
-        if(sendEmail.resolveActivity(getPackageManager()) !=null){
-            startActivity(Intent.createChooser(sendEmail,"Send QA"));
+        return filePdfDes;
+    }
+
+    public void sendEmail(View view) {
+        if (!checkAnswer) {
+            Toast.makeText(this, getString(R.string.warning), Toast.LENGTH_LONG).show();
+        } else {
+            //screenshot to bitmap
+            ScrollView root = (ScrollView) findViewById(R.id.scroll);
+            root.setDrawingCacheEnabled(true);
+            Bitmap bitmap = Bitmap.createBitmap(
+                    root.getChildAt(0).getWidth(),
+                    root.getChildAt(0).getHeight(),
+                    Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            Drawable drawable = root.getBackground();
+            if (drawable != null) {
+                drawable.draw(canvas);
+            } else {
+                canvas.drawColor(Color.WHITE);
+            }
+            root.draw(canvas);
+            root.setDrawingCacheEnabled(false);
+            //Store bitmap to file
+            File dir = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.FROYO) {
+                dir = new File(
+                        this.getExternalFilesDir(
+                                Environment.DIRECTORY_PICTURES), "screen_shot");
+            }
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            String fileName = getString(R.string.file1);
+            File file = new File(dir.getAbsolutePath(), fileName);
+            try {
+                FileOutputStream fos = new FileOutputStream(file);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 85, fos);
+                fos.flush();
+                fos.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            //get cert in image
+            int cert = level == 0 ? R.drawable.cert1 : (level == 1 ? R.drawable.cert2 : R.drawable.cert3);
+            File filePdfDes = this.parserCertificate(dir, cert, getString(R.string.certificate));
+            //Go to gmail
+            Uri uri = Uri.fromFile(file);
+            Uri uriPdf = Uri.fromFile(filePdfDes);
+            ArrayList<Uri> uris = new ArrayList<>(
+                    Arrays.asList(uri, uriPdf));
+            Intent sendEmail = new Intent();
+            sendEmail.setAction(Intent.ACTION_SEND_MULTIPLE);
+            sendEmail.setType("*/*");
+            sendEmail.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.name));
+            sendEmail.putExtra(Intent.EXTRA_TEXT, getString(R.string.email_text));
+            sendEmail.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+            if (sendEmail.resolveActivity(getPackageManager()) != null) {
+                startActivity(Intent.createChooser(sendEmail, "Send QA"));
+            }
         }
 
     }
 
-    private Bitmap getBitmapFromView(View viewById) {
-        Bitmap bitmap = Bitmap.createBitmap(
-                viewById.getWidth(),
-                viewById.getHeight(),
-                Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        Drawable drawable= viewById.getBackground();
-        if(drawable!=null){
-            drawable.draw(canvas);
-        }else{
-            canvas.drawColor(Color.WHITE);
-        }
-        viewById.draw(canvas);
-        return bitmap;
-    }
-    */
-
-    private void viewLink(String link){
-        Uri uri=Uri.parse(link);
-        Intent intent=new Intent(Intent.ACTION_VIEW, uri);
-        if(intent.resolveActivity(getPackageManager())!=null){
+    private void viewLink(String link) {
+        Uri uri = Uri.parse(link);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         }
     }
@@ -395,18 +431,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToEmail(View view) {
-        Intent sendEmail=new Intent(Intent.ACTION_SEND);
+        Intent sendEmail = new Intent(Intent.ACTION_SEND);
         sendEmail.setType("*/*");
-        sendEmail.putExtra(Intent.EXTRA_EMAIL,new String[]{"caothivananh98@gmail.com"});
-        if(sendEmail.resolveActivity(getPackageManager()) !=null){
+        sendEmail.putExtra(Intent.EXTRA_EMAIL, new String[]{"caothivananh98@gmail.com"});
+        if (sendEmail.resolveActivity(getPackageManager()) != null) {
             startActivity(sendEmail);
         }
     }
 
     public void goToGitHub(View view) {
         viewLink("https://github.com/lilliCao/AndroidBasic/tree/master/NCQuiz");
-    }
-
-    public void getCert(View view) {
     }
 }

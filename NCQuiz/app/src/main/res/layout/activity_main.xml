@@ -7,6 +7,7 @@
     tools:context="com.example.android.ncquiz.MainActivity">
 
     <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -524,7 +525,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:onClick="getCert"
+                android:onClick="sendEmail"
                 android:text="@string/cert"
                 android:textAllCaps="true" />
 
