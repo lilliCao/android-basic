@@ -1,6 +1,7 @@
 package com.example.android.ncquiz;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -11,6 +12,7 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -20,11 +22,14 @@ import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -248,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, getString(R.string.correct), Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this,
-                        getString(R.string.ircorrect) + getString(R.string.answer6),
+                        getString(R.string.ircorrect) + getString(R.string.answer5),
                         Toast.LENGTH_LONG).show();
             }
             check5 = true;
@@ -334,7 +339,9 @@ public class MainActivity extends AppCompatActivity {
         moreDetails.setClickable(false);
 
     }
-
+/*
+This method reads image and saves it in a new file
+ */
     private File parserCertificate(File dir, int cert, String fileName) {
         Bitmap certificate = BitmapFactory.decodeResource(getResources(), cert);
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -350,6 +357,36 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return filePdfDes;
+    }
+    /*
+    This function reads raw pdf in /res/raw and saves it in a new file
+     */
+    private File parserCertificatePdf(File dir, int cert, String filename){
+        Resources resources=getResources();
+        InputStream ins=resources.openRawResource(cert);
+        ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
+        byte[] buffer=new byte[1024];
+        int count;
+        try {
+            while((count=ins.read(buffer))!=-1){
+                byteArrayOutputStream.write(buffer,0,count);
+            }
+            ins.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        File file = new File(dir.getAbsolutePath(), filename);
+        try {
+            FileOutputStream fos=new FileOutputStream(file);
+            fos.write(byteArrayOutputStream.toByteArray());
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
     }
 
     public void sendEmail(View view) {
@@ -372,7 +409,7 @@ public class MainActivity extends AppCompatActivity {
             }
             root.draw(canvas);
             root.setDrawingCacheEnabled(false);
-            //Store bitmap to file
+            //Store bitmap to file --> create a directory at external file dir for use later as well
             File dir = null;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.FROYO) {
                 dir = new File(
@@ -394,8 +431,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
             //get cert in image
-            int cert = level == 0 ? R.drawable.cert1 : (level == 1 ? R.drawable.cert2 : R.drawable.cert3);
-            File filePdfDes = this.parserCertificate(dir, cert, getString(R.string.certificate));
+            //int cert = level == 0 ? R.drawable.cert1 : (level == 1 ? R.drawable.cert2 : R.drawable.cert3);
+            //get cert in pdf for better document quality
+            int cert = level == 0 ? R.raw.cert1 : (level == 1 ? R.raw.cert2 : R.raw.cert3);
+            File filePdfDes = this.parserCertificatePdf(dir, cert, getString(R.string.certificate));
+
             //Go to gmail
             Uri uri = Uri.fromFile(file);
             Uri uriPdf = Uri.fromFile(filePdfDes);

@@ -7,7 +7,7 @@
                     There is nothing to do with the Numerus Clausus, not with exams at all.
                     Its name is Nerd Check. It\'s a small quiz to check how nerd you are :)
                     Or let\'s say there are some funny questions for you to entertain:)
-                    \nThere are some questions where you can only choice 1 unique answer(with circle)
+                    \nThere are some questions where you can only choose 1 unique answer(with circle)
                      and some you can choose more(with square).
                     \nPay attention to the question before you head any answer
                     \nPress submit if you are sure about the answer. Submit will block you from that question
@@ -73,7 +73,7 @@
     <string name="warning">Please click more detail firstly to see all answer</string>
     <string name="certificate">certificate</string>
     <string name="name">NerdCheck Quiz</string>
-    <string name="email_text">Dear Tester, \\nI attach here the answer and your certificate \\nFeel free to share it with your friends \\nCheer, \\nL3I2</string>
+    <string name="email_text">Dear Tester, \nI attach here the answer and your certificate \nFeel free to share it with your friends \nCheer, \nL3I2</string>
     <string name="file1">question_answer</string>
 
 </resources>
