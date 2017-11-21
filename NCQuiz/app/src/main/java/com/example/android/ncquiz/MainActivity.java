@@ -1,5 +1,6 @@
 package com.example.android.ncquiz;
 
+
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -23,7 +24,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,7 +32,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private final int QUESTION_NUMBER = 6;
@@ -84,13 +86,18 @@ public class MainActivity extends AppCompatActivity {
     List<Button> rightAnswer = new ArrayList<>();
     List<Button> submitButton = new ArrayList<>();
     List<Button> allButton = new ArrayList<>();
+    Map<ImageView, Integer> imageLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ini();
+        for (Map.Entry<ImageView, Integer> entry : imageLoader.entrySet()) {
+            GlideApp.with(this).load(entry.getValue()).into(entry.getKey());
+        }
     }
+
 
     public void detail(View view) {
         TextView detail = (TextView) findViewById(R.id.rule);
@@ -150,6 +157,15 @@ public class MainActivity extends AppCompatActivity {
                 checkQuestion3, checkQuestion32, checkQuestion33,
                 checkQuestion41, checkQuestion42, checkQuestion43, checkQuestion44,
                 checkQuestion5, checkQuestion51, checkQuestion52, checkQuestion53));
+        imageLoader = new HashMap<>();
+        imageLoader.put((ImageView) findViewById(R.id.marvin), R.drawable.marvin);
+        imageLoader.put((ImageView) findViewById(R.id.c3po), R.drawable.c3po);
+        imageLoader.put((ImageView) findViewById(R.id.r2d2), R.drawable.r2d2);
+        imageLoader.put((ImageView) findViewById(R.id.bb8), R.drawable.bb8);
+        imageLoader.put((ImageView) findViewById(R.id.fb), R.drawable.fb);
+        imageLoader.put((ImageView) findViewById(R.id.insta), R.drawable.instagram);
+        imageLoader.put((ImageView) findViewById(R.id.mail), R.drawable.mail);
+        imageLoader.put((ImageView) findViewById(R.id.git), R.drawable.github);
     }
 
     public void submit1(View view) {
@@ -339,9 +355,10 @@ public class MainActivity extends AppCompatActivity {
         moreDetails.setClickable(false);
 
     }
-/*
-This method reads image and saves it in a new file
- */
+
+    /*
+    This method reads image and saves it in a new file
+     */
     private File parserCertificate(File dir, int cert, String fileName) {
         Bitmap certificate = BitmapFactory.decodeResource(getResources(), cert);
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -358,18 +375,19 @@ This method reads image and saves it in a new file
         }
         return filePdfDes;
     }
+
     /*
     This function reads raw pdf in /res/raw and saves it in a new file
      */
-    private File parserCertificatePdf(File dir, int cert, String filename){
-        Resources resources=getResources();
-        InputStream ins=resources.openRawResource(cert);
-        ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
-        byte[] buffer=new byte[1024];
+    private File parserCertificatePdf(File dir, int cert, String filename) {
+        Resources resources = getResources();
+        InputStream ins = resources.openRawResource(cert);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
         int count;
         try {
-            while((count=ins.read(buffer))!=-1){
-                byteArrayOutputStream.write(buffer,0,count);
+            while ((count = ins.read(buffer)) != -1) {
+                byteArrayOutputStream.write(buffer, 0, count);
             }
             ins.close();
         } catch (IOException e) {
@@ -378,7 +396,7 @@ This method reads image and saves it in a new file
 
         File file = new File(dir.getAbsolutePath(), filename);
         try {
-            FileOutputStream fos=new FileOutputStream(file);
+            FileOutputStream fos = new FileOutputStream(file);
             fos.write(byteArrayOutputStream.toByteArray());
             fos.close();
         } catch (FileNotFoundException e) {
