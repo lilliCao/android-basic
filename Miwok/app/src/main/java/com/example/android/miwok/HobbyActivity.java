@@ -3,8 +3,10 @@ package com.example.android.miwok;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -55,11 +57,21 @@ public class HobbyActivity extends AppCompatActivity {
         releaseResource();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hobbies);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         final List<Word> listItem = new ArrayList<>(Arrays.asList(
                 new Word("Em/Anh thích","I like",R.drawable.like,R.raw.voice_thich),
                 new Word("Anh/Em có thể","I can",R.drawable.i_can,R.raw.voice_cothe),

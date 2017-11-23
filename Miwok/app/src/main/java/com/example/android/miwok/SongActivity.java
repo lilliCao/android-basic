@@ -5,8 +5,10 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -54,11 +56,21 @@ public class SongActivity extends AppCompatActivity {
             audioManager.abandonAudioFocus(onAudioFocusChangeListener);
         }
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_songs);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final List<Word> listItem = new ArrayList<>(Arrays.asList(
                 new Word("Cuộc sống hoa hồng","La vie en rose",R.raw.la_vie_en_rose),

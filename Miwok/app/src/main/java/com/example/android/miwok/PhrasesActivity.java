@@ -3,8 +3,10 @@ package com.example.android.miwok;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -40,6 +42,15 @@ public class PhrasesActivity extends AppCompatActivity {
             }
         }
     };
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public void releaseResource(){
         if (mediaPlayer != null) {
@@ -59,6 +70,7 @@ public class PhrasesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phrases);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final List<Word> listItem=new ArrayList<>(Arrays.asList(
                 new Word("Con chào anh/chị/em/cô/bác","Hello",R.raw.voice_chao),

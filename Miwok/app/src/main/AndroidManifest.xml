@@ -22,20 +22,21 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PhrasesActivity" android:label="@string/category_phrases" />
-        <activity android:name=".ColorsActivity" android:label="@string/category_colors"/>
-        <activity android:name=".FamilyActivity" android:label="@string/category_family"/>
-        <activity android:name=".NumbersActivity" android:label="@string/category_numbers"></activity>
-        <activity android:name=".OccupationActivity" android:label="@string/category_occupation"></activity>
-        <activity android:name=".HobbyActivity" android:label="@string/category_hobby"></activity>
-        <activity android:name=".SongActivity" android:label="@string/category_song"></activity>
+        <activity android:name=".PhrasesActivity" android:label="@string/category_phrases" android:parentActivityName=".MainActivity"/>
+        <activity android:name=".ColorsActivity" android:label="@string/category_colors" android:parentActivityName=".MainActivity"/>
+        <activity android:name=".FamilyActivity" android:label="@string/category_family" android:parentActivityName=".MainActivity"/>
+        <activity android:name=".NumbersActivity" android:label="@string/category_numbers" android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".OccupationActivity" android:label="@string/category_occupation" android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".HobbyActivity" android:label="@string/category_hobby" android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".SongActivity" android:label="@string/category_song" android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>
