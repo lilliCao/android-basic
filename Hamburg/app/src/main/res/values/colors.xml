@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#9575CD</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="appBackground">#FFF7DA</color>
+
+    <!--Background color for sightseeing-->
+    <color name="colorSightseeing">#16AFCA</color>
+    <!--Background color for activities-->
+    <color name="colorActivities">#EF9A9A</color>
+    <!--Background color for Food-->
+    <color name="colorFood">#00E676</color>
+    <!--Background color for accomodation-->
+    <color name="colorAccomodation">#84FFFF</color>
+    <!--Background color for transport-->
+    <color name="colorTransport">#673AB7</color>
+    <!--Background color for general information-->
+    <color name="colorGeneral">#C6FF00</color>
+
+</resources>

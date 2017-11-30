@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:descendantFocusability="blocksDescendants"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/itemList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/itemListImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:border_color="@android:color/black"
+            app:border_width="2dp" />
+        <RelativeLayout
+            android:id="@+id/itemListText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:layout_gravity="center_vertical">
+            <TextView
+                android:id="@+id/itemListName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/itemListStatus"
+                android:layout_below="@id/itemListName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#D50000"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+    <TextView
+        android:paddingTop="4dp"
+        android:id="@+id/content"
+        android:text=""
+        android:layout_gravity="bottom"
+        android:textStyle="italic"
+        android:background="#E1BEE7"
+        android:textColor="@android:color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/link1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textStyle="bold"
+        android:focusable="false"
+        android:autoLink="web"
+        android:visibility="gone"
+        />
+    <TextView
+        android:id="@+id/link2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:text=""
+        android:focusable="false"
+        android:textStyle="bold"
+        android:visibility="gone"
+        />
+
+</LinearLayout>

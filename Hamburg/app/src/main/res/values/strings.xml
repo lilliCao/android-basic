@@ -1,0 +1,238 @@
+<resources>
+    <string name="app_name">Hamburg</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="about">About Application</string>
+    <string name="help">Need help</string>
+    <string name="about_content">
+        This is an application designed inside the program of Google Developer Challenge Scholarship
+        track Android Basic. This is a demo of using Fragment to create an application with multiscreens
+    </string>
+    <string name="help_content">
+        All code is hosted in this github repository. Feel free to contact me for further information
+    </string>
+    <string name="account">User account</string>
+    <string name="saved">Saved items</string>
+    <string name="account_content">Will be updated later</string>
+    <string name="saved_content">Will be updated later</string>
+    <string name="seen">seen</string>
+    <string name="general">What do you know about Hamburg?</string>
+    <string name="sightseeing">What to see?</string>
+    <string name="activity">What to do?</string>
+    <string name="food">What to eat?</string>
+    <string name="transport">How to move?</string>
+    <string name="accomodation">Where to sleep?</string>
+    <string name="location">Location</string>
+    <string name="location_text">
+        Hamburg,also as known as Free and Hanseatic Hamburg. It is the second largest city in Germany,
+        locates in the nord of the country
+    </string>
+    <string name="population">Population</string>
+    <string name="population_text">It has a population of 1.8 milliion people</string>
+    <string name="weather_content">
+        The weather in Hamburg is especially nice in summer, which is from
+        Juni to August. In winter it\'s quite cold and rains a lot
+    </string>
+    <string name="weather">Weather</string>
+    <string name="ranking">Ranking</string>
+    <string name="ranking_content">
+        The city is a tourist destination for both domestic and international
+        visitors, ranked 18th in the world for livability in 2016
+    </string>
+    <string name="harbour">Hamburg Harbour</string>
+    <string name="harbour_text">
+        Hamburg Habour is one of the most important harbours in Germany.
+        With a long walk and coast, you can either go on foot along this or take a
+        ferry. Hamburg harbour is also one of most popular places, where people
+        go to in summer for sunbathing. Harbour\'s birthday is in May and there are
+        thousands of tourists every year there"
+    </string>
+    <string name="reeperbahn">Hamburg Reeperbahn</string>
+    <string name="reeperbahn_text">
+        Located in the center of the city, Reeperbahn is one of the most famous places in Hamburg.
+        It\'s as known as the Redlight district. The whole area is very active at night.
+        There are bunch of restaurants, bars, discos, sex shops, dancing clubs etc.
+        If you visit Hamburg, it\'s one of the place you can not miss
+    </string>
+    <string name="city_hall">City Hall</string>
+    <string name="city_hall_text">
+        Also as known as the work place of parliament.This is actually the new city whole,
+        which was built after the historical flame in Hamburg.
+        An amazing architect design with a large square in front of.
+        If you are walking down the city, don\'t forget to drop over here
+    </string>
+    <string name="lake">Alster Lake</string>
+    <string name="lake_text">
+        A long and large lake in the heart of the city,
+        Alster lake is one of the most relaxing places.
+        There are a lot of coffee shops around the lake.
+        If you go to Hamburg in summer, don\'t forget to hire
+        a bike and drive around the lake. In middle of the
+        lake there is the a huge sculpture of a lady bathing.
+    </string>
+    <string name="hafencity">Hafencity</string>
+    <string name="hafencity_text">
+        This is the new part of Hamburg with modern architect. Take
+        some time and walk around. It has an amazing design
+        and is very warm in winter and cool in summer.This
+        is where the whole entertainment companies locate,
+        as well as offices and international firms
+    </string>
+    <string name="church">Churches</string>
+    <string name="church_text">
+        As known as one of the biggest cities for evanglish.
+        Hamburg has in total 5 biggest churches, which you can
+        even see from above(for example from Dockland in habour).
+        There are some very old churches from 2. World War,
+        which they want to keep as a historical sign, to remind
+        everyone of the dark side of the war
+    </string>
+    <string name="museum">Museum</string>
+    <string name="museum_text">
+        They city gives you a huge variety of museum,
+        from art to technology.Take a look at the city map and decide to visit
+        some. I would recommend the maritime museum with 9 stocks of all small,
+        big models of ships, the electricity museum with all old devices
+        from the beginning of electricity. A tour to underground of Hamburg
+        is also one thing you should not miss. Remember to book it as soon as
+        possible, because it normally takes over a week to  get it
+    </string>
+    <string name="fish_market">Fish market</string>
+    <string name="fish_market_text">
+        Every sunday morning from 8 to 10:30.
+        If you love to enjoy the fresh air of the hanseatic city,
+        don\'t miss the fish market. Go to buy some fish, fresh
+        vegetables or fruit and take a fresh breathe in the morning in the harbour.
+        Your day will be a good day</string>
+    <string name="water_light"><![CDATA[Water light in <Planten und Blomen>]]></string>
+    <string name="water_light_text">
+        An amazing water play with classical music. Only available in summer
+    </string>
+    <string name="dungeon">Hamburg Dungeon</string>
+    <string name="dungeon_text">
+        A 90-minute tour through the history of Hamburg with a very real feeling from
+        a profession theater team. From the historical flame, which destroyed
+        two third of the city till the epidemics, which killed almost people
+    </string>
+    <string name="miniatur">Miniatur</string>
+    <string name="miniatur_text">
+        There is a collection of small models of a lot of famous city
+        in the world. A small and detail, as real as unbelievable
+    </string>
+    <string name="dialog">Dialog im Dunkel</string>
+    <string name="dialog_text">Have you ever wonder what\'s
+        like to like as a blind. Here is a place where you can try it.
+        Try to live, eat and work all in the darkness
+    </string>
+    <string name="planet">Planetarium</string>
+    <string name="planet_text">
+        If you are a fan a universe, don\'t forget to come over here. They have amazing shows every
+        week for very reasonable price. Take a seat and let you fly to the moon, the galaxy far far away...
+    </string>
+    <string name="shopping">Shopping centers</string>
+    <string name="shopping_text">
+        If you are a fan of shopping, you are in the right place. There are shopping streets, shopping malls,
+        shopping centers every where in the city
+    </string>
+    <string name="musical">Musical theaters</string>
+    <string name="musical_text">
+        It\'s a must if you visit Hamburg. Five famous musical theaters
+        with amazing effect and actors gives you a real feeling like playing
+        a role in the play. They are quite expensive, around
+        100 euro per person. But if you have the chance, don\'t miss it
+    </string>
+    <string name="sternschanzen">Sternschanzen</string>
+    <string name="sternschanzen_text">
+        A coffee or a  dinner? You are in the eating street of Hamburg
+    </string>
+    <string name="fleamarket">Fleamarket</string>
+    <string name="fleamarket_text">
+        There are a lot of flea markets in Hamburg on weekend. The biggest one locates near train station Feldstraße
+        There are second hand products but very good quality for a cheap price.
+    </string>
+    <string name="dom">Hamburger Dom</string>
+    <string name="dom_text">
+        Twice a year. Hamburger Dom is a entertainment place with tons of game and food
+    </string>
+    <string name="christmas">Christmas markets</string>
+    <string name="christmas_text">
+        If you are here on christmas, you are very lucky. Go along some christmas market here
+        to feel the warmth of fried potato or try some Glühwein
+    </string>
+    <string name="ice">Eis skating in park</string>
+    <string name="ice_text">
+        A eis skating place locates in the border of Planten und Blomen
+    </string>
+    <string name="picnic">Picnic in parks</string>
+    <string name="picnic_text">
+        Give you some relaxing time and lay down lazy in the park.
+        Taking a nap or meeting with friends is both good choices
+        to relax in summer
+    </string>
+    <string name="food1">A German has to know at least 21 dishes from potato</string>
+    <string name="food1_t">
+        Try as many dishes from potato as possibe, they are all german traditional food</string>
+    <string name="food2">German Beer</string>
+    <string name="food2_t">
+        It\'s a must. There are very good beer in Germany in general. Come over some bars and order different types of beer.</string>
+    <string name="food3">Asia food</string>
+    <string name="food3_t">
+        In every corner of Hamburg. The city is a mixture of local people and immigrant. There are ton of vietnamese,
+        thailand, indonesian, chinese restaurants all around the city
+    </string>
+    <string name="food4">Breakfast(Brunch)</string>
+    <string name="food4_t">
+        A huge breakfast buffet with german tradition bread, cheese and fishes. Let\'s be german for a day</string>
+    <string name="food5">German Fast food</string>
+    <string name="food5_t">
+        The hanseatic city offers you fish bread and seafood in every corner. American fastfood is also easy
+        to find</string>
+    <string name="other">Others</string>
+    <string name="other_t">
+        Italian, Greece or whatever you want, you will find it here</string>
+    <string name="train">Train</string>
+    <string name="train_t">
+        The city has an amazing public transportation. There are around 10 underground trains going around the city
+        every day.
+    </string>
+    <string name="bus">Bus</string>
+    <string name="bus_t">
+        For the same ticket as train, you can take any bus and see the city from the window
+    </string>
+    <string name="bike">Bicycle</string>
+    <string name="bike_t">
+        Stadtrad is a project of the city to support protecting environment.
+        Be sure to sign in for Stadtrad before you come,
+        since it costs only 5 euro for signing and
+        you get 30 minutes free for each tour
+    </string>
+    <string name="foot">On foot</string>
+    <string name="foot_t">Walking around the city is not a bad idea as well</string>
+    <string name="hotel">Hotel</string>
+    <string name="hotel_t">
+        If you are quite flexible with finance, find you a comfortable hotel
+    </string>
+    <string name="hostel">Hostel</string>
+    <string name="hostel_t">
+        If you are a student, then hostel is not a bad idea at all.
+        20-30euro for a night with warm bath and breakfast included
+    </string>
+    <string name="air">Airbnb</string>
+    <string name="air_t" >
+        It\'s also very popular in a tourist attraction city like Hamburg</string>
+    <string name="couch_surfing">Couchsurfing</string>
+    <string name="couch_surfing_t">
+        If you prefer to know some local people, go to couchsurfing
+        and ask for a accomodation. People in Hamburg are very friendly and hospital
+    </string>
+    <string name="t1">general</string>
+    <string name="t2">sightseeing</string>
+    <string name="t3">activities</string>
+    <string name="t4">food</string>
+    <string name="t5">transportation</string>
+    <string name="t6">accomodation</string>
+    <string name="setting">System setting</string>
+    <string name="setting_t">Will be updated later</string>
+
+</resources>
