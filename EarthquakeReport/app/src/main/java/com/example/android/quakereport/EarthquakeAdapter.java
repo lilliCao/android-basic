@@ -21,32 +21,34 @@ import java.util.Date;
  */
 
 public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
-    private final static SimpleDateFormat simpleDatFormat=new SimpleDateFormat("MMM DD yyyy");
-    private final static SimpleDateFormat simpleDatFormatTime=new SimpleDateFormat("h:mm a");
-    private final static DecimalFormat simpleDecimalFormat=new DecimalFormat("0.0");
+    private final static SimpleDateFormat simpleDatFormat = new SimpleDateFormat("MMM DD yyyy");
+    private final static SimpleDateFormat simpleDatFormatTime = new SimpleDateFormat("h:mm a");
+    private final static DecimalFormat simpleDecimalFormat = new DecimalFormat("0.0");
+
     public EarthquakeAdapter(@NonNull Activity activity, ArrayList<Earthquake> list) {
-        super(activity,0,list);
+        super(activity, 0, list);
     }
-    private int getColor(int strength){
-        switch (strength){
+
+    private int getColor(int strength) {
+        switch (strength) {
             case 0:
-                return ContextCompat.getColor(getContext(),R.color.magnitude1);
+                return ContextCompat.getColor(getContext(), R.color.magnitude1);
             case 1:
-                return ContextCompat.getColor(getContext(),R.color.magnitude2);
+                return ContextCompat.getColor(getContext(), R.color.magnitude2);
             case 2:
-                return ContextCompat.getColor(getContext(),R.color.magnitude3);
+                return ContextCompat.getColor(getContext(), R.color.magnitude3);
             case 3:
-                return ContextCompat.getColor(getContext(),R.color.magnitude4);
+                return ContextCompat.getColor(getContext(), R.color.magnitude4);
             case 4:
-                return ContextCompat.getColor(getContext(),R.color.magnitude5);
+                return ContextCompat.getColor(getContext(), R.color.magnitude5);
             case 5:
-                return ContextCompat.getColor(getContext(),R.color.magnitude6);
+                return ContextCompat.getColor(getContext(), R.color.magnitude6);
             case 6:
-                return ContextCompat.getColor(getContext(),R.color.magnitude7);
+                return ContextCompat.getColor(getContext(), R.color.magnitude7);
             case 7:
-                return ContextCompat.getColor(getContext(),R.color.magnitude8);
+                return ContextCompat.getColor(getContext(), R.color.magnitude8);
             default:
-                return ContextCompat.getColor(getContext(),R.color.magnitude9);
+                return ContextCompat.getColor(getContext(), R.color.magnitude9);
         }
     }
 
@@ -54,26 +56,26 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
-        if (view == null){
+        if (view == null) {
             view = LayoutInflater.from(getContext())
-                    .inflate(R.layout.earthquake,parent,false);
+                    .inflate(R.layout.earthquake, parent, false);
         }
         Earthquake current = getItem(position);
         TextView strength = (TextView) view.findViewById(R.id.strength);
         TextView name = (TextView) view.findViewById(R.id.name);
         TextView subName = (TextView) view.findViewById(R.id.sub_name);
         TextView date = (TextView) view.findViewById(R.id.date);
-        TextView time= (TextView) view.findViewById(R.id.time);
+        TextView time = (TextView) view.findViewById(R.id.time);
         strength.setText(simpleDecimalFormat.format(current.getStrength()));
-        GradientDrawable circle= (GradientDrawable) strength.getBackground();
+        GradientDrawable circle = (GradientDrawable) strength.getBackground();
         circle.setColor(getColor((int) current.getStrength()));
-        String title=current.getName();
+        String title = current.getName();
         String titles[] = title.split("of ");
-        if(titles.length>1){
-            String subText=titles[0]+"of";
+        if (titles.length > 1) {
+            String subText = titles[0] + "of";
             subName.setText(titles[1]);
             name.setText(subText);
-        }else{
+        } else {
             subName.setText(title);
             name.setText("");
         }

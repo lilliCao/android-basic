@@ -16,9 +16,9 @@ public class EarthquakeLoader extends AsyncTaskLoader<List<Earthquake>> {
     private static final String LOG_TAG = EarthquakeLoader.class.getName();
 
 
-    public EarthquakeLoader(Context context,String url) {
+    public EarthquakeLoader(Context context, String url) {
         super(context);
-        this.url=url;
+        this.url = url;
     }
 
     @Override
@@ -28,19 +28,19 @@ public class EarthquakeLoader extends AsyncTaskLoader<List<Earthquake>> {
 
     @Override
     public List<Earthquake> loadInBackground() {
-         if(url==null){
-             return null;
-         }
-         List<Earthquake> list=QueryUtils.fetchEarthquakeData(url);
-         //For setting
+        if (url == null) {
+            return null;
+        }
+        List<Earthquake> list = QueryUtils.fetchEarthquakeData(url);
+        //For default sorting by strength
         Collections.sort(list, new Comparator<Earthquake>() {
             @Override
             public int compare(Earthquake earthquake, Earthquake t1) {
-                double a=earthquake.getStrength();
-                double b=t1.getStrength();
-                return a>b? 1: (a<b? -1 : 0);
+                double a = earthquake.getStrength();
+                double b = t1.getStrength();
+                return a > b ? 1 : (a < b ? -1 : 0);
             }
         });
-         return list;
+        return list;
     }
 }

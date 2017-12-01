@@ -15,11 +15,11 @@ public class Earthquake implements Parcelable {
     private long date;
     private String url;
 
-    public Earthquake(double strength, String name, long date,String url) {
+    public Earthquake(double strength, String name, long date, String url) {
         this.strength = strength;
         this.name = name;
         this.date = date;
-        this.url=url;
+        this.url = url;
     }
 
     public double getStrength() {

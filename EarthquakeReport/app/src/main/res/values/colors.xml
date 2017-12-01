@@ -58,5 +58,6 @@
 
     <!-- Text color for the primary location of the earthquake in the list item -->
     <color name="textColorEarthquakeLocation">#2B3D4D</color>
+    <color name="toolbar_color">#2196F3</color>
 
 </resources>

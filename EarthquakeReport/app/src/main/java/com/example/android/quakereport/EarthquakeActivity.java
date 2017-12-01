@@ -22,29 +22,39 @@ import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-public class EarthquakeActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Earthquake>>{
+import static android.view.View.GONE;
+
+public class EarthquakeActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Earthquake>> {
 
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
-    private static final String URL_GET=
+    private static final String URL_GET =
             "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=6&limit=10";
-    private EarthquakeAdapter adapter;
+    private static final int LOADER_ID = 1;
+    private static final int SORT_BY_DATE = 0;
+    private static final int SORT_BY_STRENGTH = 1;
+    private static EarthquakeAdapter adapter;
     private TextView emptyView;
+    private ImageView emptyImage;
     private ProgressBar loading;
+    private ConnectivityManager connectivityManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,10 +62,11 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
         // Find a reference to the {@link ListView} in the layout
         final ListView earthquakeListView = (ListView) findViewById(R.id.list);
         // Create a new {@link ArrayAdapter} of earthquakes
-        emptyView= (TextView) findViewById(R.id.empty_view);
-        loading= (ProgressBar) findViewById(R.id.loading);
+        emptyView = (TextView) findViewById(R.id.text);
+        emptyImage = (ImageView) findViewById(R.id.image);
+        loading = (ProgressBar) findViewById(R.id.loading);
         earthquakeListView.setEmptyView(emptyView);
-        adapter=new EarthquakeAdapter(this, new ArrayList<Earthquake>());
+        adapter = new EarthquakeAdapter(this, new ArrayList<Earthquake>());
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
         earthquakeListView.setAdapter(adapter);
@@ -63,39 +74,142 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
         earthquakeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Earthquake current =adapter.getItem(i);
-                Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(current.getUrl()));
+                Earthquake current = adapter.getItem(i);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(current.getUrl()));
                 startActivity(intent);
             }
         });
         //background task
         //EarthquakeAsyntask task=new EarthquakeAsyntask();
         //task.execute(URL_GET);
+        callBackgroundThread();
 
-        //check network infor
-        ConnectivityManager connectivityManager= (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo infor=connectivityManager.getActiveNetworkInfo();
-        if(infor !=null && infor.isConnected()){
-            getLoaderManager().initLoader(0,null,this);
-        }else{
-            loading.setVisibility(View.GONE);
-            emptyView.setText(R.string.no_internet);
-        }
 
         //Create toolbar set up
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
 
+    }
+
+    private void callBackgroundThread() {
+        //check network infor
+        connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo infor = connectivityManager.getActiveNetworkInfo();
+        if (infor != null && infor.isConnected()) {
+            setOnInternet();
+            getLoaderManager().initLoader(LOADER_ID, null, this);
+        } else {
+            setNoInternet();
+        }
+    }
+
+    private void setNoInternet() {
+        loading.setVisibility(GONE);
+        emptyView.setText(R.string.no_internet);
+        emptyImage.setImageResource(R.drawable.ic_cloud_off_black_24dp);
+        emptyImage.setVisibility(View.VISIBLE);
+    }
+
+    private void setOnInternet() {
+        emptyImage.setVisibility(GONE);
+        emptyView.setVisibility(GONE);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.setting_menu, menu);
+        return true;
+    }
+
+    private void onSortMethod(int type) {
+        List<Earthquake> list = new ArrayList<>();
+        for (int i = 0; i < adapter.getCount(); i++) {
+            list.add(adapter.getItem(i));
+        }
+        adapter.clear();
+        //Apply sort
+        switch (type) {
+            case SORT_BY_DATE:
+                Collections.sort(list, new Comparator<Earthquake>() {
+                    @Override
+                    public int compare(Earthquake earthquake, Earthquake t1) {
+                        long a = earthquake.getDate();
+                        long b = t1.getDate();
+                        return a > b ? -1 : (a < b ? 1 : 0);
+                    }
+                });
+
+                break;
+            case SORT_BY_STRENGTH:
+                Collections.sort(list, new Comparator<Earthquake>() {
+                    @Override
+                    public int compare(Earthquake earthquake, Earthquake t1) {
+                        double a = earthquake.getStrength();
+                        double b = t1.getStrength();
+                        return a > b ? -1 : (a < b ? 1 : 0);
+                    }
+                });
+                break;
+        }
+        adapter.addAll(list);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        View view = findViewById(R.id.setting_button);
+        switch (item.getItemId()) {
+            case R.id.setting_button:
+                //create pop up menu
+                PopupMenu popupMenu = new PopupMenu(EarthquakeActivity.this, view);
+                popupMenu.getMenuInflater().inflate(R.menu.popup_items, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        switch (menuItem.getItemId()) {
+                            case R.id.sort_date:
+                                onSortMethod(SORT_BY_DATE);
+                                break;
+                            case R.id.sort_strength:
+                                onSortMethod(SORT_BY_STRENGTH);
+                                break;
+                            default:
+                                LoaderManager manager = getLoaderManager();
+                                if (manager.getLoader(LOADER_ID) == null) {
+                                    callBackgroundThread();
+                                } else {
+                                    connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                                    NetworkInfo infor = connectivityManager.getActiveNetworkInfo();
+                                    if (infor != null && infor.isConnected()) {
+                                        setOnInternet();
+                                        manager.restartLoader(LOADER_ID, null, EarthquakeActivity.this);
+                                    } else {
+                                        adapter.clear();
+                                        setNoInternet();
+                                    }
+                                }
+                        }
+                        return true;
+                    }
+                });
+                popupMenu.show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
     public Loader<List<Earthquake>> onCreateLoader(int i, Bundle bundle) {
-        return new EarthquakeLoader(this,URL_GET);
+        loading.setVisibility(View.VISIBLE);
+        return new EarthquakeLoader(this, URL_GET);
     }
 
     @Override
     public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> earthquakes) {
-        loading.setVisibility(View.GONE);
-        if(earthquakes==null || earthquakes.isEmpty()){
+        loading.setVisibility(GONE);
+        if (earthquakes == null || earthquakes.isEmpty()) {
             emptyView.setText(R.string.no_earthquakes);
             return;
         }
