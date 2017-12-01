@@ -38,7 +38,7 @@ public class EarthquakeLoader extends AsyncTaskLoader<List<Earthquake>> {
             public int compare(Earthquake earthquake, Earthquake t1) {
                 double a = earthquake.getStrength();
                 double b = t1.getStrength();
-                return a > b ? 1 : (a < b ? -1 : 0);
+                return a > b ? -1 : (a < b ? 1 : 0);
             }
         });
         return list;

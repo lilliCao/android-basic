@@ -23,6 +23,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,11 +50,26 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
     private static final int LOADER_ID = 1;
     private static final int SORT_BY_DATE = 0;
     private static final int SORT_BY_STRENGTH = 1;
+    private static final String EARTHQUAKE_LIST ="earthquake_list" ;
     private static EarthquakeAdapter adapter;
     private TextView emptyView;
     private ImageView emptyImage;
     private ProgressBar loading;
     private ConnectivityManager connectivityManager;
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(EARTHQUAKE_LIST, (ArrayList<? extends Parcelable>) getListFromAdapter());
+    }
+
+    private List<Earthquake> getListFromAdapter(){
+        List<Earthquake> list = new ArrayList<>();
+        for (int i = 0; i < adapter.getCount(); i++) {
+            list.add(adapter.getItem(i));
+        }
+        return list;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +82,14 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
         emptyImage = (ImageView) findViewById(R.id.image);
         loading = (ProgressBar) findViewById(R.id.loading);
         earthquakeListView.setEmptyView(emptyView);
-        adapter = new EarthquakeAdapter(this, new ArrayList<Earthquake>());
+        if(savedInstanceState!=null){
+            loading.setVisibility(GONE);
+            ArrayList<Earthquake> list=savedInstanceState.getParcelableArrayList(EARTHQUAKE_LIST);
+            adapter=new EarthquakeAdapter(this,list);
+        }else{
+            adapter = new EarthquakeAdapter(this, new ArrayList<Earthquake>());
+            callBackgroundThread();
+        }
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
         earthquakeListView.setAdapter(adapter);
@@ -82,7 +105,6 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
         //background task
         //EarthquakeAsyntask task=new EarthquakeAsyntask();
         //task.execute(URL_GET);
-        callBackgroundThread();
 
 
         //Create toolbar set up
@@ -124,10 +146,7 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
     }
 
     private void onSortMethod(int type) {
-        List<Earthquake> list = new ArrayList<>();
-        for (int i = 0; i < adapter.getCount(); i++) {
-            list.add(adapter.getItem(i));
-        }
+        List<Earthquake> list=getListFromAdapter();
         adapter.clear();
         //Apply sort
         switch (type) {
