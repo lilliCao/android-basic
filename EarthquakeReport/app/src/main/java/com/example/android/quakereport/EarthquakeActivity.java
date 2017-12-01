@@ -83,7 +83,6 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
         loading = (ProgressBar) findViewById(R.id.loading);
         earthquakeListView.setEmptyView(emptyView);
         if(savedInstanceState!=null){
-            loading.setVisibility(GONE);
             ArrayList<Earthquake> list=savedInstanceState.getParcelableArrayList(EARTHQUAKE_LIST);
             adapter=new EarthquakeAdapter(this,list);
         }else{
