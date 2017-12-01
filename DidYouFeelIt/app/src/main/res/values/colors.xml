@@ -14,7 +14,7 @@
      limitations under the License.
 -->
 <resources>
-    <string name="app_name">Quake Report</string>
-    <string name="no_earthquakes">There is no earthquake in the searching time at all</string>
-    <string name="no_internet">There is no internet connection</string>
+    <color name="colorPrimary">#F57C00</color>
+    <color name="colorPrimaryDark">#E65100</color>
+    <color name="colorAccent">#FFCC0000</color>
 </resources>

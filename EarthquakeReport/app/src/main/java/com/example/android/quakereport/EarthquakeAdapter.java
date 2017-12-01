@@ -22,7 +22,7 @@ import java.util.Date;
 
 public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
     private final static SimpleDateFormat simpleDatFormat=new SimpleDateFormat("MMM DD yyyy");
-    private final static SimpleDateFormat simpleDatFormatTime=new SimpleDateFormat("h:mm");
+    private final static SimpleDateFormat simpleDatFormatTime=new SimpleDateFormat("h:mm a");
     private final static DecimalFormat simpleDecimalFormat=new DecimalFormat("0.0");
     public EarthquakeAdapter(@NonNull Activity activity, ArrayList<Earthquake> list) {
         super(activity,0,list);
