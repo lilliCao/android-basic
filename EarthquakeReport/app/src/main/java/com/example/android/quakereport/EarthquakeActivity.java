@@ -25,6 +25,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -55,6 +56,7 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
     private TextView emptyView;
     private ImageView emptyImage;
     private ProgressBar loading;
+    private LoaderManager manager;
     private ConnectivityManager connectivityManager;
 
     @Override
@@ -75,6 +77,8 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
+        //get loader manager
+        manager=getLoaderManager();
         // Find a reference to the {@link ListView} in the layout
         final ListView earthquakeListView = (ListView) findViewById(R.id.list);
         // Create a new {@link ArrayAdapter} of earthquakes
@@ -119,7 +123,7 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
         NetworkInfo infor = connectivityManager.getActiveNetworkInfo();
         if (infor != null && infor.isConnected()) {
             setOnInternet();
-            getLoaderManager().initLoader(LOADER_ID, null, this);
+            manager.initLoader(LOADER_ID, null, this);
         } else {
             setNoInternet();
         }
@@ -193,15 +197,15 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
                                 onSortMethod(SORT_BY_STRENGTH);
                                 break;
                             default:
-                                LoaderManager manager = getLoaderManager();
                                 if (manager.getLoader(LOADER_ID) == null) {
                                     callBackgroundThread();
                                 } else {
                                     connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                                     NetworkInfo infor = connectivityManager.getActiveNetworkInfo();
                                     if (infor != null && infor.isConnected()) {
+                                        Log.e(LOG_TAG,"in restart loader");
                                         setOnInternet();
-                                        manager.restartLoader(LOADER_ID, null, EarthquakeActivity.this);
+                                        manager.restartLoader(LOADER_ID, null, EarthquakeActivity.this).forceLoad();
                                     } else {
                                         adapter.clear();
                                         setNoInternet();
@@ -220,12 +224,14 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
 
     @Override
     public Loader<List<Earthquake>> onCreateLoader(int i, Bundle bundle) {
+        //Log.e(LOG_TAG,"creating loader");
         loading.setVisibility(View.VISIBLE);
-        return new EarthquakeLoader(this, URL_GET);
+        return new EarthquakeLoader(EarthquakeActivity.this, URL_GET);
     }
 
     @Override
     public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> earthquakes) {
+        Log.e(LOG_TAG,"finish loading task");
         loading.setVisibility(GONE);
         if (earthquakes == null || earthquakes.isEmpty()) {
             emptyView.setText(R.string.no_earthquakes);
