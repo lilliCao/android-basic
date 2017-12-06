@@ -20,6 +20,7 @@ import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -106,6 +107,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                InputMethodManager inputManager = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
                 Editable searchKey = editText.getText();
                 if(searchKey.toString().isEmpty()){
                     Toast.makeText(MainActivity.this,"Please enter keyword to search", Toast.LENGTH_LONG).show();
