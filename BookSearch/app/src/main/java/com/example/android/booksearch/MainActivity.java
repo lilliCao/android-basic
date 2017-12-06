@@ -1,6 +1,5 @@
 package com.example.android.booksearch;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.LoaderManager;
@@ -37,15 +36,15 @@ import java.util.Observer;
 
 import static android.view.View.GONE;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<Book>>, Observer{
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<Book>>, Observer {
     private static final String BOOK_LIST = "book_list";
     private static final String SORT_FRAGMENT = "sort_fragment";
     private static final String ABOUT_FRAGMENT = "about_fragment";
     private static final String CONTACT_FRAGMENT = "contact_fragment";
-    private static final String NO_SORT = "no_sort" ;
-    private static final String EMPTY_VIEW_VISIBILITY = "empty_view_visibility" ;
+    private static final String NO_SORT = "no_sort";
+    private static final String EMPTY_VIEW_VISIBILITY = "empty_view_visibility";
     private static final String EMPTY_VIEW_TEXT = "empty_view_text";
-    private static final String EMPTY_VIEW_IMAGE = "empty_view_image" ;
+    private static final String EMPTY_VIEW_IMAGE = "empty_view_image";
     private static BookAdapter bookAdapter;
     private LoaderManager loaderManager;
     private ConnectivityManager connectivityManager;
@@ -72,9 +71,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         outState.putParcelableArrayList(BOOK_LIST, getListFromAdapter());
         outState.putInt(EMPTY_VIEW_VISIBILITY, empty_view.getVisibility());
         outState.putString(EMPTY_VIEW_TEXT, (String) emptyTextView.getText());
-        if(emptyImageView.getTag()!=null){
+        if (emptyImageView.getTag() != null) {
             outState.putInt(EMPTY_VIEW_IMAGE, (Integer) emptyImageView.getTag());
-        }else{
+        } else {
             outState.putInt(EMPTY_VIEW_IMAGE, -1);
         }
 
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_main);
 
         //Set change observer
-        sortMethod= new BookVariableWrapper(NO_SORT);
+        sortMethod = new BookVariableWrapper(NO_SORT);
         sortMethod.addObserver(this);
 
         //Get booklist
@@ -113,11 +112,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if (savedInstanceState != null) {
             ArrayList<Book> list = savedInstanceState.getParcelableArrayList(BOOK_LIST);
             bookAdapter = new BookAdapter(this, list);
-            int visual=savedInstanceState.getInt(EMPTY_VIEW_VISIBILITY);
-            String text=savedInstanceState.getString(EMPTY_VIEW_TEXT);
-            int image=savedInstanceState.getInt(EMPTY_VIEW_IMAGE);
+            int visual = savedInstanceState.getInt(EMPTY_VIEW_VISIBILITY);
+            String text = savedInstanceState.getString(EMPTY_VIEW_TEXT);
+            int image = savedInstanceState.getInt(EMPTY_VIEW_IMAGE);
             empty_view.setVisibility(visual);
-            if(image==R.drawable.ic_cloud_off_black_24dp){
+            if (image == R.drawable.ic_cloud_off_black_24dp) {
                 emptyImageView.setImageResource(image);
                 emptyImageView.setTag(image);
                 emptyTextView.setText(text);
@@ -136,11 +135,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
                         InputMethodManager.HIDE_NOT_ALWAYS);
                 Editable searchKey = editText.getText();
-                if(searchKey.toString().isEmpty()){
-                    Toast.makeText(MainActivity.this,"Please enter keyword to search", Toast.LENGTH_LONG).show();
-                }else{
-                    String searchVolume=searchKey.toString().replace(" ","+");
-                    url = BASE_URL + searchVolume+ "&" + "maxResults=" + maxResult;
+                if (searchKey.toString().isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Please enter keyword to search", Toast.LENGTH_LONG).show();
+                } else {
+                    String searchVolume = searchKey.toString();
+                    searchVolume = searchVolume.trim().replaceAll("\\s+", "+");
+                    url = BASE_URL + searchVolume + "&" + "maxResults=" + maxResult;
                     //check network and call request
                     callInBackGround();
                 }
@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public Loader<ArrayList<Book>> onCreateLoader(int i, Bundle bundle) {
         loading.setVisibility(View.VISIBLE);
-        return new BookLoader(MainActivity.this, url,sortMethod.getSorthMethod());
+        return new BookLoader(MainActivity.this, url, sortMethod.getSorthMethod());
     }
 
     @Override
@@ -262,6 +262,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void update(Observable observable, Object o) {
         callInBackGround();
     }
+
     //class Dialog Fragment
     public static class SortDialogFragment extends DialogFragment {
         @NonNull

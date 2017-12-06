@@ -104,7 +104,7 @@ public final class QueryUtils {
                 JSONObject pdf = accessInfo.getJSONObject("pdf");
                 boolean isPdf = false;
                 if (pdf.has("isAvailable")) {
-                    isPdf=pdf.getBoolean("isAvailable");
+                    isPdf = pdf.getBoolean("isAvailable");
                 }
 
                 list.add(new Book(title, author, publisher, publisherDate, language, isEbook, isPdf, saleAbility, infoLink, previewLink));

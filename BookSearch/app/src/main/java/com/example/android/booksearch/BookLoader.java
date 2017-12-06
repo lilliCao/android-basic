@@ -26,7 +26,7 @@ public class BookLoader extends AsyncTaskLoader<ArrayList<Book>> {
     public BookLoader(Context context, String url, String sortMethod) {
         super(context);
         this.url = url;
-        this.sortMethod=sortMethod;
+        this.sortMethod = sortMethod;
     }
 
     @Override
@@ -40,20 +40,20 @@ public class BookLoader extends AsyncTaskLoader<ArrayList<Book>> {
             return null;
         }
         ArrayList<Book> list = QueryUtils.fetchBookData(url);
-        ArrayList<Book> tmp=new ArrayList<>(list);
+        ArrayList<Book> tmp = new ArrayList<>(list);
         switch (sortMethod) {
             case SORT_BY_DATE:
                 for (Book b : tmp) {
-                    if ( formatDate(b.getPublisherDate()) ==0 ) {
+                    if (formatDate(b.getPublisherDate()) == 0) {
                         list.remove(b);
                     }
                 }
                 Collections.sort(list, new Comparator<Book>() {
                     @Override
                     public int compare(Book book, Book t1) {
-                        long value1=formatDate(book.getPublisherDate());
-                        long value2=formatDate(t1.getPublisherDate());
-                        return value1> value2? -1: (value1 < value2? 1:0);
+                        long value1 = formatDate(book.getPublisherDate());
+                        long value2 = formatDate(t1.getPublisherDate());
+                        return value1 > value2 ? -1 : (value1 < value2 ? 1 : 0);
                     }
                 });
                 break;
@@ -84,36 +84,35 @@ public class BookLoader extends AsyncTaskLoader<ArrayList<Book>> {
         }
         return list;
     }
-    public long formatDate(String date){
+
+    public long formatDate(String date) {
         final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        final SimpleDateFormat formattter2=new SimpleDateFormat("yyyy-MM");
-        final SimpleDateFormat formatter3=new SimpleDateFormat("yyyy");
-        long result=0;
+        final SimpleDateFormat formattter2 = new SimpleDateFormat("yyyy-MM");
+        final SimpleDateFormat formatter3 = new SimpleDateFormat("yyyy");
+        long result = 0;
         Date dateFormat;
         try {
-            dateFormat=formatter.parse(date);
-            result=dateFormat.getTime();
-            return  result;
+            dateFormat = formatter.parse(date);
+            result = dateFormat.getTime();
+            return result;
         } catch (ParseException e) {
             e.printStackTrace();
         } finally {
             try {
-                dateFormat=formattter2.parse(date);
-                result=dateFormat.getTime();
+                dateFormat = formattter2.parse(date);
+                result = dateFormat.getTime();
                 return result;
             } catch (ParseException e) {
                 e.printStackTrace();
-            }
-            finally {
+            } finally {
                 try {
-                    dateFormat=formatter3.parse(date);
-                    result=dateFormat.getTime();
+                    dateFormat = formatter3.parse(date);
+                    result = dateFormat.getTime();
                     return result;
                 } catch (ParseException e) {
                     e.printStackTrace();
-                }
-                finally {
-                    result=0;
+                } finally {
+                    result = 0;
                 }
             }
         }

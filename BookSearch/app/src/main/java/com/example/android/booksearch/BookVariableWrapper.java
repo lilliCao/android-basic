@@ -1,6 +1,5 @@
 package com.example.android.booksearch;
 
-import java.io.BufferedReader;
 import java.util.Observable;
 
 /**
@@ -13,11 +12,13 @@ public class BookVariableWrapper extends Observable {
     }
 
     private String sorthMethod;
-    public BookVariableWrapper(String sorthMethod){
-        this.sorthMethod=sorthMethod;
+
+    public BookVariableWrapper(String sorthMethod) {
+        this.sorthMethod = sorthMethod;
     }
-    public void setSorthMethod(String sorthMethod){
-        this.sorthMethod=sorthMethod;
+
+    public void setSorthMethod(String sorthMethod) {
+        this.sorthMethod = sorthMethod;
         setChanged();
         notifyObservers();
     }
