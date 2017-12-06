@@ -72,7 +72,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         outState.putParcelableArrayList(BOOK_LIST, getListFromAdapter());
         outState.putInt(EMPTY_VIEW_VISIBILITY, empty_view.getVisibility());
         outState.putString(EMPTY_VIEW_TEXT, (String) emptyTextView.getText());
-        outState.putInt(EMPTY_VIEW_IMAGE, (Integer) emptyImageView.getTag());
+        if(emptyImageView.getTag()!=null){
+            outState.putInt(EMPTY_VIEW_IMAGE, (Integer) emptyImageView.getTag());
+        }else{
+            outState.putInt(EMPTY_VIEW_IMAGE, -1);
+        }
+
+
     }
 
     private static ArrayList<Book> getListFromAdapter() {
