@@ -29,20 +29,18 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
+import java.util.Observable;
+import java.util.Observer;
 
 import static android.view.View.GONE;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<Book>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<Book>>, Observer{
     private static final String BOOK_LIST = "book_list";
     private static final String SORT_FRAGMENT = "sort_fragment";
     private static final String ABOUT_FRAGMENT = "about_fragment";
     private static final String CONTACT_FRAGMENT = "contact_fragment";
+    private static final String NO_SORT = "no_sort" ;
     private static BookAdapter bookAdapter;
     private LoaderManager loaderManager;
     private ConnectivityManager connectivityManager;
@@ -55,11 +53,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private Button search;
     private int maxResult = 20;
     private String url;
+    private static BookVariableWrapper sortMethod;
     private final int LOADER_ID = 1;
-    private final static String FILTER_BY_EBOOK = "Filter by ebook";
-    private final static String FILTER_BY_PDF = "Filter by pdf";
-    private final static String SORT_BY_DATE = "Sort by early publish date";
-    private final static String FILTER_BY_LANGUAGE = "Filter by english";
+    public final static String FILTER_BY_EBOOK = "Filter by ebook";
+    public final static String FILTER_BY_PDF = "Filter by pdf";
+    public final static String SORT_BY_DATE = "Sort by early publish date";
+    public final static String FILTER_BY_LANGUAGE = "Filter by english";
     private static String[] sortMethods = {FILTER_BY_EBOOK, FILTER_BY_PDF, SORT_BY_DATE, FILTER_BY_LANGUAGE};
 
     @Override
@@ -80,6 +79,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Set change observer
+        sortMethod= new BookVariableWrapper(NO_SORT);
+        sortMethod.addObserver(this);
+
+        //Get booklist
         ListView bookList = findViewById(R.id.list);
         loaderManager = getLoaderManager();
 
@@ -198,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public Loader<ArrayList<Book>> onCreateLoader(int i, Bundle bundle) {
         loading.setVisibility(View.VISIBLE);
-        return new BookLoader(MainActivity.this, url);
+        return new BookLoader(MainActivity.this, url,sortMethod.getSorthMethod());
     }
 
     @Override
@@ -217,8 +222,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         bookAdapter.clear();
     }
 
+    @Override
+    public void update(Observable observable, Object o) {
+        callInBackGround();
+    }
     //class Dialog Fragment
-    @SuppressLint("ValidFragment")
     public static class SortDialogFragment extends DialogFragment {
         @NonNull
         @Override
@@ -228,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    onSortMethod(sortMethods[i]);
+                    sortMethod.setSorthMethod(sortMethods[i]);
                     dialogInterface.cancel();
                 }
             });
@@ -282,59 +290,5 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private static void onSortMethod(String sortMethod) {
-        ArrayList<Book> list = getListFromAdapter();
-        ArrayList<Book> tmp = new ArrayList<>(list);
-        bookAdapter.clear();
-        //Apply sort
-        switch (sortMethod) {
-            case SORT_BY_DATE:
-                final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                Collections.sort(list, new Comparator<Book>() {
-                    @Override
-                    public int compare(Book book, Book t1) {
-                        Date date = null;
-                        Date date1 = null;
-                        try {
-                            date = formatter.parse(book.getPublisherDate());
-                            date1 = formatter.parse(t1.getPublisherDate());
-                            return (date.after(date1) ? -1 : (date1.after(date) ? 1 : 0));
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        return 1;
-                    }
-                });
-                break;
-            //Lambda not work --> TODO
-            case FILTER_BY_EBOOK:
-                for (Book b : tmp) {
-                    if (!b.isEbook()) {
-                        list.remove(b);
-                    }
-                }
-                break;
-            case FILTER_BY_LANGUAGE:
-                for (Book b : tmp) {
-                    if (!b.getLanguage().contains("es")) {
-                        list.remove(b);
-                    }
-                }
-                ;
-                break;
-            case FILTER_BY_PDF:
-                for (Book b : tmp) {
-                    if (!b.isAvailableInPdf()) {
-                        list.remove(b);
-                    }
-                }
-                ;
-                break;
-            default:
-                break;
-        }
-        bookAdapter.addAll(list);
-    }
 }
 
