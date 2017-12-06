@@ -54,14 +54,18 @@
         <!-- Empty view is only visible when the list has no items. -->
         <RelativeLayout
             android:id="@+id/empty_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:paddingTop="30dp"
+            android:layout_toRightOf="@id/head"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
             android:orientation="vertical"
             android:visibility="gone">
 
             <ImageView
                 android:id="@+id/image"
-                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
                 android:layout_width="100dp"
                 android:layout_height="100dp" />
 

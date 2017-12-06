@@ -43,6 +43,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final String ABOUT_FRAGMENT = "about_fragment";
     private static final String CONTACT_FRAGMENT = "contact_fragment";
     private static final String NO_SORT = "no_sort" ;
+    private static final String EMPTY_VIEW_VISIBILITY = "empty_view_visibility" ;
+    private static final String EMPTY_VIEW_TEXT = "empty_view_text";
+    private static final String EMPTY_VIEW_IMAGE = "empty_view_image" ;
     private static BookAdapter bookAdapter;
     private LoaderManager loaderManager;
     private ConnectivityManager connectivityManager;
@@ -67,6 +70,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(BOOK_LIST, getListFromAdapter());
+        outState.putInt(EMPTY_VIEW_VISIBILITY, empty_view.getVisibility());
+        outState.putString(EMPTY_VIEW_TEXT, (String) emptyTextView.getText());
+        outState.putInt(EMPTY_VIEW_IMAGE, (Integer) emptyImageView.getTag());
     }
 
     private static ArrayList<Book> getListFromAdapter() {
@@ -90,20 +96,31 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         ListView bookList = findViewById(R.id.list);
         loaderManager = getLoaderManager();
 
-        if (savedInstanceState != null) {
-            ArrayList<Book> list = savedInstanceState.getParcelableArrayList(BOOK_LIST);
-            bookAdapter = new BookAdapter(this, list);
-        } else {
-            bookAdapter = new BookAdapter(this, new ArrayList<Book>());
-        }
-        bookList.setAdapter(bookAdapter);
-
+        //get other views
         emptyTextView = findViewById(R.id.text);
         emptyImageView = findViewById(R.id.image);
         empty_view = findViewById(R.id.empty_view);
         loading = findViewById(R.id.loading);
         editText = findViewById(R.id.search);
         search = findViewById(R.id.search_button);
+
+        if (savedInstanceState != null) {
+            ArrayList<Book> list = savedInstanceState.getParcelableArrayList(BOOK_LIST);
+            bookAdapter = new BookAdapter(this, list);
+            int visual=savedInstanceState.getInt(EMPTY_VIEW_VISIBILITY);
+            String text=savedInstanceState.getString(EMPTY_VIEW_TEXT);
+            int image=savedInstanceState.getInt(EMPTY_VIEW_IMAGE);
+            empty_view.setVisibility(visual);
+            if(image==R.drawable.ic_cloud_off_black_24dp){
+                emptyImageView.setImageResource(image);
+                emptyImageView.setTag(image);
+                emptyTextView.setText(text);
+            }
+        } else {
+            bookAdapter = new BookAdapter(this, new ArrayList<Book>());
+        }
+        bookList.setAdapter(bookAdapter);
+
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,7 +133,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 if(searchKey.toString().isEmpty()){
                     Toast.makeText(MainActivity.this,"Please enter keyword to search", Toast.LENGTH_LONG).show();
                 }else{
-                    url = BASE_URL + searchKey.toString() + "&" + "maxResults=" + maxResult;
+                    String searchVolume=searchKey.toString().replace(" ","+");
+                    url = BASE_URL + searchVolume+ "&" + "maxResults=" + maxResult;
                     //check network and call request
                     callInBackGround();
                 }
@@ -205,6 +223,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         empty_view.setVisibility(View.VISIBLE);
         emptyTextView.setText("There is no internet connection");
         emptyImageView.setImageResource(R.drawable.ic_cloud_off_black_24dp);
+        emptyImageView.setTag(R.drawable.ic_cloud_off_black_24dp);
     }
 
     private void setOnInternet() {
