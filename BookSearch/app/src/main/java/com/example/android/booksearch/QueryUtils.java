@@ -49,7 +49,13 @@ public final class QueryUtils {
         }
         try {
             JSONObject jo = new JSONObject(jsonResponse);
+            if(jo==null){
+                return list;
+            }
             JSONArray ja = jo.optJSONArray("items");
+            if((ja ==null) || (ja.length() ==0)){
+                return list;
+            }
             Log.e("Array length issss", String.valueOf(ja.length()));
             for (int i = 0; i < ja.length(); i++) {
                 JSONObject child = (JSONObject) ja.get(i);

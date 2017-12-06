@@ -40,6 +40,9 @@ public class BookLoader extends AsyncTaskLoader<ArrayList<Book>> {
             return null;
         }
         ArrayList<Book> list = QueryUtils.fetchBookData(url);
+        if(list.isEmpty()){
+            return list;
+        }
         ArrayList<Book> tmp = new ArrayList<>(list);
         switch (sortMethod) {
             case SORT_BY_DATE:

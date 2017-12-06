@@ -119,8 +119,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             if (image == R.drawable.ic_cloud_off_black_24dp) {
                 emptyImageView.setImageResource(image);
                 emptyImageView.setTag(image);
-                emptyTextView.setText(text);
             }
+            emptyTextView.setText(text);
         } else {
             bookAdapter = new BookAdapter(this, new ArrayList<Book>());
         }
@@ -247,6 +247,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         loading.setVisibility(View.GONE);
         if ((books == null) || books.isEmpty()) {
             emptyTextView.setText("There is no book in the searching.");
+            empty_view.setVisibility(View.VISIBLE);
             return;
         }
         bookAdapter.clear();
