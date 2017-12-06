@@ -28,6 +28,7 @@ import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -106,9 +107,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onClick(View view) {
                 Editable searchKey = editText.getText();
-                url = BASE_URL + searchKey.toString() + "&" + "maxResults=" + maxResult;
-                //check network and call request
-                callInBackGround();
+                if(searchKey.toString().isEmpty()){
+                    Toast.makeText(MainActivity.this,"Please enter keyword to search", Toast.LENGTH_LONG).show();
+                }else{
+                    url = BASE_URL + searchKey.toString() + "&" + "maxResults=" + maxResult;
+                    //check network and call request
+                    callInBackGround();
+                }
             }
         });
 
@@ -177,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                                 //Save for next lession
                                 break;
                             default:
-                                callInBackGround();
+                                sortMethod.setSorthMethod(NO_SORT);
                         }
                         return true;
                     }
