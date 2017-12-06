@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+    <item
+        android:id="@+id/setting"
+        android:title="Settings" />
+    <item
+        android:id="@+id/sort"
+        android:title="Filter/Sort By" />
+    <item
+        android:id="@+id/feedback"
+        android:title="Feedback/Contact" />
+    <item
+        android:id="@+id/saved"
+        android:title="Saved books" />
+    <item
+        android:id="@+id/about"
+        android:title="About application" />
+    <item
+        android:id="@+id/refresh"
+        android:title="Refresh" />
+</menu>

@@ -1,0 +1,84 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/toolbar"></android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:paddingTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo" />
+
+        <EditText
+            android:layout_below="@id/logo"
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:hint="Search key" />
+
+        <Button
+            android:layout_below="@id/search"
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="search"
+            android:layout_centerHorizontal="true" />
+
+        <ListView
+            android:layout_below="@id/search_button"
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#000000"
+            android:dividerHeight="2dp"
+            android:orientation="vertical" />
+
+        <!-- Empty view is only visible when the list has no items. -->
+        <RelativeLayout
+            android:id="@+id/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/search_button"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_centerInParent="true"
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
+
+            <TextView
+                android:id="@+id/text"
+                android:paddingTop="30dp"
+                android:layout_below="@id/image"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:textAppearanceMedium" />
+        </RelativeLayout>
+
+        <ProgressBar
+            android:id="@+id/loading"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/search_button" />
+    </RelativeLayout>
+
+</LinearLayout>
