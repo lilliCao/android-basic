@@ -2,6 +2,8 @@ package com.example.android.booksearch;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,8 +41,11 @@ public class BookLoader extends AsyncTaskLoader<ArrayList<Book>> {
         if (url == null) {
             return null;
         }
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String value = sharedPreferences.getString(getContext().getString(R.string.setting_language), "");
+        String language=mapToAbb(value);
         ArrayList<Book> list = QueryUtils.fetchBookData(url);
-        if(list.isEmpty()){
+        if (list.isEmpty()) {
             return list;
         }
         ArrayList<Book> tmp = new ArrayList<>(list);
@@ -70,7 +75,7 @@ public class BookLoader extends AsyncTaskLoader<ArrayList<Book>> {
                 break;
             case FILTER_BY_LANGUAGE:
                 for (Book b : tmp) {
-                    if (!b.getLanguage().contains("en")) {
+                    if (!b.getLanguage().contains(language)) {
                         list.remove(b);
                     }
                 }
@@ -86,6 +91,28 @@ public class BookLoader extends AsyncTaskLoader<ArrayList<Book>> {
                 break;
         }
         return list;
+    }
+
+    private String mapToAbb(String value) {
+        String language="";
+        switch(value){
+            case "English":
+                language="en";
+                break;
+            case "Spanish":
+                language="es";
+                break;
+            case "German":
+                language="de";
+                break;
+            case "French":
+                language="fr";
+                break;
+            default:
+                language="vi";
+                break;
+        }
+        return language;
     }
 
     public long formatDate(String date) {

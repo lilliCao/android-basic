@@ -19,6 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SettingActivity"
+            android:label="@string/setting"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Child">
+        </activity>
     </application>
 
 </manifest>

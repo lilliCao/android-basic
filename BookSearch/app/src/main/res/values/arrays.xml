@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_methods">
+        <item>@string/filter_by_ebook</item>
+        <item>@string/filter_by_pdf</item>
+        <item>@string/sort_by_publish_date</item>
+        <item>@string/filter_by_language</item>
+        <item>@string/no_filter</item>
+    </string-array>
+    <string-array name="languages">
+        <item>@string/en</item>
+        <item>@string/es</item>
+        <item>@string/de</item>
+        <item>@string/vi</item>
+        <item>@string/fr</item>
+    </string-array>
+    <string-array name="language_label">
+        <item>@string/en_label</item>
+        <item>@string/es_label</item>
+        <item>@string/de_label</item>
+        <item>@string/vi_label</item>
+        <item>@string/fr_label</item>
+    </string-array>
+
+    <string name="filter_by_ebook">Filter by ebook</string>
+    <string name="filter_by_pdf">Filter by pdf</string>
+    <string name="sort_by_publish_date">Sort by early publish date</string>
+    <string name="filter_by_language">Filter by language</string>
+    <string name="no_filter">No sort or filter</string>
+    <string name="es">es</string>
+    <string name="de">de</string>
+    <string name="vi">vi</string>
+    <string name="fr">fr</string>
+    <string name="en_label">English</string>
+    <string name="es_label">Spanish</string>
+    <string name="de_label">German</string>
+    <string name="vi_label">Vietnamese</string>
+    <string name="fr_label">French</string>
+</resources>

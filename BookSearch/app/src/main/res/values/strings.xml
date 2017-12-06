@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Book Search</string>
+    <string name="setting_sort">setting_sort</string>
+    <string name="setting_sort_title">Default sort/filter method</string>
+    <string name="no_sort">no_sort</string>
+    <string name="sort">Sort Setting</string>
+    <string name="setting">Setting</string>
+    <string name="setting_language">setting_language</string>
+    <string name="setting_language_title">Default language for filter</string>
+    <string name="en">en</string>
 </resources>

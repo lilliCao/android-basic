@@ -7,10 +7,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.DialogFragment;
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final String SORT_FRAGMENT = "sort_fragment";
     private static final String ABOUT_FRAGMENT = "about_fragment";
     private static final String CONTACT_FRAGMENT = "contact_fragment";
-    private static final String NO_SORT = "no_sort";
+    private static final String NO_SORT = "No sort or filter";
     private static final String EMPTY_VIEW_VISIBILITY = "empty_view_visibility";
     private static final String EMPTY_VIEW_TEXT = "empty_view_text";
     private static final String EMPTY_VIEW_IMAGE = "empty_view_image";
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public final static String FILTER_BY_EBOOK = "Filter by ebook";
     public final static String FILTER_BY_PDF = "Filter by pdf";
     public final static String SORT_BY_DATE = "Sort by early publish date";
-    public final static String FILTER_BY_LANGUAGE = "Filter by english";
+    public final static String FILTER_BY_LANGUAGE = "Filter by language";
     private static String[] sortMethods = {FILTER_BY_EBOOK, FILTER_BY_PDF, SORT_BY_DATE, FILTER_BY_LANGUAGE};
 
     @Override
@@ -93,8 +95,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Set change observer
-        sortMethod = new BookVariableWrapper(NO_SORT);
+        //Set change observer and get default sort
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String sort = sharedPreferences.getString(getString(R.string.setting_sort), "");
+        sortMethod = new BookVariableWrapper(sort);
         sortMethod.addObserver(this);
 
         //Get booklist
@@ -203,6 +207,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                                 dialogFragment1.show(getSupportFragmentManager(), ABOUT_FRAGMENT);
                                 break;
                             case R.id.setting:
+                                Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+                                startActivity(intent);
                                 break;
                             case R.id.feedback:
                                 DialogFragment dialogFragment2 = new ContactDialogFragment();
@@ -248,6 +254,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if ((books == null) || books.isEmpty()) {
             emptyTextView.setText("There is no book in the searching.");
             empty_view.setVisibility(View.VISIBLE);
+            bookAdapter.clear();
             return;
         }
         bookAdapter.clear();
