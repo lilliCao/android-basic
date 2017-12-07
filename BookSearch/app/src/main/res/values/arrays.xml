@@ -21,6 +21,13 @@
         <item>@string/vi_label</item>
         <item>@string/fr_label</item>
     </string-array>
+    <string-array name="numbers">
+        <item>@string/m5</item>
+        <item>@string/m10</item>
+        <item>@string/m20</item>
+        <item>@string/m30</item>
+        <item>@string/m40</item>
+    </string-array>
 
     <string name="filter_by_ebook">Filter by ebook</string>
     <string name="filter_by_pdf">Filter by pdf</string>
@@ -36,4 +43,8 @@
     <string name="de_label">German</string>
     <string name="vi_label">Vietnamese</string>
     <string name="fr_label">French</string>
+    <string name="m30">30</string>
+    <string name="m40">40</string>
+    <string name="m10">10</string>
+    <string name="m5">5</string>
 </resources>

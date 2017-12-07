@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final String EMPTY_VIEW_VISIBILITY = "empty_view_visibility";
     private static final String EMPTY_VIEW_TEXT = "empty_view_text";
     private static final String EMPTY_VIEW_IMAGE = "empty_view_image";
+    private static final String URL_SAVE = "url" ;
     private static BookAdapter bookAdapter;
     private LoaderManager loaderManager;
     private ConnectivityManager connectivityManager;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private Button search;
     private int maxResult = 20;
     private String url;
+    private String searchVolume;
     private static BookVariableWrapper sortMethod;
     private final int LOADER_ID = 1;
     public final static String FILTER_BY_EBOOK = "Filter by ebook";
@@ -78,8 +80,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         } else {
             outState.putInt(EMPTY_VIEW_IMAGE, -1);
         }
-
-
+        outState.putString(URL_SAVE, url);
     }
 
     private static ArrayList<Book> getListFromAdapter() {
@@ -98,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         //Set change observer and get default sort
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String sort = sharedPreferences.getString(getString(R.string.setting_sort), "");
+        String max = sharedPreferences.getString(getString(R.string.setting_number_of_result), "");
+        maxResult = Integer.parseInt(max);
         sortMethod = new BookVariableWrapper(sort);
         sortMethod.addObserver(this);
 
@@ -125,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 emptyImageView.setTag(image);
             }
             emptyTextView.setText(text);
+            url=savedInstanceState.getString(URL_SAVE);
         } else {
             bookAdapter = new BookAdapter(this, new ArrayList<Book>());
         }
@@ -133,6 +137,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Get current Setting
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                String sort = sharedPreferences.getString(getString(R.string.setting_sort), "");
+                String max = sharedPreferences.getString(getString(R.string.setting_number_of_result), "");
+                maxResult = Integer.parseInt(max);
+                //Do search book
                 InputMethodManager inputManager = (InputMethodManager)
                         getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -142,11 +152,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 if (searchKey.toString().isEmpty()) {
                     Toast.makeText(MainActivity.this, "Please enter keyword to search", Toast.LENGTH_LONG).show();
                 } else {
-                    String searchVolume = searchKey.toString();
+                    searchVolume = searchKey.toString();
                     searchVolume = searchVolume.trim().replaceAll("\\s+", "+");
                     url = BASE_URL + searchVolume + "&" + "maxResults=" + maxResult;
                     //check network and call request
-                    callInBackGround();
+                    sortMethod.setSorthMethod(sort);
                 }
             }
         });
@@ -218,6 +228,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                                 //Save for next lession
                                 break;
                             default:
+                                //Get current setting for refresh
+                                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                                String sort = sharedPreferences.getString(getString(R.string.setting_sort), "");
+                                String max = sharedPreferences.getString(getString(R.string.setting_number_of_result), "");
+                                maxResult = Integer.parseInt(max);
+                                url = BASE_URL + searchVolume + "&" + "maxResults=" + maxResult;
                                 sortMethod.setSorthMethod(NO_SORT);
                         }
                         return true;

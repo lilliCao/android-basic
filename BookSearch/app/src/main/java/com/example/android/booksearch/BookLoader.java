@@ -43,9 +43,9 @@ public class BookLoader extends AsyncTaskLoader<ArrayList<Book>> {
         }
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String value = sharedPreferences.getString(getContext().getString(R.string.setting_language), "");
-        String language=mapToAbb(value);
+        String language = mapToAbb(value);
         ArrayList<Book> list = QueryUtils.fetchBookData(url);
-        if (list.isEmpty()) {
+        if (list == null || list.isEmpty()) {
             return list;
         }
         ArrayList<Book> tmp = new ArrayList<>(list);
@@ -94,22 +94,22 @@ public class BookLoader extends AsyncTaskLoader<ArrayList<Book>> {
     }
 
     private String mapToAbb(String value) {
-        String language="";
-        switch(value){
+        String language = "";
+        switch (value) {
             case "English":
-                language="en";
+                language = "en";
                 break;
             case "Spanish":
-                language="es";
+                language = "es";
                 break;
             case "German":
-                language="de";
+                language = "de";
                 break;
             case "French":
-                language="fr";
+                language = "fr";
                 break;
             default:
-                language="vi";
+                language = "vi";
                 break;
         }
         return language;

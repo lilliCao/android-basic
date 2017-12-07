@@ -21,9 +21,11 @@ public class BookPreferenceFragment extends PreferenceFragment implements Prefer
 
         //Get preference and fetch to summary
         Preference pref = findPreference(getString(R.string.setting_sort));
-        Preference language=findPreference(getString(R.string.setting_language));
+        Preference language = findPreference(getString(R.string.setting_language));
+        Preference number = findPreference(getString(R.string.setting_number_of_result));
         bindPreferenceSummaryToValue(pref, getString(R.string.setting_sort));
-        bindPreferenceSummaryToValue(language,getString(R.string.setting_language));
+        bindPreferenceSummaryToValue(language, getString(R.string.setting_language));
+        bindPreferenceSummaryToValue(number, getString(R.string.setting_number_of_result));
     }
 
     private void bindPreferenceSummaryToValue(Preference pref, String field) {
