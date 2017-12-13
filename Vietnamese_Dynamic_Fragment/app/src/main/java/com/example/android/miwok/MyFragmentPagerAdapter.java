@@ -4,10 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by tali on 24.11.17.
@@ -112,17 +110,17 @@ public class MyFragmentPagerAdapter extends android.support.v4.app.FragmentPager
         Log.e("Fragment position", String.valueOf(position));
         switch (position) {
             case 0:
-                return CategoryFragment.newInstance(numbers,false,R.color.category_numbers);
+                return CategoryFragment.newInstance(numbers, false, R.color.category_numbers);
             case 1:
-                return CategoryFragment.newInstance(family,false,R.color.category_family);
+                return CategoryFragment.newInstance(family, false, R.color.category_family);
             case 2:
-                return CategoryFragment.newInstance(colors,false,R.color.category_colors);
+                return CategoryFragment.newInstance(colors, false, R.color.category_colors);
             case 3:
-                return CategoryFragment.newInstance(phrases,false,R.color.category_phrases);
+                return CategoryFragment.newInstance(phrases, false, R.color.category_phrases);
             case 4:
-                return CategoryFragment.newInstance(occupation,true,R.color.category_occupation);
+                return CategoryFragment.newInstance(occupation, true, R.color.category_occupation);
             case 5:
-                return CategoryFragment.newInstance(hobbies, true,R.color.category_hobby);
+                return CategoryFragment.newInstance(hobbies, true, R.color.category_hobby);
             default:
                 return new SongFragment();
         }

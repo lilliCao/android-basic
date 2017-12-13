@@ -18,7 +18,7 @@ public class ImageButtonBalance extends android.support.v7.widget.AppCompatImage
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int myMinWidth=getMeasuredWidth();
+        int myMinWidth = getMeasuredWidth();
         int w = resolveSize(myMinWidth, widthMeasureSpec);
         int h = resolveSize(myMinWidth, heightMeasureSpec);
         setMeasuredDimension(w, h);

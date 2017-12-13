@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 emptyImageView.setTag(image);
             }
             emptyTextView.setText(text);
-            url=savedInstanceState.getString(URL_SAVE);
+          a  url=savedInstanceState.getString(URL_SAVE);
         } else {
             bookAdapter = new BookAdapter(this, new ArrayList<Book>());
         }

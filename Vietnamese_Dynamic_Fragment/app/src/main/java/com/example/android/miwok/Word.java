@@ -8,7 +8,7 @@ import android.os.Parcelable;
  * Created by tali on 22.11.17.
  */
 
-class Word implements Parcelable{
+class Word implements Parcelable {
     private String origin;
     private String translation;
     private int imageNumber;
@@ -26,12 +26,14 @@ class Word implements Parcelable{
         this.translation = translation;
     }
 
-    public Word(String origin, String translation,int audioNumber){
-        this.origin=origin;
-        this.translation=translation;
-        this.audioNumber=audioNumber;
+    public Word(String origin, String translation, int audioNumber) {
+        this.origin = origin;
+        this.translation = translation;
+        this.audioNumber = audioNumber;
     }
-;
+
+    ;
+
     public String getOrigin() {
         return origin;
     }
