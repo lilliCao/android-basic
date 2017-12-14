@@ -40,6 +40,12 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         ViewGroup.MarginLayoutParams paramsHorizon = (ViewGroup.MarginLayoutParams) horizon.getLayoutParams();
         paramsHorizon.setMargins(0, (int) (size * 1.0 / 5.0), 0, 0);
         horizon.setLayoutParams(paramsHorizon);
+
+        TextView capa=view.findViewById(R.id.capacity);
+        float textS=capa.getTextSize();
+        textS= (float) (textS*(DEFAULT_ZOOM_PROZENT/100.0));
+        capa.setTextSize(0,textS);
+
         Item item = getItem(position);
         if (item.isPlatine()) {
             LinearLayout platine = view.findViewById(R.id.platines);
