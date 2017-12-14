@@ -21,7 +21,6 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -29,6 +28,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static int DEFAULT_ZOOM_PROZENT = 100;
     private ArrayList<Integer> chosen = new ArrayList<>();
     private GridView gridView;
     private Button connect;
@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Item> items;
     private ItemAdapter itemAdapter;
     private Button load;
+    private static int currentLevel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,42 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     items = new ArrayList<>();
                 }
-                switch (i) {
-                    case 0:
-                        deepCopy(Data.level1);
-                        break;
-                    case 1:
-                        deepCopy(Data.level2);
-                        break;
-                    case 2:
-                        deepCopy(Data.level3);
-                        break;
-                    case 3:
-                        deepCopy(Data.level4);
-                        break;
-                    case 4:
-                        deepCopy(Data.level5);
-                        break;
-                    case 5:
-                        deepCopy(Data.level6);
-                        break;
-                    case 6:
-                        deepCopy(Data.level7);
-                        break;
-                    case 7:
-                        deepCopy(Data.level8);
-                        break;
-                    case 8:
-                        deepCopy(Data.level9);
-                        break;
-                    case 9:
-                        deepCopy(Data.level10);
-                        break;
-                    default:
-                        deepCopy(Data.level11);
-                        break;
-
-                }
+                getData(i);
             }
 
             @Override
@@ -111,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DEFAULT_ZOOM_PROZENT = 100;
                 chosen.clear();
                 itemAdapter.clear();
                 itemAdapter.addAll(items);
@@ -129,11 +96,11 @@ public class MainActivity extends AppCompatActivity {
                 if (!items.get(i).isPlatine()) {
                     return;
                 }
-                RelativeLayout platines = view.findViewById(R.id.platines);
+                LinearLayout platines = view.findViewById(R.id.platines);
                 platines.setBackgroundColor(Color.WHITE);
                 if (chosen.size() == 2) {
                     View v = gridView.getChildAt(chosen.get(0));
-                    RelativeLayout r = v.findViewById(R.id.platines);
+                    LinearLayout r = v.findViewById(R.id.platines);
                     r.setBackgroundColor(getResources().getColor(R.color.colorDefault, null));
                     chosen.remove(0);
                 }
@@ -147,13 +114,13 @@ public class MainActivity extends AppCompatActivity {
         connect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(chosen != null && chosen.size()==2 && items.get(chosen.get(0)).isPlatine() && items.get(chosen.get(1)).isPlatine()){
+                if (chosen != null && chosen.size() == 2 && items.get(chosen.get(0)).isPlatine() && items.get(chosen.get(1)).isPlatine()) {
                     if (isConnectPossible(chosen.get(0), chosen.get(1))) {
                         Toast.makeText(MainActivity.this, "Connected", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(MainActivity.this, "Connect impossible", Toast.LENGTH_SHORT).show();
                     }
-                }else{
+                } else {
                     Toast.makeText(MainActivity.this, "Please choose 2 platines to connect", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -161,13 +128,13 @@ public class MainActivity extends AppCompatActivity {
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if( chosen != null && chosen.size()==2 && items.get(chosen.get(0)).isPlatine() && items.get(chosen.get(1)).isPlatine()){
+                if (chosen != null && chosen.size() == 2 && items.get(chosen.get(0)).isPlatine() && items.get(chosen.get(1)).isPlatine()) {
                     if (isRemovePossible(chosen.get(0), chosen.get(1))) {
                         Toast.makeText(MainActivity.this, "Removed", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(MainActivity.this, "Remove impossible", Toast.LENGTH_SHORT).show();
                     }
-                }else{
+                } else {
                     Toast.makeText(MainActivity.this, "Please choose 2 platines to remove loading", Toast.LENGTH_SHORT).show();
                 }
 
@@ -187,6 +154,56 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void getData(int i) {
+        switch (i) {
+            case 0:
+                deepCopy(Data.level1);
+                currentLevel = 1;
+                break;
+            case 1:
+                deepCopy(Data.level2);
+                currentLevel = 2;
+                break;
+            case 2:
+                deepCopy(Data.level3);
+                currentLevel = 3;
+                break;
+            case 3:
+                deepCopy(Data.level4);
+                currentLevel = 4;
+                break;
+            case 4:
+                deepCopy(Data.level5);
+                currentLevel = 5;
+                break;
+            case 5:
+                deepCopy(Data.level6);
+                currentLevel = 6;
+                break;
+            case 6:
+                deepCopy(Data.level7);
+                currentLevel = 7;
+                break;
+            case 7:
+                deepCopy(Data.level8);
+                currentLevel = 8;
+                break;
+            case 8:
+                deepCopy(Data.level9);
+                currentLevel = 9;
+                break;
+            case 9:
+                deepCopy(Data.level10);
+                currentLevel = 10;
+                break;
+            default:
+                deepCopy(Data.level11);
+                currentLevel = 11;
+                break;
+
+        }
     }
 
     private void deepCopy(ArrayList<Item> list) {
@@ -433,10 +450,34 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 popupMenu.show();
+                return true;
+            case R.id.zoom_in:
+                DEFAULT_ZOOM_PROZENT += 10;
+                if (DEFAULT_ZOOM_PROZENT >= 200) {
+                    DEFAULT_ZOOM_PROZENT = 200;
+                }
+                recreateGridView();
+                return true;
+            case R.id.zoom_out:
+                DEFAULT_ZOOM_PROZENT += -10;
+                if (DEFAULT_ZOOM_PROZENT <= 60) {
+                    DEFAULT_ZOOM_PROZENT = 60;
+                }
+                recreateGridView();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    private void recreateGridView() {
+        chosen.clear();
+        itemAdapter.clear();
+        items.clear();
+        getData(currentLevel - 1);
+        itemAdapter.addAll(items);
+        gridView.setAdapter(itemAdapter);
     }
 
     public static class AboutDialogFragment extends DialogFragment {

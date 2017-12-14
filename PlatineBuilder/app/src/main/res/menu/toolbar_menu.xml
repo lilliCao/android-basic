@@ -3,6 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
     <item
+        android:id="@+id/zoom_in"
+        app:showAsAction="always"
+        tools:ignore="MenuTitle"
+        android:icon="@drawable/ic_zoom_in_black_24dp"/>
+    <item
+        android:id="@+id/zoom_out"
+        app:showAsAction="always"
+        tools:ignore="MenuTitle"
+        android:icon="@drawable/ic_zoom_out_black_24dp" />
+    <item
         android:id="@+id/help"
         app:showAsAction="always"
         tools:ignore="MenuTitle"

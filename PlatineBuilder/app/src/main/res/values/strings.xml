@@ -44,7 +44,12 @@
     <string name="solution"><![CDATA[Instruction & Solution]]></string>
     <string name="about_app">About</string>
     <string name="feedback">Feedback/Contact</string>
-    <string name="hint">Please choose a level and click load button</string>
+    <string name="hint">
+        \n Please choose a level and click load button
+        \n Resize your table of game if necessary
+    </string>
+    <string name="zoom_in">Zoom in</string>
+    <string name="zoom_out">Zoom out</string>
     <string-array name="drowdownList">
         <item>Level 1</item>
         <item>Level 2</item>

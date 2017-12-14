@@ -8,10 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import static com.example.android.platinebuilder.MainActivity.DEFAULT_ZOOM_PROZENT;
 
 /**
  * Created by tali on 13.12.17.
@@ -29,15 +31,25 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         if (view == null) {
             view = LayoutInflater.from(getContext()).inflate(R.layout.item, parent, false);
         }
+        ViewGroup.LayoutParams params = view.getLayoutParams();
+        int size = (int) (params.width * (DEFAULT_ZOOM_PROZENT / 100.0));
+        params.height = size;
+        view.setLayoutParams(params);
+
+        LinearLayout horizon = view.findViewById(R.id.connectors_horizontal);
+        ViewGroup.MarginLayoutParams paramsHorizon = (ViewGroup.MarginLayoutParams) horizon.getLayoutParams();
+        paramsHorizon.setMargins(0, (int) (size * 1.0 / 5.0), 0, 0);
+        horizon.setLayoutParams(paramsHorizon);
         Item item = getItem(position);
         if (item.isPlatine()) {
-            RelativeLayout platine = view.findViewById(R.id.platines);
+            LinearLayout platine = view.findViewById(R.id.platines);
             platine.setVisibility(View.VISIBLE);
             TextView cap = view.findViewById(R.id.capacity);
             ImageView image = view.findViewById(R.id.platine);
             cap.setText(String.valueOf(item.getCapacity()));
             image.setImageResource(R.drawable.chip);
         }
+
         return view;
     }
 }
