@@ -19,6 +19,13 @@
             android:paddingTop="20dp">
 
             <Button
+                android:id="@+id/show_all"
+                android:background="@color/colorAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/show_all" />
+
+            <Button
                 android:id="@+id/rule"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -47,13 +54,6 @@
                 android:text="@string/gui_help_text"
                 android:background="@color/colorText"
                 android:visibility="gone" />
-
-            <Button
-                android:id="@+id/show_all"
-                android:background="@color/colorAll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/show_all" />
 
             <Button
                 android:id="@+id/level1"

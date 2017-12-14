@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                chosen.clear();
                 itemAdapter.clear();
                 itemAdapter.addAll(items);
                 gridView.setAdapter(itemAdapter);
@@ -146,21 +147,30 @@ public class MainActivity extends AppCompatActivity {
         connect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isConnectPossible(chosen.get(0), chosen.get(1))) {
-                    Toast.makeText(MainActivity.this, "Connected", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MainActivity.this, "Connect impossible", Toast.LENGTH_SHORT).show();
+                if(chosen != null && chosen.size()==2 && items.get(chosen.get(0)).isPlatine() && items.get(chosen.get(1)).isPlatine()){
+                    if (isConnectPossible(chosen.get(0), chosen.get(1))) {
+                        Toast.makeText(MainActivity.this, "Connected", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "Connect impossible", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(MainActivity.this, "Please choose 2 platines to connect", Toast.LENGTH_SHORT).show();
                 }
             }
         });
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isRemovePossible(chosen.get(0), chosen.get(1))) {
-                    Toast.makeText(MainActivity.this, "Removed", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MainActivity.this, "Remove impossible", Toast.LENGTH_SHORT).show();
+                if( chosen != null && chosen.size()==2 && items.get(chosen.get(0)).isPlatine() && items.get(chosen.get(1)).isPlatine()){
+                    if (isRemovePossible(chosen.get(0), chosen.get(1))) {
+                        Toast.makeText(MainActivity.this, "Removed", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "Remove impossible", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(MainActivity.this, "Please choose 2 platines to remove loading", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
         win.setOnClickListener(new View.OnClickListener() {
@@ -190,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isRemovePossible(int i, int j) {
+
         int row1 = i % 5;
         int row2 = j % 5;
         int count = Math.abs(i - j);

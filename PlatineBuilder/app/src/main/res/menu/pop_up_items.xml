@@ -3,12 +3,12 @@
     tools:context=".MainActivity">
     <item
         android:id="@+id/solution"
-        android:title="Solution" />
+        android:title="@string/solution" />
     <item
         android:id="@+id/about"
-        android:title="About" />
+        android:title="@string/about_app" />
     <item
         android:id="@+id/feedback"
-        android:title="Feedback/Contact" />
+        android:title="@string/feedback" />
 </menu>
 
