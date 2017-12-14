@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">Platine Builder</string>
+    <string name="load">Load</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="connect">Connect</string>
+    <string name="remove">Remove</string>
+    <string name="capacity">0</string>
+    <string name="win">Check</string>
+    <string name="rule">Game rules</string>
+    <string name="rule_text">
+        \n The rule of the game is very simple.
+        \n You need to connect all the platines together.
+        \n The line between platines is seen as the capacity of both platines.
+        \n Each platine need to have as many lines going in as the capacity showed next to the platine
+        \n You are not allowed to connect 2 platines when another platine is located in between or a loading line is already there
+        \n There are maximal 2 loading lines going to a platine
+        \n Good luck
+    </string>
+    <string name="level1">Level 1</string>
+    <string name="level2">Level 2</string>
+    <string name="level3">Level 3</string>
+    <string name="level4">Level 4</string>
+    <string name="level5">Level 5</string>
+    <string name="level6">Level 6</string>
+    <string name="level7">Level 7</string>
+    <string name="level8">Level 8</string>
+    <string name="level9">Level 9</string>
+    <string name="level10">Level 10</string>
+    <string name="level11">Level 11</string>
+    <string name="show_all">Show All</string>
+    <string name="gui_text">About GUI</string>
+    <string name="gui_help_text">
+        \n I offer you a small GUI to test the game.
+        \n I don\'t support land mode here. Mean don\'t rotate your application while playing
+        \n Choose a level from the top down panel and click load button to load the game
+        \n Click on the platine to choose. 2 chosen platines to be applied rule will be marked white. The others is blue
+        \n You can use connect button to connect between 2 chosen platines
+        \n You can use remove button to remove your current loading lines. Each time you can only remove 1 linea.
+        \n You can test your result any time you want by check button
+        \n Remember if the result is right. I will block the gui for that level. Because I take in consideration that you want
+        to go to next level
+        \n If you stuck. Check out the solution in toolbar for more information and available solution
+        \n Any button in Solution page is able to close by click again after opening
+    </string>
+    <string name="no_land_view">This application doesn\'t support land mode. Please turn back to port mode</string>
+    <string-array name="drowdownList">
+        <item>Level 1</item>
+        <item>Level 2</item>
+        <item>Level 3</item>
+        <item>Level 4</item>
+        <item>Level 5</item>
+        <item>Level 6</item>
+        <item>Level 7</item>
+        <item>Level 8</item>
+        <item>Level 9</item>
+        <item>Level 10</item>
+        <item>Level 11</item>
+    </string-array>
+</resources>

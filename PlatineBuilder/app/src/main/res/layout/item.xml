@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="50dp"
+    android:layout_height="50dp">
+
+    <RelativeLayout
+        android:id="@+id/platines"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/colorDefault">
+
+        <TextView
+            android:id="@+id/capacity"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerHorizontal="true" />
+
+        <ImageView
+            android:id="@+id/platine"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/capacity"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:id="@+id/connectors_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/empty1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="5sp" />
+
+        <View
+            android:id="@+id/connect1"
+            android:visibility="gone"
+            android:layout_width="fill_parent"
+            android:layout_height="5dp"
+            android:background="@android:color/black" />
+
+        <TextView
+            android:id="@+id/empty2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="5sp" />
+
+        <View
+            android:id="@+id/connect2"
+            android:visibility="gone"
+            android:layout_width="fill_parent"
+            android:layout_height="5dp"
+            android:background="@android:color/black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/connectors_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/connectors_vertical1"
+            android:layout_width="5dp"
+            android:visibility="gone"
+            android:layout_height="match_parent"
+            android:background="@android:color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text=""
+            android:textSize="10sp"
+            android:paddingRight="8dp" />
+
+        <View
+            android:id="@+id/connectors_vertical2"
+            android:visibility="gone"
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/black" />
+    </LinearLayout>
+
+</RelativeLayout>
