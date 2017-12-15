@@ -30,21 +30,22 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         View view = convertView;
         if (view == null) {
             view = LayoutInflater.from(getContext()).inflate(R.layout.item, parent, false);
+            ViewGroup.LayoutParams params = view.getLayoutParams();
+            int size = (int) (params.width * (DEFAULT_ZOOM_PROZENT / 100.0));
+            params.height = size;
+            view.setLayoutParams(params);
+
+            LinearLayout horizon = view.findViewById(R.id.connectors_horizontal);
+            ViewGroup.MarginLayoutParams paramsHorizon = (ViewGroup.MarginLayoutParams) horizon.getLayoutParams();
+            paramsHorizon.setMargins(0, (int) (size * 1.0 / 5.0), 0, 0);
+            horizon.setLayoutParams(paramsHorizon);
+
+            TextView capa=view.findViewById(R.id.capacity);
+            float textS=capa.getTextSize();
+            textS= (float) (textS*(DEFAULT_ZOOM_PROZENT/100.0));
+            capa.setTextSize(0,textS);
         }
-        ViewGroup.LayoutParams params = view.getLayoutParams();
-        int size = (int) (params.width * (DEFAULT_ZOOM_PROZENT / 100.0));
-        params.height = size;
-        view.setLayoutParams(params);
 
-        LinearLayout horizon = view.findViewById(R.id.connectors_horizontal);
-        ViewGroup.MarginLayoutParams paramsHorizon = (ViewGroup.MarginLayoutParams) horizon.getLayoutParams();
-        paramsHorizon.setMargins(0, (int) (size * 1.0 / 5.0), 0, 0);
-        horizon.setLayoutParams(paramsHorizon);
-
-        TextView capa=view.findViewById(R.id.capacity);
-        float textS=capa.getTextSize();
-        textS= (float) (textS*(DEFAULT_ZOOM_PROZENT/100.0));
-        capa.setTextSize(0,textS);
 
         Item item = getItem(position);
         if (item.isPlatine()) {
