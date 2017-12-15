@@ -6,7 +6,7 @@
         android:id="@+id/zoom_in"
         app:showAsAction="always"
         tools:ignore="MenuTitle"
-        android:icon="@drawable/ic_zoom_in_black_24dp"/>
+        android:icon="@drawable/ic_zoom_in_black_24dp" />
     <item
         android:id="@+id/zoom_out"
         app:showAsAction="always"

@@ -11,9 +11,8 @@
         \n You need to connect all the platines together.
         \n The line between platines is seen as the capacity of both platines.
         \n Each platine need to have as many lines going in as the capacity showed next to the platine
-        \n You are not allowed to connect 2 platines when another platine is located in between or a loading line is already there
+        \n You are not allowed to connect 2 platines when another platine is located in between or a loading line in other direction is already there
         \n There are maximal 2 loading lines going to a platine
-        \n Good luck
     </string>
     <string name="level1">Level 1</string>
     <string name="level2">Level 2</string>
@@ -32,14 +31,16 @@
         \n I offer you a small GUI to test the game.
         \n I don\'t support land mode here. Mean don\'t rotate your application while playing
         \n Choose a level from the top down panel and click load button to load the game
-        \n Click on the platine to choose. 2 chosen platines to be applied rule will be marked white. The others is blue
-        \n You can use connect button to connect between 2 chosen platines
-        \n You can use remove button to remove your current loading lines. Each time you can only remove 1 linea.
-        \n You can test your result any time you want by check button
+        \n If the table of game is too small or too big for you, use <b>plus</b> or <b>minus</b> sign in the toolbar to resize the table of game
+        \n Resize button will automatically load a game again with new size. So be sure to scale your table of game before playing
+        \n Click on the platine to choose. 2 chosen platines to be applied rule will be marked white. The others are blue
+        \n You can use <b>connect</b> button to connect between 2 chosen platines
+        \n You can use <b>remove</b> button to remove your current loading lines. Each time you can only remove 1 linear.
+        \n You can test your result any time you want by <b>check</b> button
         \n Remember if the result is right. I will block the gui for that level. Because I take in consideration that you want
         to go to next level
-        \n If you stuck. Check out the solution in toolbar for more information and available solution
-        \n Any button in Solution page is able to close by click again after opening
+        \n If you stuck. Check out the <b><![CDATA[Instruction & Solution]]></b> in toolbar for more information and available solution
+        \n Any button in <b><![CDATA[Instruction & Solution]]></b> page is able to close by click again after opening
     </string>
     <string name="solution"><![CDATA[Instruction & Solution]]></string>
     <string name="about_app">About</string>
@@ -50,6 +51,19 @@
     </string>
     <string name="zoom_in">Zoom in</string>
     <string name="zoom_out">Zoom out</string>
+    <string name="connected">Connected</string>
+    <string name="connect_impossible">Connect impossible</string>
+    <string name="connect_need_2_platines">Please choose 2 platines to connect</string>
+    <string name="removed">Removed</string>
+    <string name="remove_impossible">Remove impossible</string>
+    <string name="remove_need_2_platines">Please choose 2 platines to remove loading</string>
+    <string name="success">Well done. Next level?</string>
+    <string name="fail">Not really. One more try?</string>
+    <string name="about_app_text">
+        This application is built for the IT talent competition 2017.
+        \nTopic: simulate the old japanese mystery by designing a game of building platine
+        \nAuthor: L3I2</string>
+    <string name="close">CLOSE</string>
     <string-array name="drowdownList">
         <item>Level 1</item>
         <item>Level 2</item>

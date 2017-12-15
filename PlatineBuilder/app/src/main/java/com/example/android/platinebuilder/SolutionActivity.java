@@ -105,6 +105,7 @@ public class SolutionActivity extends AppCompatActivity {
                     for (final Map.Entry<Button, ImageView> item : map.entrySet()) {
                         item.getValue().setVisibility(View.GONE);
                     }
+                    show = false;
                 }
             }
         });

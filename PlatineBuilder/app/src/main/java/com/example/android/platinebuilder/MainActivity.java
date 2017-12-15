@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.DialogFragment;
@@ -39,6 +40,20 @@ public class MainActivity extends AppCompatActivity {
     private Button load;
     private static int currentLevel;
 
+    public void showToast(String text) {
+        final Toast toast = Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT);
+        toast.show();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                toast.cancel();
+            }
+        }, 700);
+
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
         remove = findViewById(R.id.removeB);
         win = findViewById(R.id.winB);
         load = findViewById(R.id.load);
+        //Disable click around before loading level
+        setClickableButtons(false);
         //toolbar
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -67,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     items = new ArrayList<>();
                 }
-                getData(i);
+                currentLevel = i + 1;
             }
 
             @Override
@@ -80,12 +97,11 @@ public class MainActivity extends AppCompatActivity {
                 DEFAULT_ZOOM_PROZENT = 100;
                 chosen.clear();
                 itemAdapter.clear();
+                items.clear();
+                getData();
                 itemAdapter.addAll(items);
                 gridView.setAdapter(itemAdapter);
-                gridView.setEnabled(true);
-                connect.setClickable(true);
-                remove.setClickable(true);
-                win.setClickable(true);
+                setClickableButtons(true);
             }
         });
 
@@ -116,12 +132,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (chosen != null && chosen.size() == 2 && items.get(chosen.get(0)).isPlatine() && items.get(chosen.get(1)).isPlatine()) {
                     if (isConnectPossible(chosen.get(0), chosen.get(1))) {
-                        Toast.makeText(MainActivity.this, "Connected", Toast.LENGTH_SHORT).show();
+                        showToast(getString(R.string.connected));
                     } else {
-                        Toast.makeText(MainActivity.this, "Connect impossible", Toast.LENGTH_SHORT).show();
+                        showToast(getString(R.string.connect_impossible));
                     }
                 } else {
-                    Toast.makeText(MainActivity.this, "Please choose 2 platines to connect", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.connect_need_2_platines), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -130,12 +146,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (chosen != null && chosen.size() == 2 && items.get(chosen.get(0)).isPlatine() && items.get(chosen.get(1)).isPlatine()) {
                     if (isRemovePossible(chosen.get(0), chosen.get(1))) {
-                        Toast.makeText(MainActivity.this, "Removed", Toast.LENGTH_SHORT).show();
+                        showToast(getString(R.string.removed));
                     } else {
-                        Toast.makeText(MainActivity.this, "Remove impossible", Toast.LENGTH_SHORT).show();
+                        showToast(getString(R.string.remove_impossible));
                     }
                 } else {
-                    Toast.makeText(MainActivity.this, "Please choose 2 platines to remove loading", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.remove_need_2_platines), Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -144,63 +160,56 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isWinning()) {
-                    Toast.makeText(MainActivity.this, "Well done. Next level?", Toast.LENGTH_SHORT).show();
-                    gridView.setEnabled(false);
-                    connect.setClickable(false);
-                    remove.setClickable(false);
-                    win.setClickable(false);
+                    Toast.makeText(MainActivity.this, getString(R.string.success), Toast.LENGTH_SHORT).show();
+                    setClickableButtons(false);
                 } else {
-                    Toast.makeText(MainActivity.this, "Not really. One more try?", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.fail), Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    public void getData(int i) {
-        switch (i) {
-            case 0:
-                deepCopy(Data.level1);
-                currentLevel = 1;
-                break;
+    private void setClickableButtons(boolean value) {
+        gridView.setEnabled(value);
+        remove.setEnabled(value);
+        connect.setEnabled(value);
+        win.setEnabled(value);
+    }
+
+    public void getData() {
+        switch (currentLevel) {
             case 1:
-                deepCopy(Data.level2);
-                currentLevel = 2;
+                deepCopy(Data.level1);
                 break;
             case 2:
-                deepCopy(Data.level3);
-                currentLevel = 3;
+                deepCopy(Data.level2);
                 break;
             case 3:
-                deepCopy(Data.level4);
-                currentLevel = 4;
+                deepCopy(Data.level3);
                 break;
             case 4:
-                deepCopy(Data.level5);
-                currentLevel = 5;
+                deepCopy(Data.level4);
                 break;
             case 5:
-                deepCopy(Data.level6);
-                currentLevel = 6;
+                deepCopy(Data.level5);
                 break;
             case 6:
-                deepCopy(Data.level7);
-                currentLevel = 7;
+                deepCopy(Data.level6);
                 break;
             case 7:
-                deepCopy(Data.level8);
-                currentLevel = 8;
+                deepCopy(Data.level7);
                 break;
             case 8:
-                deepCopy(Data.level9);
-                currentLevel = 9;
+                deepCopy(Data.level8);
                 break;
             case 9:
+                deepCopy(Data.level9);
+                break;
+            case 10:
                 deepCopy(Data.level10);
-                currentLevel = 10;
                 break;
             default:
                 deepCopy(Data.level11);
-                currentLevel = 11;
                 break;
 
         }
@@ -376,7 +385,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         } else if (sameColumn) {
-            int base;
             if (i > j) {
                 start = j / 5 + 1;
                 end = i;
@@ -475,9 +483,10 @@ public class MainActivity extends AppCompatActivity {
         chosen.clear();
         itemAdapter.clear();
         items.clear();
-        getData(currentLevel - 1);
+        getData();
         itemAdapter.addAll(items);
         gridView.setAdapter(itemAdapter);
+        setClickableButtons(true);
     }
 
     public static class AboutDialogFragment extends DialogFragment {
@@ -485,12 +494,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("This application is built for " +
-                    "the IT talent competition 2018." +
-                    "\nTopic: simulate the old japanese mystery " +
-                    "by designing a game of building platine" +
-                    "\nAuthor: L3I2")
-                    .setPositiveButton("CLOSE", new DialogInterface.OnClickListener() {
+            builder.setMessage(getContext().getString(R.string.about_app_text))
+                    .setPositiveButton(getContext().getString(R.string.close), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.cancel();
@@ -517,7 +522,7 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent = new Intent(Intent.ACTION_SEND);
                             intent.setType("*/*");
                             intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"caothivananh98@gmail.com"});
-                            intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback for BookSearch App from " + user.getText().toString());
+                            intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback for Platine Builder App from " + user.getText().toString());
                             intent.putExtra(Intent.EXTRA_TEXT, feed.getText().toString());
                             if (intent.resolveActivity(getContext().getPackageManager()) != null) {
                                 startActivity(intent);

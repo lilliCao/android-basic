@@ -28,6 +28,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
+        //inflate and resize view if necessary
         if (view == null) {
             view = LayoutInflater.from(getContext()).inflate(R.layout.item, parent, false);
             ViewGroup.LayoutParams params = view.getLayoutParams();
@@ -40,10 +41,10 @@ public class ItemAdapter extends ArrayAdapter<Item> {
             paramsHorizon.setMargins(0, (int) (size * 1.0 / 5.0), 0, 0);
             horizon.setLayoutParams(paramsHorizon);
 
-            TextView capa=view.findViewById(R.id.capacity);
-            float textS=capa.getTextSize();
-            textS= (float) (textS*(DEFAULT_ZOOM_PROZENT/100.0));
-            capa.setTextSize(0,textS);
+            TextView capa = view.findViewById(R.id.capacity);
+            float textS = capa.getTextSize();
+            textS = (float) (textS * (DEFAULT_ZOOM_PROZENT / 100.0));
+            capa.setTextSize(0, textS);
         }
 
 
