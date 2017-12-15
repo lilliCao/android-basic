@@ -1,5 +1,7 @@
 package com.example.android.booksearch;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -95,6 +97,19 @@ public final class QueryUtils {
                 if (volumeInfo.has("previewLink")) {
                     previewLink = volumeInfo.getString("previewLink");
                 }
+                Bitmap bookImage = null;
+                String imageUrl = "";
+                if (volumeInfo.has("imageLinks")) {
+                    JSONObject imageLinks = volumeInfo.getJSONObject("imageLinks");
+                    if (imageLinks.has("smallThumbnail")) {
+                        imageUrl = imageLinks.getString("smallThumbnail");
+                    } else if (imageLinks.has("thumbnail")) {
+                        imageUrl = imageLinks.getString("thumbnail");
+                    }
+                }
+                if (!imageUrl.isEmpty()) {
+                    bookImage = getBookImage(imageUrl);
+                }
 
                 JSONObject saleInfo = child.optJSONObject("saleInfo");
                 String saleAbility = "";
@@ -113,13 +128,34 @@ public final class QueryUtils {
                     isPdf = pdf.getBoolean("isAvailable");
                 }
 
-                list.add(new Book(title, author, publisher, publisherDate, language, isEbook, isPdf, saleAbility, infoLink, previewLink));
+                list.add(new Book(title, author, publisher, publisherDate, language, isEbook, isPdf, saleAbility, infoLink, previewLink, bookImage));
 
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return list;
+    }
+
+    private static Bitmap getBookImage(String imageUrl) {
+        URL url = create(imageUrl);
+        Bitmap bitmap = null;
+        InputStream ins = null;
+        try {
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestMethod("GET");
+            httpURLConnection.setReadTimeout(10000);
+            httpURLConnection.setConnectTimeout(15000);
+            httpURLConnection.connect();
+            int code = httpURLConnection.getResponseCode();
+            if (code == 200) {
+                ins = httpURLConnection.getInputStream();
+                bitmap = BitmapFactory.decodeStream(ins);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bitmap;
     }
 
     private static String makeHttpRequest(URL url) {

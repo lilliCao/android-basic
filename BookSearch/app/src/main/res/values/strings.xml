@@ -11,4 +11,17 @@
     <string name="setting_number_of_result">number_of_result</string>
     <string name="setting_number_of_result_title">Default number of search books</string>
     <string name="m20">20</string>
+    <string name="about_text">
+        This application is one of the project of the nanodegree course Networking.
+        \nAuthor: L3I2</string>
+    <string name="pdf_yes">Available in pdf: yes</string>
+    <string name="pdf_no">Available in pdf: no</string>
+    <string name="ebook_yes">Ebook: yes</string>
+    <string name="ebook_no">Ebook: no</string>
+    <string name="info_link">Information link: Click me</string>
+    <string name="preview_link">Preview link: Click me</string>
+    <string name="no_infor">no information</string>
+    <string name="language">Language:</string>
+    <string name="sale">Sale status:</string>
+    <string name="no_search">There is no search to refresh</string>
 </resources>

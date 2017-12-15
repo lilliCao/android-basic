@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final String EMPTY_VIEW_VISIBILITY = "empty_view_visibility";
     private static final String EMPTY_VIEW_TEXT = "empty_view_text";
     private static final String EMPTY_VIEW_IMAGE = "empty_view_image";
-    private static final String URL_SAVE = "url" ;
+    private static final String URL_SAVE = "url";
     private static BookAdapter bookAdapter;
     private LoaderManager loaderManager;
     private ConnectivityManager connectivityManager;
@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public final static String SORT_BY_DATE = "Sort by early publish date";
     public final static String FILTER_BY_LANGUAGE = "Filter by language";
     private static String[] sortMethods = {FILTER_BY_EBOOK, FILTER_BY_PDF, SORT_BY_DATE, FILTER_BY_LANGUAGE};
+    private ListView bookList;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         sortMethod.addObserver(this);
 
         //Get booklist
-        ListView bookList = findViewById(R.id.list);
+        bookList = findViewById(R.id.list);
         loaderManager = getLoaderManager();
 
         //get other views
@@ -128,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 emptyImageView.setTag(image);
             }
             emptyTextView.setText(text);
-          a  url=savedInstanceState.getString(URL_SAVE);
+            url = savedInstanceState.getString(URL_SAVE);
         } else {
             bookAdapter = new BookAdapter(this, new ArrayList<Book>());
         }
@@ -229,12 +230,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                                 break;
                             default:
                                 //Get current setting for refresh
-                                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-                                String sort = sharedPreferences.getString(getString(R.string.setting_sort), "");
-                                String max = sharedPreferences.getString(getString(R.string.setting_number_of_result), "");
-                                maxResult = Integer.parseInt(max);
-                                url = BASE_URL + searchVolume + "&" + "maxResults=" + maxResult;
-                                sortMethod.setSorthMethod(NO_SORT);
+                                if(!editText.getText().toString().isEmpty()) {
+                                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                                    String sort = sharedPreferences.getString(getString(R.string.setting_sort), "");
+                                    String max = sharedPreferences.getString(getString(R.string.setting_number_of_result), "");
+                                    maxResult = Integer.parseInt(max);
+                                    url = BASE_URL + searchVolume + "&" + "maxResults=" + maxResult;
+                                    sortMethod.setSorthMethod(NO_SORT);
+                                }else{
+                                    Toast.makeText(MainActivity.this,getString(R.string.no_search),Toast.LENGTH_SHORT).show();
+                                }
                         }
                         return true;
                     }
@@ -285,6 +290,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void update(Observable observable, Object o) {
         callInBackGround();
+        //set scroll back to first item in book list
+        bookList.setSelection(0);
     }
 
     //class Dialog Fragment
@@ -310,8 +317,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("This application is one of the project of the nanodegree course Networking." +
-                    "\nAuthor: L3I2")
+            builder.setMessage(getString(R.string.about_text))
                     .setPositiveButton("CLOSE", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {

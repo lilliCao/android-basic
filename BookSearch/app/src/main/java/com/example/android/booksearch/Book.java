@@ -1,6 +1,7 @@
 package com.example.android.booksearch;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -20,8 +21,9 @@ public class Book implements Parcelable {
     private String saleAbility;
     private String infoLink;
     private String previewLink;
+    private Bitmap bookImage;
 
-    public Book(String title, String authors, String publisher, String publisherDate, String language, boolean isEbook, boolean availableInPdf, String saleAbility, String infoLink, String previewLink) {
+    public Book(String title, String authors, String publisher, String publisherDate, String language, boolean isEbook, boolean availableInPdf, String saleAbility, String infoLink, String previewLink, Bitmap bookImage) {
         this.title = title;
         this.authors = authors;
         this.publisher = publisher;
@@ -32,6 +34,7 @@ public class Book implements Parcelable {
         this.saleAbility = saleAbility;
         this.infoLink = infoLink;
         this.previewLink = previewLink;
+        this.bookImage = bookImage;
     }
 
     @Override
@@ -130,5 +133,13 @@ public class Book implements Parcelable {
 
     public void setPreviewLink(String previewLink) {
         this.previewLink = previewLink;
+    }
+
+    public Bitmap getBookImage() {
+        return bookImage;
+    }
+
+    public void setBookImage(Bitmap bookImage) {
+        this.bookImage = bookImage;
     }
 }

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -35,6 +36,7 @@ public class BookAdapter extends ArrayAdapter<Book> {
         }
         final Book book = getItem(position);
         //get view
+        ImageView image = view.findViewById(R.id.book_image);
         TextView title = view.findViewById(R.id.title);
         TextView author = view.findViewById(R.id.author);
         TextView publisher = view.findViewById(R.id.publish_name);
@@ -47,6 +49,9 @@ public class BookAdapter extends ArrayAdapter<Book> {
         TextView isPdf = view.findViewById(R.id.pdf);
         final LinearLayout details = view.findViewById(R.id.detail);
         ImageButton moreDetails = view.findViewById(R.id.moreDetails);
+        if (!(book.getBookImage() == null)) {
+            image.setImageBitmap(book.getBookImage());
+        }
         moreDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,6 +65,11 @@ public class BookAdapter extends ArrayAdapter<Book> {
         infoLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*Open in webview --> Page doesn't look well
+                Intent intent = new Intent(getContext().getApplicationContext(),MainActivity.class);
+                intent.putExtra("url", book.getInfoLink());
+                view.getContext().startActivity(intent);
+                */
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(book.getInfoLink()));
                 view.getContext().startActivity(intent);
             }
@@ -77,26 +87,30 @@ public class BookAdapter extends ArrayAdapter<Book> {
         setTextView(author, book.getAuthors());
         setTextView(publisher, book.getPublisher());
         setTextView(publishDate, book.getPublisherDate());
-        setTextView(language, "Language: " + book.getLanguage());
-        setTextView(saleAbility, "Sale status: " + book.getSaleAbility());
-        setTextView(infoLink, "Information link: " + book.getInfoLink());
-        setTextView(previewLink, "Preview link: " + book.getPreviewLink());
+        setTextView(language, getContext().getString(R.string.language) + book.getLanguage());
+        setTextView(saleAbility, getContext().getString(R.string.sale) + book.getSaleAbility());
+        if (!book.getInfoLink().isEmpty()) {
+            setTextView(infoLink, getContext().getString(R.string.info_link));
+        }
+        if (!book.getPreviewLink().isEmpty()) {
+            setTextView(previewLink, getContext().getString(R.string.preview_link));
+        }
         if (book.isEbook()) {
-            setTextView(isEbook, "Ebook: yes");
+            setTextView(isEbook, getContext().getString(R.string.ebook_yes));
         } else {
-            setTextView(isEbook, "Ebook: no");
+            setTextView(isEbook, getContext().getString(R.string.ebook_no));
         }
         if (book.isAvailableInPdf()) {
-            setTextView(isPdf, "Available in pdf: yes");
+            setTextView(isPdf, getContext().getString(R.string.pdf_yes));
         } else {
-            setTextView(isPdf, "Available in pdf: no");
+            setTextView(isPdf, getContext().getString(R.string.pdf_no));
         }
         return view;
     }
 
     public static void setTextView(TextView v, String data) {
         if (data.isEmpty()) {
-            v.setText("no information");
+            v.setText(v.getContext().getString(R.string.no_infor));
         } else {
             v.setText(data);
         }

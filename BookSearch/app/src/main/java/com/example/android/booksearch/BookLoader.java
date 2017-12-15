@@ -51,9 +51,11 @@ public class BookLoader extends AsyncTaskLoader<ArrayList<Book>> {
         ArrayList<Book> tmp = new ArrayList<>(list);
         switch (sortMethod) {
             case SORT_BY_DATE:
+                ArrayList<Book> bookNoDate = new ArrayList<>();
                 for (Book b : tmp) {
                     if (formatDate(b.getPublisherDate()) == 0) {
                         list.remove(b);
+                        bookNoDate.add(b);
                     }
                 }
                 Collections.sort(list, new Comparator<Book>() {
@@ -64,6 +66,7 @@ public class BookLoader extends AsyncTaskLoader<ArrayList<Book>> {
                         return value1 > value2 ? -1 : (value1 < value2 ? 1 : 0);
                     }
                 });
+                list.addAll(bookNoDate);
                 break;
             //Lambda not work --> TODO
             case FILTER_BY_EBOOK:
