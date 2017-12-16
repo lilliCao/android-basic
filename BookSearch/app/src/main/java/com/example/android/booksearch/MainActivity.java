@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         //Set change observer and get default sort
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        PreferenceManager.setDefaultValues(this,R.xml.preferences, false);
         String sort = sharedPreferences.getString(getString(R.string.setting_sort), "");
         String max = sharedPreferences.getString(getString(R.string.setting_number_of_result), "");
         maxResult = Integer.parseInt(max);

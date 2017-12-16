@@ -18,6 +18,7 @@
 
         <LinearLayout
             android:id="@+id/book_data"
+            android:layout_gravity="center_vertical"
             android:paddingLeft="5dp"
             android:layout_width="0dp"
             android:layout_weight="10"
