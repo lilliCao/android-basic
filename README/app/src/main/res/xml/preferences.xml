@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="Sort Method">
+
+    <ListPreference
+        android:key="@string/setting_number_of_result"
+        android:title="@string/setting_number_of_result_title"
+        android:defaultValue="@string/m20"
+        android:entries="@array/numbers"
+        android:entryValues="@array/numbers"></ListPreference>
+
+</PreferenceScreen>

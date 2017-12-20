@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">README</string>
+    <string name="no_information">no information</string>
+    <string name="about">About</string>
+    <string name="feedback">Feedback/Contact</string>
+    <string name="setting">Settings</string>
+    <string name="about_text">
+        This application is one of the project of the nanodegree courses from Udacity
+        \nAuthor: L3I2</string>
+    <string name="feedback_name">Name please</string>
+    <string name="feedback_text">Feedback please</string>
+    <string name="update">UPDATE</string>
+    <string name="no_item">There is no news found for this category</string>
+    <string name="no_connection">Oops there is no internet connection</string>
+    <string name="t_all">All</string>
+    <string name="t_business"><![CDATA[Business & Economy]]></string>
+    <string name="t_tech"><![CDATA[Science & Technology]]></string>
+    <string name="t_lifestyle">Lifestyle</string>
+    <string name="t_travel">Traveling</string>
+    <string name="t_sport">Sport</string>
+    <string name="t_football">Football</string>
+    <string name="setting_number_of_result">Number of articles</string>
+    <string name="setting_number_of_result_title">Number of articles</string>
+    <string name="m20">20</string>
+    <string name="m10">10</string>
+    <string name="m30">30</string>
+    <string name="m40">40</string>
+    <string name="m50">50</string>
+    <string-array name="spinner_list">
+        <item>All</item>
+        <item><![CDATA[Business & Economy]]></item>
+        <item><![CDATA[Science & Technology]]></item>
+        <item>Lifestyle</item>
+        <item>Traveling</item>
+        <item>Sport</item>
+        <item>Football</item>
+    </string-array>
+    <string-array name="numbers">
+        <item>@string/m10</item>
+        <item>@string/m20</item>
+        <item>@string/m30</item>
+        <item>@string/m40</item>
+        <item>@string/m50</item>
+    </string-array>
+</resources>

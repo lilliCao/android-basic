@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="distance_to_photo">8dp</dimen>
+    <dimen name="bound_news">15dp</dimen>
+    <dimen name="share_box">20dp</dimen>
+    <dimen name="linear">1dp</dimen>
+    <dimen name="sub_text">10sp</dimen>
+</resources>

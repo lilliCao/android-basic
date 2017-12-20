@@ -7,10 +7,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-/**
- * Currently not use because page looks very bad in webView
- */
-
 public class WebviewActivity extends AppCompatActivity {
 
     @Override
@@ -22,9 +18,13 @@ public class WebviewActivity extends AppCompatActivity {
         String url = myIntent.getStringExtra("url");
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        //Load page with completely zoom out
+        webSettings.setLoadWithOverviewMode(true);
+        //Make it like a normal viewport as browser
+        webSettings.setUseWideViewPort(true);
         //open page inside of my Webview
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("http://www.google.de");
+        webView.loadUrl(url);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

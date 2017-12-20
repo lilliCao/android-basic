@@ -65,19 +65,20 @@ public class BookAdapter extends ArrayAdapter<Book> {
         infoLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Open in webview --> Page doesn't look well
-                Intent intent = new Intent(getContext().getApplicationContext(),MainActivity.class);
+                Intent intent = new Intent(getContext().getApplicationContext(),WebviewActivity.class);
                 intent.putExtra("url", book.getInfoLink());
                 view.getContext().startActivity(intent);
-                */
+                /*
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(book.getInfoLink()));
                 view.getContext().startActivity(intent);
+                */
             }
         });
         previewLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(book.getPreviewLink()));
+                Intent intent = new Intent(getContext().getApplicationContext(),WebviewActivity.class);
+                intent.putExtra("url", book.getPreviewLink());
                 view.getContext().startActivity(intent);
             }
         });
