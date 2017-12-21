@@ -1,5 +1,9 @@
 package com.example.android.hamburg;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.PopupMenu;
 
 
@@ -59,19 +64,17 @@ public class MainActivity extends AppCompatActivity {
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
-                        Intent intent = null;
                         switch (menuItem.getItemId()) {
                             case R.id.about:
-                                intent = new Intent(MainActivity.this, AboutActivity.class);
-                                break;
-                            case R.id.account:
-                                intent = new Intent(MainActivity.this, AccountActivity.class);
+                                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+                                startActivity(intent);
                                 break;
                             default:
-                                intent = new Intent(MainActivity.this, SettingActivity.class);
+                                //feedback
+                                DialogFragment contact=new ContactDialogFragment();
+                                contact.show(getFragmentManager(), "");
                                 break;
                         }
-                        startActivity(intent);
                         return true;
                     }
                 });
@@ -79,6 +82,33 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+    public static class ContactDialogFragment extends DialogFragment{
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+            View view=getActivity().getLayoutInflater().inflate(R.layout.contact, null);
+            EditText user=view.findViewById(R.id.user);
+            final EditText feed=view.findViewById(R.id.feedback);
+            builder.setTitle(getString(R.string.feed))
+                    .setView(view)
+                    .setPositiveButton(getString(R.string.send), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intent=new Intent(Intent.ACTION_SEND);
+                            intent.setType("*/*");
+                            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"caothivananh98@gmail.com"});
+                            intent.putExtra(Intent.EXTRA_SUBJECT,getString(R.string.feedback));
+                            intent.putExtra(Intent.EXTRA_TEXT, feed.getText().toString());
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                if(intent.resolveActivity(getContext().getPackageManager())!=null){
+                                    startActivity(intent);
+                                }
+                            }
+                        }
+                    });
+            return builder.create();
         }
     }
 }

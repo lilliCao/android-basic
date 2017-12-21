@@ -16,22 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".AboutActivity"
-            android:label="About"
-            android:theme="@style/ChildTheme"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".SettingActivity"
-            android:label="Setting"
-            android:theme="@style/ChildTheme"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".AccountActivity"
-            android:label="User Account"
-            android:theme="@style/ChildTheme"
-            android:parentActivityName=".MainActivity" />
+        <activity android:name=".AboutActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/ChildTheme">
+
+        </activity>
     </application>
 
 </manifest>

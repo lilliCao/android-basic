@@ -234,5 +234,9 @@
     <string name="t6">accomodation</string>
     <string name="setting">System setting</string>
     <string name="setting_t">Will be updated later</string>
+    <string name="name">Name please</string>
+    <string name="feed">Feedback please</string>
+    <string name="send">Send</string>
+    <string name="feedback">Feedback for Hamburg App</string>
 
 </resources>

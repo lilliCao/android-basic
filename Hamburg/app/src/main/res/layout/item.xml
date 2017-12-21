@@ -29,12 +29,6 @@
                 android:id="@+id/itemListName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/itemListStatus"
-                android:layout_below="@id/itemListName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#D50000"/>
 
         </RelativeLayout>
     </LinearLayout>

@@ -52,13 +52,11 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         Item currentItem = getItem(position);
         //Get views
         TextView textViewName = listItemView.findViewById(R.id.itemListName);
-        TextView textViewStatus = listItemView.findViewById(R.id.itemListStatus);
         LinearLayout listView = listItemView.findViewById(R.id.itemList);
         //Adapt new view
         int color = ContextCompat.getColor(getContext(), this.backgroundColor);
         listView.setBackgroundColor(color);
         textViewName.setText(currentItem.getName());
-        textViewStatus.setText(currentItem.getStatus());
         if (currentItem.getImageId() != -1) {
             ImageView imageView = listItemView.findViewById(R.id.itemListImage);
             imageView.setBackgroundColor(Color.WHITE);

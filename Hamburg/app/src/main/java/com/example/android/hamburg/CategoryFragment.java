@@ -29,7 +29,7 @@ public class CategoryFragment extends Fragment {
     }
 
     public static CategoryFragment newInstance(ArrayList<Item> itemArrayList, int backgroundColor,
-                                               boolean noAdaptableImage, int titleImageId, String name, boolean isGeneralInfor) {
+                                               boolean noAdaptableImage, int titleImageId, String name) {
         CategoryFragment categoryFragment = new CategoryFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(itemList, itemArrayList);
@@ -37,7 +37,6 @@ public class CategoryFragment extends Fragment {
         bundle.putBoolean(badImage, noAdaptableImage);
         bundle.putInt(titleImage, titleImageId);
         bundle.putString(titleName, name);
-        bundle.putBoolean(generalInformation, isGeneralInfor);
         categoryFragment.setArguments(bundle);
         return categoryFragment;
     }
@@ -53,7 +52,6 @@ public class CategoryFragment extends Fragment {
         String name = getArguments().getString(titleName);
         int backgroundColor = getArguments().getInt(color);
         boolean isBadImage = getArguments().getBoolean(badImage);
-        final boolean isGeneral = getArguments().getBoolean(generalInformation);
         //Get view
         ImageView titleImageView = rootView.findViewById(R.id.itemImage);
         TextView titleTextView = rootView.findViewById(R.id.itemName);
@@ -74,14 +72,9 @@ public class CategoryFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Item currentItem = items.get(i);
-                TextView itemStatus = view.findViewById(R.id.itemListStatus);
                 TextView textView = view.findViewById(R.id.content);
                 TextView link1View = view.findViewById(R.id.link1);
                 TextView link2View = view.findViewById(R.id.link2);
-                if (!isGeneral) {
-                    itemStatus.setText(getString(R.string.seen));
-                    items.get(i).setStatus(getString(R.string.seen));
-                }
                 link1View.setVisibility(View.GONE);
                 link2View.setVisibility(View.GONE);
 

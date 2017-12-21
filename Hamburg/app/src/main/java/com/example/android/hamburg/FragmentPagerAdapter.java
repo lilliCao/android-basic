@@ -145,22 +145,22 @@ public class FragmentPagerAdapter extends android.support.v4.app.FragmentPagerAd
         switch (position) {
             case 0:
                 return CategoryFragment.newInstance(general, R.color.colorGeneral, true,
-                        R.drawable.catelog_general, act.getString(R.string.general), true);
+                        R.drawable.catelog_general, act.getString(R.string.general));
             case 1:
                 return CategoryFragment.newInstance(sightseeing, R.color.colorSightseeing, true,
-                        R.drawable.catelog_sightseeing, act.getString(R.string.sightseeing), false);
+                        R.drawable.catelog_sightseeing, act.getString(R.string.sightseeing));
             case 2:
                 return CategoryFragment.newInstance(activity, R.color.colorActivities, true,
-                        R.drawable.catelog_activity, act.getString(R.string.activity), false);
+                        R.drawable.catelog_activity, act.getString(R.string.activity));
             case 3:
                 return CategoryFragment.newInstance(eating, R.color.colorFood, true,
-                        R.drawable.catelog_food, act.getString(R.string.food), false);
+                        R.drawable.catelog_food, act.getString(R.string.food));
             case 4:
                 return CategoryFragment.newInstance(transport, R.color.colorTransport, true,
-                        R.drawable.catelog_transport, act.getString(R.string.transport), false);
+                        R.drawable.catelog_transport, act.getString(R.string.transport));
             default:
                 return CategoryFragment.newInstance(accomodation, R.color.colorAccomodation, false,
-                        R.drawable.catelog_accomodation, act.getString(R.string.accomodation), false);
+                        R.drawable.catelog_accomodation, act.getString(R.string.accomodation));
         }
     }
 
