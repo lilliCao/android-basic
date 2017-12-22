@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+
     <LinearLayout
         android:id="@+id/itemFather"
         android:layout_width="match_parent"
@@ -13,36 +14,36 @@
         android:paddingBottom="16dp"
         android:paddingRight="24dp"
         android:paddingLeft="24dp">
+
         <RelativeLayout
             android:id="@+id/itemTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="24dp">
-            <de.hdodenhof.circleimageview.CircleImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/itemImage"
                 android:background="@color/appBackground"
                 android:layout_centerHorizontal="true"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 app:border_color="@color/appBackground"
-                app:border_width="2dp"
-                />
+                app:border_width="2dp" />
+
             <TextView
                 android:id="@+id/itemName"
                 android:layout_below="@id/itemImage"
                 android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
         </RelativeLayout>
+
         <ListView
             android:id="@+id/itemList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:drawSelectorOnTop="true"
-        />
+            android:drawSelectorOnTop="true" />
 
     </LinearLayout>
 

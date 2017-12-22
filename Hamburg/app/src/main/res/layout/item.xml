@@ -12,19 +12,20 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/itemListImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:border_color="@android:color/black"
             app:border_width="2dp" />
+
         <RelativeLayout
             android:id="@+id/itemListText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="16dp"
             android:layout_gravity="center_vertical">
+
             <TextView
                 android:id="@+id/itemListName"
                 android:layout_width="wrap_content"
@@ -32,6 +33,7 @@
 
         </RelativeLayout>
     </LinearLayout>
+
     <TextView
         android:paddingTop="4dp"
         android:id="@+id/content"
@@ -41,7 +43,8 @@
         android:background="#E1BEE7"
         android:textColor="@android:color/black"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
     <TextView
         android:id="@+id/link1"
         android:layout_width="wrap_content"
@@ -50,8 +53,8 @@
         android:textStyle="bold"
         android:focusable="false"
         android:autoLink="web"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/link2"
         android:layout_width="wrap_content"
@@ -60,7 +63,6 @@
         android:text=""
         android:focusable="false"
         android:textStyle="bold"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 
 </LinearLayout>

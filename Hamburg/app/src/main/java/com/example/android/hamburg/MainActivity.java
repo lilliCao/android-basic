@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             default:
                                 //feedback
-                                DialogFragment contact=new ContactDialogFragment();
+                                DialogFragment contact = new ContactDialogFragment();
                                 contact.show(getFragmentManager(), "");
                                 break;
                         }
@@ -84,25 +84,26 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-    public static class ContactDialogFragment extends DialogFragment{
+
+    public static class ContactDialogFragment extends DialogFragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
-            View view=getActivity().getLayoutInflater().inflate(R.layout.contact, null);
-            EditText user=view.findViewById(R.id.user);
-            final EditText feed=view.findViewById(R.id.feedback);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            View view = getActivity().getLayoutInflater().inflate(R.layout.contact, null);
+            EditText user = view.findViewById(R.id.user);
+            final EditText feed = view.findViewById(R.id.feedback);
             builder.setTitle(getString(R.string.feed))
                     .setView(view)
                     .setPositiveButton(getString(R.string.send), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent=new Intent(Intent.ACTION_SEND);
+                            Intent intent = new Intent(Intent.ACTION_SEND);
                             intent.setType("*/*");
                             intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"caothivananh98@gmail.com"});
-                            intent.putExtra(Intent.EXTRA_SUBJECT,getString(R.string.feedback));
+                            intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback));
                             intent.putExtra(Intent.EXTRA_TEXT, feed.getText().toString());
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                if(intent.resolveActivity(getContext().getPackageManager())!=null){
+                                if (intent.resolveActivity(getContext().getPackageManager()) != null) {
                                     startActivity(intent);
                                 }
                             }

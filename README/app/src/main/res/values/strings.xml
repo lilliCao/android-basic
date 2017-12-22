@@ -19,6 +19,10 @@
     <string name="t_travel">Traveling</string>
     <string name="t_sport">Sport</string>
     <string name="t_football">Football</string>
+    <string name="t_film">Film</string>
+    <string name="t_education">Education</string>
+    <string name="t_environment">Environment</string>
+    <string name="t_culture">Culture</string>
     <string name="setting_number_of_result">Number of articles</string>
     <string name="setting_number_of_result_title">Number of articles</string>
     <string name="m20">20</string>
@@ -26,14 +30,21 @@
     <string name="m30">30</string>
     <string name="m40">40</string>
     <string name="m50">50</string>
+    <string name="t_fashion">Fashion</string>
+    <string name="enter_something">Please enter something if you want to search</string>
     <string-array name="spinner_list">
-        <item>All</item>
-        <item><![CDATA[Business & Economy]]></item>
-        <item><![CDATA[Science & Technology]]></item>
-        <item>Lifestyle</item>
-        <item>Traveling</item>
-        <item>Sport</item>
-        <item>Football</item>
+        <item>@string/t_all</item>
+        <item>@string/t_business</item>
+        <item>@string/t_tech</item>
+        <item>@string/t_lifestyle</item>
+        <item>@string/t_travel</item>
+        <item>@string/t_sport</item>
+        <item>@string/t_football</item>
+        <item>@string/t_film</item>
+        <item>@string/t_education</item>
+        <item>@string/t_environment</item>
+        <item>@string/t_culture</item>
+        <item>@string/t_fashion</item>
     </string-array>
     <string-array name="numbers">
         <item>@string/m10</item>

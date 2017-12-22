@@ -16,16 +16,20 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
@@ -33,6 +37,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -51,10 +56,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private TextView noItem;
     private LoaderManager loaderManager;
     private ListView list;
-    private Button update;
+    private ImageButton search;
+    private EditText searchText;
     private String url;
     private String pageSize;
     public SharedPreferences sharedPreferences;
+    private SwipeRefreshLayout swipe;
+    private InputMethodManager inputMethodManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,27 +82,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         //toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //spinner
-        Spinner spinner = findViewById(R.id.spinner);
-        final ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(
-                this,
-                R.array.spinner_list,
-                android.R.layout.simple_dropdown_item_1line);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(spinnerAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                chosenSection = i;
-                createNewUrl(chosenSection);
-                //Toast.makeText(MainActivity.this,chosenSection,Toast.LENGTH_SHORT).show();
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
         //share preference
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -105,35 +93,88 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         loaderManager = getLoaderManager();
         callInBackGround();
 
-        //update button
-        update = findViewById(R.id.update);
-        update.setOnClickListener(new View.OnClickListener() {
+        //search button
+        inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        search = findViewById(R.id.update);
+        searchText = findViewById(R.id.search);
+        searchText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if (i == keyEvent.KEYCODE_ENTER) {
+                    searchAction();
+                    return true;
+                }
+                return false;
+            }
+        });
+        search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                searchAction();
+            }
+        });
+        //swipe to refresh
+        swipe = findViewById(R.id.swipe_to_refresh);
+        swipe.setRefreshing(false);
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipe.setRefreshing(false);
                 callInBackGround();
             }
         });
     }
 
+
+    private void searchAction() {
+        hideKeyboard();
+        if (!searchText.getText().toString().isEmpty()) {
+            String searchWords = searchText.getText().toString().trim().replace("\\s", "%20");
+            url = TEST_URL + "&q=" + searchWords;
+            callInBackGround();
+        } else {
+            Toast.makeText(MainActivity.this, getString(R.string.enter_something), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void hideKeyboard() {
+        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
     private void createNewUrl(int chosenSection) {
         switch (chosenSection) {
             case 1:
-                url += "&section=business";
+                url = TEST_URL + "&section=business";
                 break;
             case 2:
-                url += "&section=technology";
+                url = TEST_URL + "&section=technology";
                 break;
             case 3:
-                url += "&section=lifeandstyle";
+                url = TEST_URL + "&section=lifeandstyle";
                 break;
             case 4:
-                url += "&section=travel";
+                url = TEST_URL + "&section=travel";
                 break;
             case 5:
-                url += "&section=sport";
+                url = TEST_URL + "&section=sport";
                 break;
             case 6:
-                url += "&section=football";
+                url = TEST_URL + "&section=football";
+                break;
+            case 7:
+                url = TEST_URL + "&section=film";
+                break;
+            case 8:
+                url = TEST_URL + "&section=education";
+                break;
+            case 9:
+                url = TEST_URL + "&section=environment";
+                break;
+            case 10:
+                url = TEST_URL + "&section=culture";
+                break;
+            case 11:
+                url = TEST_URL + "&section=fashion";
                 break;
             default:
                 break;
@@ -175,6 +216,30 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_items, menu);
+        //spinner
+        MenuItem item = menu.findItem(R.id.spinner);
+        Spinner spinner = (Spinner) MenuItemCompat.getActionView(item);
+        final ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.spinner_list,
+                android.R.layout.simple_dropdown_item_1line);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                searchText.setText("");
+                chosenSection = i;
+                createNewUrl(chosenSection);
+                //Toast.makeText(MainActivity.this,chosenSection,Toast.LENGTH_SHORT).show();
+                callInBackGround();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         return true;
     }
 
@@ -198,6 +263,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                             case R.id.about:
                                 DialogFragment aboutDialog = new AboutDialogFragment();
                                 aboutDialog.show(getSupportFragmentManager(), CONTACT_FRAGMENT);
+                                break;
+                            case R.id.refresh:
+                                callInBackGround();
                                 break;
                             default:
                                 DialogFragment feedbackDialog = new ContactDialogFragment();
@@ -227,6 +295,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<ArrayList<News>> loader, ArrayList<News> news) {
         loading.setVisibility(View.GONE);
+        swipe.setRefreshing(false);
         if (news == null || news.isEmpty()) {
             noItem.setVisibility(View.VISIBLE);
             adapter.clear();
