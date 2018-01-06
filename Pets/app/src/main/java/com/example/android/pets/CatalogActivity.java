@@ -1,26 +1,38 @@
 package com.example.android.pets;
 
+import android.app.AlertDialog;
+import android.app.LoaderManager;
+import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.Loader;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
-import com.example.android.pets.data.PetContract;
 import com.example.android.pets.data.PetContract.PetEntry;
 import com.example.android.pets.data.PetDbHelper;
 
 /**
  * Displays list of pets that were entered and stored in the app.
  */
-public class CatalogActivity extends AppCompatActivity {
+public class CatalogActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+    private static final int LOADER_ID = 1;
     private PetDbHelper mDbHelper;
+    private Cursor cursor;
+    private ListView listView;
+    private PetCursorAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,39 +51,24 @@ public class CatalogActivity extends AppCompatActivity {
         // To access our database, we instantiate our subclass of SQLiteOpenHelper
         // and pass the context, which is the current activity.
         mDbHelper = new PetDbHelper(this);
-        displayDatabaseInfo();
+        listView = (ListView) findViewById(R.id.list);
+        RelativeLayout emptyView = (RelativeLayout) findViewById(R.id.empty_view);
+        listView.setEmptyView(emptyView);
+        adapter = new PetCursorAdapter(this, null);
+        listView.setAdapter(adapter);
+        getLoaderManager().initLoader(LOADER_ID, null, this);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Intent intent = new Intent(CatalogActivity.this, EditorActivity.class);
+                Uri uri = ContentUris.withAppendedId(PetEntry.CONTENT_URI, id);
+                intent.setData(uri);
+                startActivity(intent);
+            }
+        });
     }
 
-    /**
-     * Temporary helper method to display information in the onscreen TextView about the state of
-     * the pets database.
-     */
-    private void displayDatabaseInfo() {
-
-        // Create and/or open a database to read from it
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-        String fields[] = {PetEntry.COLUMN_PET_NAME, PetEntry.COLUMN_PET_GENDER};
-
-        String selection=PetEntry.COLUMN_PET_GENDER+"=?";
-        String[] selectionArgs=new String[] {String.valueOf(PetEntry.GENDER_MALE)};
-        Cursor cursor = db.query(PetEntry.TABLE_NAME,fields,selection,selectionArgs,null,null,null);
-        try {
-            // Display the number of rows in the Cursor (which reflects the number of rows in the
-            // pets table in the database).
-            //int colummIndex=cursor.getColumnIndex(PetEntry.COLUMN_PET_NAME);
-            //cursor.moveToPosition(1);
-            //String firstName=cursor.getString(colummIndex);
-
-            TextView displayView = (TextView) findViewById(R.id.text_view_pet);
-            displayView.setText("Number of rows in pets database table: " + cursor.getCount());
-            //displayView.setText("First pet name is "+firstName);
-        } finally {
-            // Always close the cursor when you're done reading from it. This releases all its
-            // resources and makes it invalid.
-            cursor.close();
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -87,27 +84,84 @@ public class CatalogActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to a click on the "Insert dummy data" menu option
             case R.id.action_insert_dummy_data:
-                //insertPet();
+                insertPet();
                 //displayDatabaseInfo();
                 return true;
             // Respond to a click on the "Delete all entries" menu option
             case R.id.action_delete_all_entries:
-                // Do nothing for now
+                showDeleteConfirmationDialog();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void deleteAllPets() {
+        int rowDeleted = getContentResolver().delete(PetEntry.CONTENT_URI, null, null);
+        if (rowDeleted == 0) {
+            Toast.makeText(this, "Error deleting pets", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Successfully deleting " + rowDeleted + "pets", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void showDeleteConfirmationDialog() {
+        // Create an AlertDialog.Builder and set the message, and click listeners
+        // for the postivie and negative buttons on the dialog.
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_dialog_msg);
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Delete" button, so delete the pet.
+                deleteAllPets();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Cancel" button, so dismiss the dialog
+                // and continue editing the pet.
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
     private void insertPet() {
-        SQLiteDatabase sqLiteDatabase=mDbHelper.getWritableDatabase();
+        //SQLiteDatabase sqLiteDatabase=mDbHelper.getWritableDatabase();
 
-        ContentValues test= new ContentValues();
-        test.put(PetEntry.COLUMN_PET_NAME,"Toto");
+        ContentValues test = new ContentValues();
+        test.put(PetEntry.COLUMN_PET_NAME, "Toto");
         test.put(PetEntry.COLUMN_PET_GENDER, PetEntry.GENDER_MALE);
-        test.put(PetEntry.COLUMN_PET_BREED,"Terrier");
-        test.put(PetEntry.COLUMN_PET_WEIGHT,7);
+        test.put(PetEntry.COLUMN_PET_BREED, "Terrier");
+        test.put(PetEntry.COLUMN_PET_WEIGHT, 7);
 
-        sqLiteDatabase.insert(PetEntry.TABLE_NAME,null,test);
+        //sqLiteDatabase.insert(PetEntry.TABLE_NAME,null,test);
+        getContentResolver().insert(PetEntry.CONTENT_URI, test);
+    }
 
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        String[] projection = new String[]{
+                PetEntry.COLUMN_PET_NAME,
+                PetEntry._ID,
+                PetEntry.COLUMN_PET_GENDER,
+                PetEntry.COLUMN_PET_BREED,
+                PetEntry.COLUMN_PET_WEIGHT,
+        };
+        return new CursorLoader(this, PetEntry.CONTENT_URI, projection, null, null, null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        adapter.swapCursor(cursor);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        adapter.swapCursor(null);
     }
 }
