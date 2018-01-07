@@ -29,8 +29,6 @@ import com.example.android.pets.data.PetDbHelper;
  */
 public class CatalogActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final int LOADER_ID = 1;
-    private PetDbHelper mDbHelper;
-    private Cursor cursor;
     private ListView listView;
     private PetCursorAdapter adapter;
 
@@ -50,7 +48,6 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
         });
         // To access our database, we instantiate our subclass of SQLiteOpenHelper
         // and pass the context, which is the current activity.
-        mDbHelper = new PetDbHelper(this);
         listView = (ListView) findViewById(R.id.list);
         RelativeLayout emptyView = (RelativeLayout) findViewById(R.id.empty_view);
         listView.setEmptyView(emptyView);
@@ -152,7 +149,7 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
                 PetEntry.COLUMN_PET_BREED,
                 PetEntry.COLUMN_PET_WEIGHT,
         };
-        return new CursorLoader(this, PetEntry.CONTENT_URI, projection, null, null, null);
+        return new CursorLoader(this, PetEntry.CONTENT_URI, projection, null, null, PetEntry.COLUMN_PET_NAME+" ASC");
     }
 
     @Override
