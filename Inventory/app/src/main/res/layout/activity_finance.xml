@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.android.inventory.FinanceActivity">
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d_up"
+                android:text="@string/total_income"
+                android:textAllCaps="true"
+                android:layout_gravity="center_horizontal" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/finance"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:id="@+id/total"
+                android:textColor="@color/color_total"
+                android:textSize="@dimen/text_huge"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/details_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/details"
+                android:textAllCaps="true"
+                android:paddingBottom="@dimen/d_up" />
+
+            <LinearLayout
+                android:id="@+id/summary_report"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical"></LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</android.support.constraint.ConstraintLayout>
+

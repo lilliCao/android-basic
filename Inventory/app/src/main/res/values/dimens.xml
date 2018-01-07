@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="divider_list">2dp</dimen>
+    <dimen name="add_button_margin">16dp</dimen>
+    <dimen name="d_empty_view">4dp</dimen>
+    <dimen name="d_empty_view_image">150dp</dimen>
+    <dimen name="d_item">16dp</dimen>
+    <dimen name="d_sub_body">16dp</dimen>
+    <dimen name="d_order">20dp</dimen>
+    <dimen name="text_small">12sp</dimen>
+    <dimen name="d_icon_text">8dp</dimen>
+    <dimen name="d_feedback">16dp</dimen>
+    <dimen name="d_up">16dp</dimen>
+    <dimen name="text_huge">56sp</dimen>
+</resources>

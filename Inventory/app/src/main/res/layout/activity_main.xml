@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.android.inventory.MainActivity">
+
+    <ListView
+        android:id="@+id/list"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@android:color/black"
+        android:dividerHeight="@dimen/divider_list"></ListView>
+
+    <RelativeLayout
+        android:id="@+id/empty_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:id="@+id/empty_view_image"
+            android:layout_width="@dimen/d_empty_view_image"
+            android:layout_height="@dimen/d_empty_view_image"
+            android:src="@drawable/empty_view"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/empty_view_text"
+            android:layout_below="@id/empty_view_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/empty_view_text"
+            android:paddingTop="@dimen/d_empty_view"
+            android:fontFamily="sans-serif"
+            android:textAppearance="?android:textAppearanceMedium" />
+
+        <TextView
+            android:layout_below="@id/empty_view_text"
+            android:id="@+id/empty_view_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/color_no_important"
+            android:fontFamily="sans-serif"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:text="@string/empty_view_text2" />
+
+    </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_button"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_add_black_24dp"
+        android:layout_margin="@dimen/add_button_margin" />
+
+</RelativeLayout>

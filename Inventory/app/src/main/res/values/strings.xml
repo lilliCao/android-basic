@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">Inventory</string>
+    <string name="empty_view_text">Have an idea for your business?</string>
+    <string name="empty_view_text2">Let\'s start your business</string>
+    <string name="l_name">Product name</string>
+    <string name="s_name">Name</string>
+    <string name="s_price">Unit price</string>
+    <string name="s_quantity">Quantity</string>
+    <string name="s_supply">Suppliers</string>
+    <string name="s_order">Order</string>
+    <string name="s_order_data">Details</string>
+    <string name="s_order_method">Order by</string>
+    <string name="about">About</string>
+    <string name="feedback">Feedback</string>
+    <string name="delete_all">Delete all</string>
+    <string name="done">Done</string>
+    <string name="delete">Delete</string>
+    <string name="detail">Detail</string>
+    <string name="item_delete">Delete</string>
+    <string name="item_edit">Edit</string>
+    <string name="item_sale">Sale</string>
+    <string name="phone">PHONE</string>
+    <string name="email">EMAIL</string>
+    <string name="web">WEBSITE</string>
+    <string name="price_text">Unit price:</string>
+    <string name="quantity_text">In store:</string>
+    <string name="can_not_decrease_quantity">Impossibe to decrease quantity</string>
+    <string name="fill_name">product name is missing</string>
+    <string name="fill_supplier">supplier data is missing</string>
+    <string name="fill_details">order data is missing</string>
+    <string name="fill_price">Price is missing or in wrong format</string>
+    <string name="add_new">Add Product</string>
+    <string name="edit_mode">Edit Product</string>
+    <string name="delete_dialog_msg">Delete all the products?</string>
+    <string name="delete_dialog_msg_item">Delete this product?</string>
+    <string name="cancel">Cancel</string>
+    <string name="close">CLOSE</string>
+    <string name="about_message">
+        This application is designed as the final project of the course Storage,
+        Android Basic Nanodegree from Udacity.
+    \nAuthor: L3I2</string>
+    <string name="f_name">Name</string>
+    <string name="f_feedback">Feedback</string>
+    <string name="f_title">Feedback</string>
+    <string name="send">SEND</string>
+    <string name="finance">Finance Summary</string>
+    <string name="total_income">Total Income</string>
+    <string name="details">Details</string>
+    <string name="unsave_message">You might have some unsaved change?
+        \nStill exist?</string>
+    <string name="stay">STAY</string>
+    <string name="keep_exist">EXIST</string>
+
+    <string-array name="spinner_order">
+        <item name="phone">@string/phone</item>
+        <item name="email">@string/email</item>
+        <item name="web">@string/web</item>
+    </string-array>
+
+</resources>

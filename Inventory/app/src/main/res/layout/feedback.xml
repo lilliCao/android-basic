@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/d_feedback"
+    android:paddingRight="@dimen/d_feedback"
+    android:orientation="vertical">
+
+    <TextView
+        android:text="@string/f_name"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/f_name_enter"
+        android:hint="@string/f_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:text="@string/f_feedback"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/f_feedback_enter"
+        android:hint="@string/f_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
