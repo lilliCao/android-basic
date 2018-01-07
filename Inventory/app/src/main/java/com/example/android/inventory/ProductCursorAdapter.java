@@ -10,15 +10,11 @@ import android.widget.TextView;
 
 import com.example.android.inventory.data.ProductContract;
 
-import java.text.DecimalFormat;
-
 /**
  * Created by tali on 06.01.18.
  */
 
 public class ProductCursorAdapter extends CursorAdapter {
-    public static final DecimalFormat decimalFormat = new DecimalFormat("0.00");
-
 
     public ProductCursorAdapter(Context context, Cursor c) {
         super(context, c, 0);
@@ -42,7 +38,7 @@ public class ProductCursorAdapter extends CursorAdapter {
         TextView date = view.findViewById(R.id.p_last_edit);
         //set data
         name.setText(cursor.getString(nameCol));
-        price.setText(decimalFormat.format(cursor.getInt(priceCol) / 100.00) + "$");
+        price.setText(cursor.getFloat(priceCol) + "$");
         quantity.setText(String.valueOf(cursor.getInt(quantityCol)));
         date.setText(cursor.getString(dateCol));
 

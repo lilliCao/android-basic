@@ -14,14 +14,13 @@ import android.widget.TextView;
 
 import com.example.android.inventory.data.ProductContract;
 
-import static com.example.android.inventory.ProductCursorAdapter.decimalFormat;
 
 public class FinanceActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private TextView total;
     private LinearLayout summaryReport;
     private Button detailButton;
     private static final int LOADER_ID = 4;
-    private int totalMoney;
+    private float totalMoney;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,15 +74,15 @@ public class FinanceActivity extends AppCompatActivity implements LoaderManager.
             int colName = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME);
             int colNumber = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_NUMBER_SALE);
             int colIncome = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_INCOME);
-            totalMoney += cursor.getInt(colIncome);
+            totalMoney += cursor.getFloat(colIncome);
 
             reportName.setText(cursor.getString(colName));
             reportNumber.setText(String.valueOf(cursor.getInt(colNumber)));
-            reportIncome.setText(decimalFormat.format(cursor.getInt(colIncome) / 100.00));
+            reportIncome.setText(String.valueOf(cursor.getFloat(colIncome)));
 
             summaryReport.addView(view);
         }
-        total.setText(decimalFormat.format(totalMoney / 100.00) + "$");
+        total.setText(totalMoney + "$");
         getLoaderManager().destroyLoader(LOADER_ID);
     }
 

@@ -64,7 +64,7 @@
                 android:id="@+id/s_price"
                 style="@style/SubFieldStyle"
                 android:inputType="numberDecimal"
-                android:hint="eg 20.00 0.12 234.24" />
+                android:hint="eg 20 0.12 234.2" />
         </LinearLayout>
 
         <LinearLayout
@@ -92,9 +92,9 @@
                     android:layout_weight="6"
                     android:layout_height="wrap_content"
                     android:id="@+id/s_quantity"
+                    android:text="0"
                     android:inputType="number"
-                    android:textAppearance="?android:textAppearanceSmall"
-                    android:hint="number of products please" />
+                    android:textAppearance="?android:textAppearanceSmall" />
 
                 <Button
                     android:id="@+id/plus"

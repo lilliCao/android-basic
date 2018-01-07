@@ -24,7 +24,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.view.menu.MenuPopupHelper;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,9 +43,7 @@ import com.example.android.inventory.data.ProductContract;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.regex.Pattern;
 
-import static com.example.android.inventory.ProductCursorAdapter.decimalFormat;
 
 public class SubActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private final static String LOG_TAG = SubActivity.class.getSimpleName();
@@ -66,7 +63,6 @@ public class SubActivity extends AppCompatActivity implements LoaderManager.Load
     private Button order;
     private int spinnerValue = ProductContract.ProductEntry.ORDER_PHONE;
     private int quantityValue;
-    private final String decimalPatter = "([0-9]+)\\.([0-9]{2})";
     private Uri uriPass;
     private static final int LOADER_ID = 2;
     private boolean productChanged = false;
@@ -260,15 +256,7 @@ public class SubActivity extends AppCompatActivity implements LoaderManager.Load
         intent.setData(Uri.parse("tel:" + orderDetailV));
         if (intent.resolveActivity(getPackageManager()) != null) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                Log.e(LOG_TAG, "in check permission");
                 ActivityCompat.requestPermissions(SubActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL);
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return;
             }
             startActivity(intent);
@@ -395,12 +383,12 @@ public class SubActivity extends AppCompatActivity implements LoaderManager.Load
     }
 
     private void deleteProduct() {
-            int rowDeleted = getContentResolver().delete(uriPass, null, null);
-            if (rowDeleted == 0) {
-                Toast.makeText(this, "Error deleting this product", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Successfully deleting this product", Toast.LENGTH_SHORT).show();
-            }
+        int rowDeleted = getContentResolver().delete(uriPass, null, null);
+        if (rowDeleted == 0) {
+            Toast.makeText(this, "Error deleting this product", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Successfully deleting this product", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void showUnsaveChangesDialog() {
@@ -453,7 +441,9 @@ public class SubActivity extends AppCompatActivity implements LoaderManager.Load
             Toast.makeText(SubActivity.this, getString(R.string.fill_details), Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (!Pattern.matches(decimalPatter, priceV)) {
+        try {
+            Double.parseDouble(quantityV);
+        } catch (Exception e) {
             Toast.makeText(SubActivity.this, getString(R.string.fill_price), Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -461,7 +451,7 @@ public class SubActivity extends AppCompatActivity implements LoaderManager.Load
 
         ContentValues values = new ContentValues();
         values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME, nameV);
-        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, (int) (Double.parseDouble(priceV) * 100));
+        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, Double.parseDouble(priceV));
         if (!TextUtils.isEmpty(quantityV)) {
             values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY, Integer.valueOf(quantityV));
         }
@@ -532,7 +522,7 @@ public class SubActivity extends AppCompatActivity implements LoaderManager.Load
             int colImage = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_IMAGE);
 
             name.setText(cursor.getString(colName));
-            price.setText(decimalFormat.format(cursor.getInt(colPrice) / 100.00));
+            price.setText(String.valueOf(cursor.getFloat(colPrice)));
             quantity.setText(String.valueOf(cursor.getInt(colQuantity)));
             supplier.setText(cursor.getString(colSupplier));
             orderDetail.setText(cursor.getString(colOrderdetails));

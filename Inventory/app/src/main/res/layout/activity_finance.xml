@@ -43,8 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/details"
-                android:textAllCaps="true"
-                android:paddingBottom="@dimen/d_up" />
+                android:textAllCaps="true" />
 
             <LinearLayout
                 android:id="@+id/summary_report"

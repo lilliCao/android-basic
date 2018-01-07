@@ -128,8 +128,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 return true;
             case R.id.sample:
                 insertSampleProduct();
+                return true;
             case R.id.setting:
                 showSettingDialog();
+                return true;
             default:
                 break;
         }
@@ -163,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_SUPPLIER, "test supplier");
         values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_ORDER_DETAIL, "http://udacity.com");
         values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY, 10);
-        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, 1234);
+        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, 12.34);
         values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_ORDER_METHOD, ProductContract.ProductEntry.ORDER_WEB);
         getContentResolver().insert(ProductContract.ProductEntry.CONTENT_URI, values);
     }
@@ -307,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 contentValues.put(ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY, cursor.getInt(colQuantity) - 1);
                 contentValues.put(ProductContract.ProductEntry.COLUMN_PRODUCT_NUMBER_SALE, cursor.getInt(colSale) + 1);
                 contentValues.put(ProductContract.ProductEntry.COLUMN_PRODUCT_INCOME,
-                        cursor.getInt(colIncome) + cursor.getInt(colPrice));
+                        cursor.getFloat(colIncome) + cursor.getFloat(colPrice));
                 //update
                 int rowUpdated = getContentResolver().update(uriPass, contentValues, null, null);
                 if (rowUpdated == 0) {
