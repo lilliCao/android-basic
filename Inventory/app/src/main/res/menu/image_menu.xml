@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".SubActivity">
+    <item
+        android:id="@+id/gallery"
+        android:title="@string/gallery"
+        android:icon="@drawable/ic_photo_library_black_24dp"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/camera"
+        app:showAsAction="never"
+        android:title="@string/camera"
+        android:icon="@drawable/ic_photo_camera_black_24dp" />
+</menu>

@@ -351,6 +351,7 @@ public class SubActivity extends AppCompatActivity implements LoaderManager.Load
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.delete:
+                showDeleteDialog();
                 break;
             case R.id.done:
                 //call insert
@@ -368,6 +369,38 @@ public class SubActivity extends AppCompatActivity implements LoaderManager.Load
                 break;
         }
         return true;
+    }
+
+    private void showDeleteDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.delete_dialog_msg_item));
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                deleteProduct();
+                dialog.cancel();
+                finish();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void deleteProduct() {
+            int rowDeleted = getContentResolver().delete(uriPass, null, null);
+            if (rowDeleted == 0) {
+                Toast.makeText(this, "Error deleting this product", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Successfully deleting this product", Toast.LENGTH_SHORT).show();
+            }
     }
 
     private void showUnsaveChangesDialog() {
