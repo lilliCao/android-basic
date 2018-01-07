@@ -6,6 +6,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -65,20 +66,24 @@ public class FinanceActivity extends AppCompatActivity implements LoaderManager.
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         while (cursor.moveToNext()) {
-            TextView view = new TextView(this);
+            LinearLayout view = new LinearLayout(this);
+            LayoutInflater.from(this).inflate(R.layout.summary_report, view);
+            TextView reportName = view.findViewById(R.id.r_name);
+            TextView reportNumber = view.findViewById(R.id.r_number);
+            TextView reportIncome = view.findViewById(R.id.r_income);
+
             int colName = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME);
             int colNumber = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_NUMBER_SALE);
             int colIncome = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_INCOME);
             totalMoney += cursor.getInt(colIncome);
-            view.setText(cursor.getString(colName) +
-                    "   X   " +
-                    String.valueOf(cursor.getInt(colNumber)) +
-                    "   =   " +
-                    decimalFormat.format(cursor.getInt(colIncome) / 100.00)
-            );
+
+            reportName.setText(cursor.getString(colName));
+            reportNumber.setText(String.valueOf(cursor.getInt(colNumber)));
+            reportIncome.setText(decimalFormat.format(cursor.getInt(colIncome) / 100.00));
+
             summaryReport.addView(view);
         }
-        total.setText(decimalFormat.format(totalMoney / 100.00) +"$");
+        total.setText(decimalFormat.format(totalMoney / 100.00) + "$");
         getLoaderManager().destroyLoader(LOADER_ID);
     }
 

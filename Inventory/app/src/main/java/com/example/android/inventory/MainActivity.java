@@ -36,11 +36,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private ProductCursorAdapter adapter;
     private RelativeLayout emptyview;
     private Uri uriPass;
+    private String sortOrder = ProductContract.ProductEntry.COLUMN_PRODUCT_NAME + " ASC";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         FloatingActionButton add = findViewById(R.id.add_button);
         add.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +85,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                                 break;
                             case R.id.item_sale:
                                 uriPass = uri;
-                                updateSale();
+                                reload(LOADER_ID_ITEM);
+                                break;
+                            default:
                                 break;
                         }
                         return true;
@@ -122,8 +126,46 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             case R.id.feedback:
                 showFeedbackDialog();
                 return true;
+            case R.id.sample:
+                insertSampleProduct();
+            case R.id.setting:
+                showSettingDialog();
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showSettingDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.sort_by)
+                .setItems(R.array.sort_option, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (i == 0) {
+                            //alphabetical
+                            sortOrder = ProductContract.ProductEntry.COLUMN_PRODUCT_NAME + " ASC";
+                        } else {
+                            //date
+                            sortOrder = ProductContract.ProductEntry.COLUMN_PRODUCT_DATE + " ASC";
+                        }
+                        reload(LOADER_ID);
+                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+
+    private void insertSampleProduct() {
+        ContentValues values = new ContentValues();
+        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME, "test product");
+        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_SUPPLIER, "test supplier");
+        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_ORDER_DETAIL, "http://udacity.com");
+        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY, 10);
+        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, 1234);
+        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_ORDER_METHOD, ProductContract.ProductEntry.ORDER_WEB);
+        getContentResolver().insert(ProductContract.ProductEntry.CONTENT_URI, values);
     }
 
     private void showFeedbackDialog() {
@@ -201,11 +243,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
 
-    private void updateSale() {
-        if (getLoaderManager().getLoader(LOADER_ID_ITEM) == null) {
-            getLoaderManager().initLoader(LOADER_ID_ITEM, null, this);
+    private void reload(int id) {
+        if (getLoaderManager().getLoader(id) == null) {
+            getLoaderManager().initLoader(id, null, this);
         } else {
-            getLoaderManager().restartLoader(LOADER_ID_ITEM, null, this);
+            getLoaderManager().restartLoader(id, null, this);
         }
     }
 
@@ -237,7 +279,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 projection,
                 null,
                 null,
-                ProductContract.ProductEntry.COLUMN_PRODUCT_NAME + " ASC");
+                sortOrder);
 
 
     }
@@ -276,7 +318,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     Toast.makeText(this, "Successful updating : " + rowUpdated + " product(s)", Toast.LENGTH_SHORT).show();
                 }
                 getLoaderManager().destroyLoader(LOADER_ID_ITEM);
-            }else{
+            } else {
                 Toast.makeText(this, "Unable to sell. Please check the products in store", Toast.LENGTH_SHORT).show();
             }
         }

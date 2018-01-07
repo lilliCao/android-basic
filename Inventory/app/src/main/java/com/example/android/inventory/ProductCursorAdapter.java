@@ -17,7 +17,7 @@ import java.text.DecimalFormat;
  */
 
 public class ProductCursorAdapter extends CursorAdapter {
-    public static final DecimalFormat decimalFormat = new DecimalFormat("#.00");
+    public static final DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
 
     public ProductCursorAdapter(Context context, Cursor c) {

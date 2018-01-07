@@ -21,6 +21,11 @@
                 app:showAsAction="never"
                 android:icon="@drawable/ic_attach_money_black_24dp" />
             <item
+                android:id="@+id/sample"
+                android:title="@string/sample"
+                app:showAsAction="never"
+                android:icon="@drawable/ic_check_circle_black_24dp" />
+            <item
                 android:id="@+id/about"
                 android:title="@string/about"
                 app:showAsAction="never"
@@ -29,6 +34,11 @@
                 android:id="@+id/feedback"
                 android:title="@string/feedback"
                 android:icon="@drawable/ic_feedback_black_24dp"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/setting"
+                android:title="@string/setting"
+                android:icon="@drawable/ic_settings_black_24dp"
                 app:showAsAction="never" />
 
         </menu>

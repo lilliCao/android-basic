@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -48,10 +48,11 @@
 
             <LinearLayout
                 android:id="@+id/summary_report"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:visibility="gone"
-                android:layout_gravity="center_horizontal"
+                android:paddingLeft="@dimen/d_up"
+                android:paddingRight="@dimen/d_up"
                 android:orientation="vertical"></LinearLayout>
 
         </LinearLayout>
@@ -59,5 +60,5 @@
     </ScrollView>
 
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
 

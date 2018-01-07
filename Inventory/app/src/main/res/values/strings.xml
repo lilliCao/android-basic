@@ -50,11 +50,27 @@
         \nStill exist?</string>
     <string name="stay">STAY</string>
     <string name="keep_exist">EXIST</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="order_empty">Order detail is missing</string>
+    <string name="can_not_increase_quantity">Impossible to increase empty quantity</string>
+    <string name="wrong_url">The given url is incorrect</string>
+    <string name="wrong_phone">The given phone number is incorrect</string>
+    <string name="error_pick_photo">Error picking photo from gallery</string>
+    <string name="sample">Sample Product</string>
+    <string name="setting">Sort product</string>
+    <string name="sort_by">Sort by</string>
+    <string name="alphabet">Alphabetic A-B (default)</string>
+    <string name="date">Latest product entrance first</string>
 
     <string-array name="spinner_order">
         <item name="phone">@string/phone</item>
         <item name="email">@string/email</item>
         <item name="web">@string/web</item>
+    </string-array>
+    <string-array name="sort_option">
+        <item name="alphabet">@string/alphabet</item>
+        <item name="date">@string/date</item>
     </string-array>
 
 </resources>

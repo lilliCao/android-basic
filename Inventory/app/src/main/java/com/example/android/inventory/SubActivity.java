@@ -1,5 +1,8 @@
 package com.example.android.inventory;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
@@ -7,14 +10,24 @@ import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.menu.MenuBuilder;
+import android.support.v7.view.menu.MenuPopupHelper;
 import android.text.TextUtils;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,13 +39,20 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.android.inventory.Utils.BitmapUtils;
 import com.example.android.inventory.data.ProductContract;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.regex.Pattern;
 
 import static com.example.android.inventory.ProductCursorAdapter.decimalFormat;
 
 public class SubActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+    private final static String LOG_TAG = SubActivity.class.getSimpleName();
+    private static final int REQUEST_PHONE_CALL = 1;
+    private static final int PICK_PHOTO_GALLERY = 2;
+    private static final int CAPTURE_PHOTO = 3;
     private EditText name;
     private EditText price;
     private EditText quantity;
@@ -57,6 +77,8 @@ public class SubActivity extends AppCompatActivity implements LoaderManager.Load
             return false;
         }
     };
+    private String orderDetailV;
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,11 +112,11 @@ public class SubActivity extends AppCompatActivity implements LoaderManager.Load
             @Override
             public void onClick(View view) {
                 String quantityV = quantity.getText().toString();
-                quantityValue = Integer.valueOf(quantityV);
-                if (TextUtils.isEmpty(quantityV) || (quantityValue == 0)) {
+                if (TextUtils.isEmpty(quantityV) || (Integer.valueOf(quantityV) == 0)) {
                     Toast.makeText(SubActivity.this, getString(R.string.can_not_decrease_quantity), Toast.LENGTH_SHORT).show();
                     return;
                 } else {
+                    quantityValue = Integer.valueOf(quantityV);
                     quantityValue--;
                     quantity.setText(String.valueOf(quantityValue));
                 }
@@ -104,11 +126,11 @@ public class SubActivity extends AppCompatActivity implements LoaderManager.Load
             @Override
             public void onClick(View view) {
                 String quantityV = quantity.getText().toString();
-                quantityValue = Integer.valueOf(quantityV);
                 if (TextUtils.isEmpty(quantityV)) {
-                    Toast.makeText(SubActivity.this, getString(R.string.can_not_decrease_quantity), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SubActivity.this, getString(R.string.can_not_increase_quantity), Toast.LENGTH_SHORT).show();
                     return;
                 } else {
+                    quantityValue = Integer.valueOf(quantityV);
                     quantityValue++;
                     quantity.setText(String.valueOf(quantityValue));
                 }
@@ -122,7 +144,163 @@ public class SubActivity extends AppCompatActivity implements LoaderManager.Load
         } else {
             invalidateOptionsMenu();
         }
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("RestrictedApi")
+            @Override
+            public void onClick(View view) {
+                MenuBuilder builder = new MenuBuilder(SubActivity.this);
+                new MenuInflater(SubActivity.this).inflate(R.menu.image_menu, builder);
+                MenuPopupHelper options = new MenuPopupHelper(SubActivity.this, builder, imageButton);
+                options.setForceShowIcon(true);
+                builder.setCallback(new MenuBuilder.Callback() {
+                    @Override
+                    public boolean onMenuItemSelected(MenuBuilder menu, MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.gallery:
+                                pickPhotoFromGallery();
+                                break;
+                            case R.id.camera:
+                                takePhotoFromCamera();
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+
+                    @Override
+                    public void onMenuModeChange(MenuBuilder menu) {
+
+                    }
+                });
+                options.show();
+            }
+        });
+        order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                orderDetailV = orderDetail.getText().toString();
+                if (TextUtils.isEmpty(orderDetailV)) {
+                    Toast.makeText(SubActivity.this, getString(R.string.order_empty), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String spinnerV = orderMethod.getSelectedItem().toString();
+                if (spinnerV.equals(getString(R.string.phone))) {
+                    orderCall();
+                } else if (spinnerV.equals(getString(R.string.email))) {
+                    orderEmail();
+                } else {
+                    orderWeb();
+                }
+
+            }
+        });
     }
+
+    private void takePhotoFromCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, CAPTURE_PHOTO);
+    }
+
+    private void pickPhotoFromGallery() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, PICK_PHOTO_GALLERY);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_PHOTO_GALLERY && resultCode == Activity.RESULT_OK) {
+            if (data == null) {
+                Toast.makeText(SubActivity.this, getString(R.string.error_pick_photo), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            try {
+                InputStream ins = getContentResolver().openInputStream(data.getData());
+                bitmap = BitmapFactory.decodeStream(ins);
+                image.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else if (requestCode == CAPTURE_PHOTO && resultCode == Activity.RESULT_OK) {
+            Bundle extras = data.getExtras();
+            bitmap = (Bitmap) extras.get("data");
+            image.setImageBitmap(bitmap);
+        }
+    }
+
+    private void orderWeb() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        if (!Patterns.WEB_URL.matcher(orderDetailV).matches()) {
+            Toast.makeText(SubActivity.this, getString(R.string.wrong_url), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        intent.setData(Uri.parse(orderDetailV));
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
+
+    private void orderEmail() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("*/*");
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{orderDetailV});
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Order from Inventory App ");
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
+
+    private void orderCall() {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        if (Uri.parse("tel:" + orderDetailV) == null) {
+            Toast.makeText(SubActivity.this, getString(R.string.wrong_phone), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        intent.setData(Uri.parse("tel:" + orderDetailV));
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                Log.e(LOG_TAG, "in check permission");
+                ActivityCompat.requestPermissions(SubActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL);
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            startActivity(intent);
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_PHONE_CALL: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    startActivity(new Intent().setData(Uri.parse("tel:" + orderDetailV)));
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -186,6 +364,8 @@ public class SubActivity extends AppCompatActivity implements LoaderManager.Load
                 } else {
                     NavUtils.navigateUpFromSameTask(this);
                 }
+            default:
+                break;
         }
         return true;
     }
@@ -255,6 +435,9 @@ public class SubActivity extends AppCompatActivity implements LoaderManager.Load
         values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_SUPPLIER, supplierV);
         values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_ORDER_DETAIL, orderDetailV);
         values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_ORDER_METHOD, spinnerValue);
+        if (bitmap != null) {
+            values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_IMAGE, BitmapUtils.fromBitmapToByteArray(bitmap));
+        }
 
         if (uriPass == null) {
             Uri uri = getContentResolver().insert(ProductContract.ProductEntry.CONTENT_URI, values);
@@ -313,6 +496,8 @@ public class SubActivity extends AppCompatActivity implements LoaderManager.Load
             int colSupplier = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_SUPPLIER);
             int colOrderMethod = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_ORDER_METHOD);
             int colOrderdetails = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_ORDER_DETAIL);
+            int colImage = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_IMAGE);
+
             name.setText(cursor.getString(colName));
             price.setText(decimalFormat.format(cursor.getInt(colPrice) / 100.00));
             quantity.setText(String.valueOf(cursor.getInt(colQuantity)));
@@ -321,11 +506,22 @@ public class SubActivity extends AppCompatActivity implements LoaderManager.Load
             switch (cursor.getInt(colOrderMethod)) {
                 case ProductContract.ProductEntry.ORDER_PHONE:
                     orderMethod.setSelection(0);
+                    break;
                 case ProductContract.ProductEntry.ORDER_EMAIL:
                     orderMethod.setSelection(1);
-                default:
+                    break;
+                case ProductContract.ProductEntry.ORDER_WEB:
                     orderMethod.setSelection(2);
+                    break;
+                default:
+                    break;
 
+            }
+            if (cursor.getBlob(colImage) != null) {
+                bitmap = BitmapUtils.fromByteArrayToBitmap(cursor.getBlob(colImage));
+                if (bitmap != null) {
+                    image.setImageBitmap(bitmap);
+                }
             }
         }
     }
