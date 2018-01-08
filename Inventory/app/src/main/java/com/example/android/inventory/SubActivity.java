@@ -451,7 +451,9 @@ public class SubActivity extends AppCompatActivity implements LoaderManager.Load
 
         ContentValues values = new ContentValues();
         values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME, nameV);
-        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, Double.parseDouble(priceV));
+        if(!TextUtils.isEmpty(priceV)){
+            values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, Double.parseDouble(priceV));
+        }
         if (!TextUtils.isEmpty(quantityV)) {
             values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY, Integer.valueOf(quantityV));
         }

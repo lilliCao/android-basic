@@ -74,13 +74,15 @@ public class FinanceActivity extends AppCompatActivity implements LoaderManager.
             int colName = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME);
             int colNumber = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_NUMBER_SALE);
             int colIncome = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_INCOME);
-            totalMoney += cursor.getFloat(colIncome);
+            if(cursor.getFloat(colIncome) >0){
+                totalMoney += cursor.getFloat(colIncome);
 
-            reportName.setText(cursor.getString(colName));
-            reportNumber.setText(String.valueOf(cursor.getInt(colNumber)));
-            reportIncome.setText(String.valueOf(cursor.getFloat(colIncome)));
+                reportName.setText(cursor.getString(colName));
+                reportNumber.setText(String.valueOf(cursor.getInt(colNumber)));
+                reportIncome.setText(String.valueOf(cursor.getFloat(colIncome)));
 
-            summaryReport.addView(view);
+                summaryReport.addView(view);
+            }
         }
         total.setText(totalMoney + "$");
         getLoaderManager().destroyLoader(LOADER_ID);
