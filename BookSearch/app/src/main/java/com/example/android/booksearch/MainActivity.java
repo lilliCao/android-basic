@@ -18,6 +18,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -99,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         //Set change observer and get default sort
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        PreferenceManager.setDefaultValues(this,R.xml.preferences, false);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         String sort = sharedPreferences.getString(getString(R.string.setting_sort), "");
         String max = sharedPreferences.getString(getString(R.string.setting_number_of_result), "");
         maxResult = Integer.parseInt(max);
@@ -139,33 +140,47 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Get current Setting
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-                String sort = sharedPreferences.getString(getString(R.string.setting_sort), "");
-                String max = sharedPreferences.getString(getString(R.string.setting_number_of_result), "");
-                maxResult = Integer.parseInt(max);
-                //Do search book
-                InputMethodManager inputManager = (InputMethodManager)
-                        getSystemService(Context.INPUT_METHOD_SERVICE);
-
-                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);
-                Editable searchKey = editText.getText();
-                if (searchKey.toString().isEmpty()) {
-                    Toast.makeText(MainActivity.this, "Please enter keyword to search", Toast.LENGTH_LONG).show();
-                } else {
-                    searchVolume = searchKey.toString();
-                    searchVolume = searchVolume.trim().replaceAll("\\s+", "+");
-                    url = BASE_URL + searchVolume + "&" + "maxResults=" + maxResult;
-                    //check network and call request
-                    sortMethod.setSorthMethod(sort);
+                searchAction();
+            }
+        });
+        editText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if (i == keyEvent.KEYCODE_ENTER) {
+                    searchAction();
+                    return true;
                 }
+                return false;
             }
         });
 
         //Create toolbar set up
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
+
+    private void searchAction() {
+        //Get current Setting
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        String sort = sharedPreferences.getString(getString(R.string.setting_sort), "");
+        String max = sharedPreferences.getString(getString(R.string.setting_number_of_result), "");
+        maxResult = Integer.parseInt(max);
+        //Do search book
+        InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
+        Editable searchKey = editText.getText();
+        if (searchKey.toString().isEmpty()) {
+            Toast.makeText(MainActivity.this, "Please enter keyword to search", Toast.LENGTH_LONG).show();
+        } else {
+            searchVolume = searchKey.toString();
+            searchVolume = searchVolume.trim().replaceAll("\\s+", "+");
+            url = BASE_URL + searchVolume + "&" + "maxResults=" + maxResult;
+            //check network and call request
+            sortMethod.setSorthMethod(sort);
+        }
     }
 
     private void callInBackGround() {
@@ -226,20 +241,17 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                                 DialogFragment dialogFragment2 = new ContactDialogFragment();
                                 dialogFragment2.show(getSupportFragmentManager(), CONTACT_FRAGMENT);
                                 break;
-                            case R.id.saved:
-                                //Save for next lession
-                                break;
                             default:
                                 //Get current setting for refresh
-                                if(!editText.getText().toString().isEmpty()) {
+                                if (!editText.getText().toString().isEmpty()) {
                                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
                                     String sort = sharedPreferences.getString(getString(R.string.setting_sort), "");
                                     String max = sharedPreferences.getString(getString(R.string.setting_number_of_result), "");
                                     maxResult = Integer.parseInt(max);
                                     url = BASE_URL + searchVolume + "&" + "maxResults=" + maxResult;
                                     sortMethod.setSorthMethod(NO_SORT);
-                                }else{
-                                    Toast.makeText(MainActivity.this,getString(R.string.no_search),Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(MainActivity.this, getString(R.string.no_search), Toast.LENGTH_SHORT).show();
                                 }
                         }
                         return true;

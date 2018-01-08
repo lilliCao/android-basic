@@ -11,9 +11,6 @@
         android:id="@+id/feedback"
         android:title="Feedback/Contact" />
     <item
-        android:id="@+id/saved"
-        android:title="Saved books" />
-    <item
         android:id="@+id/about"
         android:title="About application" />
     <item
